@@ -361,24 +361,6 @@ class Results
         return $retval;
     }
 
-
-    public function updateVoters($num = 1)
-    {
-        global $_TABLES;
-
-        $num = (int)$num;
-        DB_change(
-            $_TABLES['polltopics'],
-            'voters',
-            "voters + $num",
-            'pid',
-            DB_escapeString($this->pid),
-            '',
-            true
-        );
-        return $this;
-    }
-
 }
 
 ?>
