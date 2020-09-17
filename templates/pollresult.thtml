@@ -1,0 +1,19 @@
+{# begin {templatelocation} #}
+{!if edit_url}
+	<span class="uk-align-right"><a href="{edit_url}" class="uk-aling-right uk-icon uk-icon-edit tm-meta-icon"></a></span>
+{!endif}
+<h3>
+{!if poll_topic}
+    {poll_topic}
+{!endif}
+{!!if {isAdmin} && {isOpen} !!}
+    (Poll is Open)
+{!endif}
+{!if poll_description}
+  <div class="uk-panel uk-panel-box">{poll_description}</div>
+{!endif}
+{poll_questions}
+<div class="uk-panel uk-text-small uk-text-truncate uk-margin-bottom">
+	{notification} <a href="{admin_url}">{lang_polltopics}</a> | {num_votes} {lang_votes} {poll_comments}
+</div>
+{# end {templatelocation} #}

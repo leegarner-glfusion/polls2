@@ -1,0 +1,10 @@
+<plugin>
+    <id>polls2</id>
+    <name>Polls-v2</name>
+    <description>Online Poll System- Revised</description>
+    <version>3.0.0</version>
+    <glfusionversion>2.0.0</glfusionversion>
+    <phpversion>7.3.0</phpversion>
+    <url>http://www.glfusion.org</url>
+    <maintainer>Mark R. Evans</maintainer>
+</plugin>
