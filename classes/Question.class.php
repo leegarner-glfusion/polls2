@@ -161,13 +161,13 @@ class Question
             if (!isset($this->Answers[$i])) {
                 COM_errorLog("Answer now found, creating new answer $i for question {$this->qid}");
                 $this->Answers[$i] = new Answer;
-                $this->Answers[$i]->setQid($this->qid)->setPid($this->pid);
             }
             $this->Answers[$i]->setAnswer($A['answer'][$this->qid][$i])
+                ->setQid($this->qid)
+                ->setPid($this->pid)
                 ->setAid($i)
                 ->setVotes($A['votes'][$this->qid][$i])
                 ->setRemark($A['remark'][$this->qid][$i])
-                //;
                 ->Save();
         }
         for (; $i < count($this->Answers); $i++) {
@@ -215,6 +215,18 @@ class Question
     public function getAnswers()
     {
         return $this->Answers;
+    }
+
+
+    /**
+     * Delete all the questions for a poll.
+     * Called when a poll is deleted or the ID is changed.
+     *
+     * @param   string  $pid    Poll ID
+     */
+    public static function deletePoll($pid)
+    {
+        DB_delete(DB::table('questions'), 'pid', $pid);
     }
 
 

@@ -156,6 +156,18 @@ class Answer
 
 
     /**
+     * Delete all the answers for a poll.
+     * Called when a poll is deleted or the ID is changed.
+     *
+     * @param   string  $pid    Poll ID
+     */
+    public static function deletePoll($pid)
+    {
+        DB_delete(DB::table('answers'), 'pid', $pid);
+    }
+
+
+    /**
      * Set the poll ID.
      *
      * @param   string  $pid    Poll ID

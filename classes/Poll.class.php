@@ -696,15 +696,15 @@ class Poll
                 $Questions[$i]->Delete();
             }
 
-            // Now, if the ID was changed, update the question and answer tables
             if (!$this->isNew && $changingID) {
-                DB_query("UPDATE " . DB::table('answers') . "
-                        SET pid = '{$this->pid}'
-                        WHERE pid = '{$this->old_pid}'");
-                DB_query("UPDATE " . DB::table('questions') . "
-                        SET pid = '{$this->pid}'
-                        WHERE pid = '{$this->old_pid}'");
+                // Questions and answers were already saved above,
+                // so just delete the old poll IDs.
+                Answer::deletePoll($this->old_pid);
+                Question::deletePoll($this->old_pid);
+                // Still need to update the voter records.
+                Voter::changePid($this->old_pid, $this->pid);
             }
+
             CTL_clearCache();       // so autotags pick up changes
             $msg = '';              // no error message if successful
         } else {
@@ -1167,6 +1167,8 @@ class Poll
                     $delete_option, $this->commentcode, $this->owner_id
                 );
             }
+        } else {
+            $retval .= COM_showMessageText("There are no questions for this poll");
         }
         return $retval;
     }
@@ -1515,10 +1517,10 @@ class Poll
             ($force || $Poll->hasAccess()== 3)
         ) {
             $pid = DB_escapeString($pid);
+            Question::deletePoll($this->pid);
+            Answer::deletePoll($this->pid);
+            Voter::deletePoll($this->pid);
             DB_delete(DB::table('topics'), 'pid', $pid);
-            DB_delete(DB::table('answers'), 'pid', $pid);
-            DB_delete(DB::table('questions'), 'pid', $pid);
-            DB_delete(DB::table('voters'), 'pid', $pid);
             DB_delete(DB::table('comments'), array('sid', 'type'), array($pid,  'polls'));
             PLG_itemDeleted($pid, 'polls');
             if (!$force) {
@@ -1653,6 +1655,31 @@ class Poll
         } else {
             return $newvalue;
         }
+    }
+
+
+    /**
+     * Update the voter count for this poll.
+     *
+     * @todo    deprecate
+     * @param   integer $num    Number to add, default = 1
+     * @return  object  $this
+     */
+    public function updateVoters($num = 1)
+    {
+        global $_TABLES;
+
+        $num = (int)$num;
+        DB_change(
+            DB::table('topics'),
+            'voters',
+            "voters + $num",
+            'pid',
+            DB_escapeString($this->pid),
+            '',
+            true
+        );
+        return $this;
     }
 
 }

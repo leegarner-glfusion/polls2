@@ -121,6 +121,17 @@ class Voter
     }
 
 
+    /**
+     * Delete all the voters for a poll, when the poll is deleted.
+     *
+     * @param   string  $pid    Poll ID
+     */
+    public static function deletePoll($pid)
+    {
+        DB_delete(DB::table('voters'), 'pid', $pid);
+    }
+
+
     public static function moveUser($origUID, $destUID)
     {
         DB_query("UPDATE " . DB::table('voters') . "
