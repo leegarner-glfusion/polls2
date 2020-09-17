@@ -1,4 +1,4 @@
-# polls2
+# Polls Plugin, revision 2
 Standalone version of the Polls plugin.
 
 Publish polls on your site where visitors can choose among multiple options.
