@@ -115,6 +115,14 @@ $INSTALL_plugin['polls2'] = array(
         'feature' => 'admin_feature_id',
         'log' => 'Adding feature to the admin group',
     ),
+    array(
+        'type' => 'block',
+        'name' => 'polls_block',
+        'title' => 'Polls',
+        'phpblockfn' => 'phpblock_polls2',
+        'block_type' => 'phpblock',
+        'is_enabled' => 0,
+    ),
 );
 
 
