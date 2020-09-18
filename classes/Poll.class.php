@@ -639,7 +639,6 @@ class Poll
         } else {
             $Questions = array();
         }
-        $navbar = new \navbar;
 
         $T->set_block('editor','questiontab','qt');
         $maxQ = Config::get('maxquestions');
@@ -652,12 +651,6 @@ class Poll
             }
 
             $T->set_var('question_tab', $LANG25[31] . " $display_id");
-
-            $navbar->add_menuitem(
-                $LANG25[31] . " $display_id",
-                "showhidePollsEditorDiv(\"$j\",$j, $maxQ);return false;",
-                true
-            );
             $T->set_var('question_id', $j);
             if (isset($Questions[$j])) {
                 $T->set_var(array(
@@ -695,10 +688,8 @@ class Poll
             $T->parse ('question_list', 'question', true);
             $T->clear_var ('answer_option');
         }
-        $navbar->set_selected($LANG25[31] . " 1");
         $token = SEC_createToken();
         $T->set_var(array(
-            'navbar' => $navbar->generate(),
             'sectoken_name' => CSRF_TOKEN,
             'gltoken_name' => CSRF_TOKEN,
             'sectoken' => $token,
