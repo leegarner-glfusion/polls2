@@ -280,7 +280,7 @@ function plugin_searchtypes_polls2()
 {
     global $LANG_POLLS;
 
-    return array(Config::get('pi_name') => ucfirst(Config::get('pi_name'));
+    return array(Config::get('pi_name') => ucfirst(Config::get('pi_name')));
 
 }
 
