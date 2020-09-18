@@ -80,4 +80,7 @@
 .block-box-left .poll_answer_percent{
   text-align:right;
 }
+div#polls_block h3 {
+    color: inherit;
+}
 /* end public_html/polls/style.css */
