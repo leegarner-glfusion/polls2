@@ -59,6 +59,12 @@ $LANG_POLLS = array(
 'msg_updated' => 'Item(s) have been updated',
 'msg_deleted' => 'Item(s) have been deleted',
 'msg_nochange' => 'Item(s) are unchanged',
+'datepicker' => 'Date Picker',
+'timepicker' => 'Time Picker',
+'closes' => 'Poll Closes',
+'opens' => 'Poll Opens',
+'voting_group' => 'Voting Group',
+'results_group' => 'Results Group',
 );
 
 ###############################################################################
