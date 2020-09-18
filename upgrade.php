@@ -86,6 +86,11 @@ function polls_upgrade()
             DB_query("ALTER TABLE `{$_TABLES['polltopics']}` CHANGE COLUMN `date` `date` DATETIME NULL DEFAULT NULL;",1);
 
         case '2.2.4':
+            $tbl_topics = DB::table('topics');
+            DB_query("ALTER TABLE $tbl_topics ADD opens datetime not null default '1970-01-01 00:00:00' after `date`", 1);
+            DB_query("ALTER TABLE $tbl_topics ADD closes datetime not null default '9999-12-31 23:59:59' after `opens`", 1);
+            DB_query("ALTER TABLE $tbl_topics ADD results_gid mediumint(8) unsigned not null default '1' after group_id", 1);
+
             // Consolidate the permission array to just voting and results group IDs.
             // If login is required, make sure the group is not "All Users".
             // Else if anonymous has access, set the group to "All Users".
@@ -108,11 +113,15 @@ function polls_upgrade()
                 $voting_grp = (int)$voting_grp;
                 if ($voting_grp != $A['group_id']) {
                     $sql = "UPDATE " . DB::table('topics') . "
-                        SET results_grp = $voting_grp, group_id = $voting_grp
+                        SET results_gid = $voting_grp, group_id = $voting_grp
                         WHERE pid = '" . DB_escapeString($A['pid']) . "'";
                     DB_query($sql);
                 }
             }
+            DB_query("ALTER TABLE $tbl_topics ADD drop perm_owner", 1);
+            DB_query("ALTER TABLE $tbl_topics ADD drop perm_group", 1);
+            DB_query("ALTER TABLE $tbl_topics ADD drop perm_members", 1);
+            DB_query("ALTER TABLE $tbl_topics ADD drop perm_anon", 1);
 
         default :
             DB_query("UPDATE {$_TABLES['plugins']} SET pi_version='".$_PO_CONF['pi_version']."',pi_gl_version='".$_PO_CONF['gl_version']."' WHERE pi_name='polls' LIMIT 1");
