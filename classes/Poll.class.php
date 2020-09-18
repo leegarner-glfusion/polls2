@@ -13,6 +13,7 @@
  */
 namespace Polls;
 use Polls\Models\Dates;
+use Polls\Models\Groups;
 
 
 /**
@@ -77,7 +78,7 @@ class Poll
 
     /** Is a login required to submit the poll?
      * @var boolean */
-    private $login_required = 0;
+    //private $login_required = 0;
 
     /** Owner ID.
      * @var integer */
@@ -85,11 +86,11 @@ class Poll
 
     /** Voting Group ID.
      * @var integer */
-    private $group_id = 2;
+    private $voting_gid = Groups::ALL_USERS;
 
     /** Results Group ID.
      * @var integer */
-    private $results_grp = 2;
+    private $results_gid = Groups::ALL_USERS;
 
     /** Owner permission.
      * @var integer */
@@ -141,8 +142,8 @@ class Poll
             // Creating a new poll, set the default groups based on the
             // global login-required setting.
             if (Config::get('pollsloginrequired')) {
-                $this->group_id = 13;
-                $this->results_grp = 13;
+                $this->voting_gid = Groups::LOGGED_IN;
+                $this->results_gid = Groups::LOGGED_IN;
             }
         }
         $this->_Questions = Question::getByPoll($this->pid);
@@ -195,6 +196,7 @@ class Poll
             WHERE is_open = 1 $in_block
             AND '" . $_CONF['_now']->toMySQL(true) . "' BETWEEN opens AND closes
             ORDER BY pid ASC";
+        //echo $sql;die;
         $res = DB_query($sql);
         $retval = array();
         while ($A = DB_fetchArray($res, false)) {
@@ -312,7 +314,7 @@ class Poll
      */
     public function canViewResults()
     {
-        return SEC_inGroup($this->results_grp);
+        return SEC_inGroup($this->results_gid);
     }
 
 
@@ -325,7 +327,7 @@ class Poll
      */
     public function canVote()
     {
-        return $this->isOpen() && SEC_inGroup($this->group_id);
+        return $this->isOpen() && SEC_inGroup($this->voting_gid);
     }
 
 
@@ -387,13 +389,13 @@ class Poll
 
     public function getVotingGroup()
     {
-        return (int)$this->group_id;
+        return (int)$this->voting_gid;
     }
 
 
     public function getResultsGroup()
     {
-        return (int)$this->results_grp;
+        return (int)$this->results_gid;
     }
 
 
@@ -477,12 +479,12 @@ class Poll
         $this->dscp = $A['description'];
         $this->inblock = isset($A['display']) && $A['display'] ? 1 : 0;
         $this->is_open = isset($A['is_open']) && $A['is_open'] ? 1 : 0;
-        $this->login_required = isset($A['login_required']) && $A['login_required'] ? 1 : 0;
+        //$this->login_required = isset($A['login_required']) && $A['login_required'] ? 1 : 0;
         $this->hideresults = isset($A['hideresults']) && $A['hideresults'] ? 1 : 0;
         $this->commentcode = (int)$A['commentcode'];
         $this->owner_id = (int)$A['owner_id'];
-        $this->group_id = (int)$A['group_id'];
-        $this->results_grp = (int)$A['results_grp'];
+        $this->voting_gid = (int)$A['group_id'];
+        $this->results_gid = (int)$A['results_gid'];
         if ($fromdb) {
             $this->voters = (int)$A['vote_count'];
             $this->questions = (int)$A['questions'];
@@ -570,7 +572,7 @@ class Poll
             }
         } else {
             $this->owner_id = (int)$_USER['uid'];
-            $this->group_id = (int)SEC_getFeatureGroup ('polls.edit');
+            $this->voting_gid = (int)SEC_getFeatureGroup ('polls.edit');
             $this->commentcode = (int)$_CONF['comment_code'];
             SEC_setDefaultPermissions($A, Config::get('default_permissions'));
         }
@@ -607,12 +609,12 @@ class Poll
             'lang_appearsonhomepage' => $LANG25[8],
             'lang_openforvoting' => $LANG25[33],
             'lang_hideresults' => $LANG25[37],
-            'lang_login_required' => $LANG25[43],
+            //'lang_login_required' => $LANG25[43],
             'poll_hideresults_explain' => $LANG25[38],
             'poll_topic_info' => $LANG25[39],
             'poll_display' => $this->inblock ? 'checked="checked"' : '',
             'poll_open' => $this->is_open ? 'checked="checked"' : '',
-            'login_req_chk' => $this->login_required ? 'checked="checked"' : '',
+            //'login_req_chk' => $this->login_required ? 'checked="checked"' : '',
             'poll_hideresults' => $this->hideresults ? 'checked="checked"' : '',
             'lang_opens' => $LANG_POLLS['opens'],
             'lang_closes' => $LANG_POLLS['closes'],
@@ -634,8 +636,8 @@ class Poll
             'owner_id' => $this->owner_id,
             'lang_voting_group' => $LANG_POLLS['voting_group'],
             'lang_results_group' => $LANG_POLLS['results_group'],
-            'group_dropdown' => SEC_getGroupDropdown($this->group_id, 3),
-            'res_grp_dropdown' => SEC_getGroupDropdown($this->results_grp, 3),
+            'group_dropdown' => SEC_getGroupDropdown($this->voting_gid, 3),
+            'res_grp_dropdown' => SEC_getGroupDropdown($this->results_gid, 3),
             //'lang_permissions' => $LANG_ACCESS['permissions'],
             //'lang_permissionskey' => $LANG_ACCESS['permissionskey'],
             //'permissions_editor' => SEC_getPermissionsHTML(
@@ -773,15 +775,16 @@ class Poll
             questions = '" . (int)$this->questions . "',
             display = '" . (int)$this->inblock . "',
             is_open = '" . (int)$this->is_open . "',
-            login_required = '" . (int)$this->login_required . "',
             hideresults = '" . (int)$this->hideresults . "',
             commentcode = '" . (int)$this->commentcode . "',
             owner_id = '" . (int)$this->owner_id . "',
-            group_id = '" . (int)$this->group_id . "',
-            perm_owner = '" . (int)$this->perm_owner . "',
+            group_id = '" . (int)$this->voting_gid . "',
+            results_gid = '" . (int)$this->results_gid . "'";
+            /*perm_owner = '" . (int)$this->perm_owner . "',
             perm_group = '" . (int)$this->perm_group . "',
             perm_members = '" . (int)$this->perm_members . "',
             perm_anon = '" . (int)$this->perm_anon . "'";
+            login_required = '" . (int)$this->login_required . "',*/
         $sql = $sql1 . $sql2 . $sql3;
         //echo $sql;die;
         DB_query($sql, 1);
@@ -837,7 +840,7 @@ class Poll
     {
         return SEC_hasAccess(
             $this->owner_id,
-            $this->group_id,
+            $this->voting_gid,
             $this->perm_owner,
             $this->perm_group,
             $this->perm_members,
@@ -1029,7 +1032,7 @@ class Poll
                     $LANG_POLLS['vote'],
                     Config::get('url') . "/index.php?pid={$A['pid']}"
                 );
-            } elseif (SEC_inGroup($A['results_grp'])) {
+            } elseif (SEC_inGroup($A['results_gid'])) {
                 $retval = COM_createLink(
                     $LANG_POLLS['results'],
                     Config::get('url') . "/index.php?results=x&pid={$A['pid']}"
@@ -1130,7 +1133,8 @@ class Poll
                 'comments' => 'pollcomments.thtml',
             ) );
             if ($nquestions > 1) {
-                $poll->set_var('poll_topic', $LANG25['34'] . " " . $filterS->filterData($this->topic));
+                $poll->set_var('lang_poll_topic', $LANG25[34]);
+                $poll->set_var('poll_topic', $filterS->filterData($this->topic));
                 $poll->set_var('lang_question', $LANG25[31].':');
             }
             $poll->set_var(array(
@@ -1333,7 +1337,7 @@ class Poll
      */
     public function alreadyVoted()
     {
-        return Voter::hasVoted($this->pid, $this->group_id);
+        return Voter::hasVoted($this->pid, $this->voting_gid);
     }
 
 
@@ -1403,7 +1407,7 @@ class Poll
                 FROM " . DB::table('topics') . " p",
             'query_fields' => array('topic'),
             'default_filter' => "WHERE opens < '" . $_CONF['_now']->toMySQL(true) . "' AND (" .
-                SEC_buildAccessSql('', 'group_id') . SEC_buildAccessSql('OR', 'results_grp') . ')',
+                SEC_buildAccessSql('', 'group_id') . SEC_buildAccessSql('OR', 'results_gid') . ')',
             'query' => '',
             'query_limit' => 0,
         );

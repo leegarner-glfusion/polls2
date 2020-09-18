@@ -12,6 +12,7 @@
  * @filesource
  */
 namespace Polls;
+use Polls\Models\Groups;
 
 
 /**
@@ -43,8 +44,8 @@ class Voter
                 return true;
             }
         }
-        if ($voting_grp != 2) {
-            // If a login is required, return fals now since there's no need
+        if ($voting_grp != Groups::ALL_USERS) {
+            // If a login is required, return false now since there's no need
             // to check for anonymous votes.
             return false;
         }
