@@ -68,7 +68,10 @@ if ( $pid == '' || $aid == 0 ) {
     $questions = DB_query($questions_sql);
     $nquestions = DB_numRows($questions);
 
-    if ((isset($_POST['aid']) && (count($_POST['aid']) == $nquestions)) && !isset ($_COOKIE['poll-'.$pid])) {
+    if (
+        isset($_POST['aid']) &&
+        count($_POST['aid']) == $nquestions &&
+    ) {
         $retval = POLLS_saveVote_AJAX($pid,$aid);
     } else {
         $eMsg = $LANG_POLLS['answer_all'] . ' "'
@@ -88,15 +91,16 @@ function POLLS_saveVote_AJAX($pid, $aid)
     global $_USER, $_CONF, $_PO_CONF, $_TABLES, $LANG_POLLS;
 
     $retval = array('html' => '','statusMessage' => '');
-
-    if (Voter::hasVoted($pid)) {
+    $Poll = Poll::getInstance($pid);
+    if ($Poll->alreadyVoted() {
         $retval['statusMessage'] = 'You have already voted on this poll';
-        $retval['html'] = Poll::getInstance($pid)->showResults(400,'','',2);
+        $retval['html'] = $Poll->showResults();
     } else {
-        setcookie ('poll-'.$pid, implode('-',$aid), time() + $_PO_CONF['pollcookietime'],
-                   $_CONF['cookie_path'], $_CONF['cookiedomain'],
-                   $_CONF['cookiesecure']);
-
+        SEC_setCookie(
+            'poll-' . $pid,
+            implode('-', $aid),
+            time() + $_PO_CONF['pollcookietime']
+        )
         $answers = count($aid);
         for ($i = 0; $i < $answers; $i++) {
             Answer::increment($aid[$i]);

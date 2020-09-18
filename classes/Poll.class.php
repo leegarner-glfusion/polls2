@@ -84,9 +84,13 @@ class Poll
      * @var integer */
     private $owner_id = 0;
 
-    /** Group ID.
+    /** Voting Group ID.
      * @var integer */
-    private $group_id = 1;
+    private $group_id = 13;
+
+    /** Results Group ID.
+     * @var integer */
+    private $results_grp = 13;
 
     /** Owner permission.
      * @var integer */
@@ -1322,7 +1326,7 @@ class Poll
      */
     public function alreadyVoted()
     {
-        return Voter::hasVoted($this->pid);
+        return Voter::hasVoted($this->pid, $this->group_id);
     }
 
 

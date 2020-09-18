@@ -26,9 +26,10 @@ class Voter
      * For anonymous, checks the IP address and the poll cookie.
      *
      * @param   string  $pid    Poll ID
+     * @param   integer $voting_grp Group with access to vote
      * @return  boolean     True if the user has voted, False if not
      */
-    public static function hasVoted($pid)
+    public static function hasVoted($pid, $voting_grp=2)
     {
         global $_USER;
 
@@ -42,6 +43,11 @@ class Voter
             ) {
                 return true;
             }
+        }
+        if ($voting_grp != 2) {
+            // If a login is required, return fals now since there's no need
+            // to check for anonymous votes.
+            return false;
         }
 
         // For Anonymous we only have the cookie and IP address.
