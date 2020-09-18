@@ -13,6 +13,8 @@
  */
 namespace Polls2;
 use Polls2\DB;
+use Polls2\Models\Dates;
+
 
 /**
  * Class for a single poll.
@@ -58,6 +60,14 @@ class Poll
      * @var boolean */
     private $is_open = 1;
 
+    /** Opening date/time.
+     * @var object */
+    private $Opens = NULL;
+
+    /** Closing date/time
+     * @var object */
+    private $Closes = NULL;
+
     /** Hide results while the poll is open?
      * @var boolean */
     private $hideresults = 1;
@@ -98,6 +108,8 @@ class Poll
      * @var boolean */
     private $isNew = true;
 
+    /** Questions for this poll.
+     * @var array */
     private $_Questions = array();
 
 
@@ -111,14 +123,15 @@ class Poll
      */
     function __construct($pid = '')
     {
+        $this->setID(COM_makeSid());
+        $this->setOpenDate();
+        $this->setClosingDate();
         if (is_array($pid)) {
             $this->setVars($pid, true);
         } elseif (!empty($pid)) {
             $pid = COM_sanitizeID($pid);
             $this->setID($pid);
-            if (!$this->Read()) {
-                $this->setID(COM_makeSid());
-            } else {
+            if ($this->Read()) {
                 $this->isNew = false;
             }
         }
@@ -248,7 +261,17 @@ class Poll
      */
     public function isOpen()
     {
-        return $this->is_open ? 1 : 0;
+        global $_CONF;
+
+        if (
+            $this->Opens->toMySQL(true) > $_CONF['_now']->toMySQL(true) ||
+            $this->Closes->toMySQL(true) < $_CONF['_now']->toMySQL(true)
+        ) {
+            return 0;
+        } elseif ($this->is_open) {
+            return 1;
+        }
+        return 0;
     }
 
 
@@ -320,6 +343,43 @@ class Poll
         return (int)$this->commentcode;
     }
 
+
+    /**
+     * Set the opening date, minimum date by default.
+     *
+     * @param   string  $dt     Datetime string
+     * @return  object  $this
+     */
+    public function setOpenDate($dt=NULL)
+    {
+        global $_CONF;
+
+        if ($dt === NULL) {
+            $dt = Dates::MIN_DATE . ' ' . Dates::MIN_TIME;
+        }
+        $this->Opens = new \Date($dt, $_CONF['timezone']);
+        return $this;
+    }
+
+
+    /**
+     * Set the closing date, minimum date by default.
+     *
+     * @param   string  $dt     Datetime string
+     * @return  object  $this
+     */
+    public function setClosingDate($dt=NULL)
+    {
+        global $_CONF;
+
+        if ($dt === NULL) {
+            $dt = Dates::MAX_DATE . ' ' . Dates::MAX_TIME;
+        }
+        $this->Closes = new \Date($dt, $_CONF['timezone']);
+        return $this;
+    }
+
+
     /**
      * Read a single poll record from the database
      *
@@ -381,6 +441,8 @@ class Poll
             } else {
                 $this->Date = new \Date($A['date'], $_CONF['timezone']);
             }
+            $this->setOpenDate($A['opens']);
+            $this->setClosingDate($A['closes']);
         } else {
             list(
                 $this->perm_owner,
@@ -393,6 +455,20 @@ class Poll
                 $A['perm_members'],
                 $A['perm_anon']
             );
+            if (empty($A['opens_date'])) {
+                $A['opens_date'] = Dates::MIN_DATE;
+            }
+            if (empty($A['opens_time'])) {
+                $A['opens_time'] = Dates::MIN_TIME;
+            }
+            $this->setOpenDate($A['opens_date'] . ' ' . $A['opens_time']);
+            if (empty($A['closes_date'])) {
+                $A['closes_date'] = Dates::MAX_DATE;
+            }
+            if (empty($A['closes_time'])) {
+                $A['closes_time'] = Dates::MAX_TIME;
+            }
+            $this->setClosingDate($A['closes_date'] . ' ' . $A['closes_time']);
         }
     }
 
@@ -485,6 +561,22 @@ class Poll
             $access = 3;
         }
 
+        $open_date = $this->Opens->format('Y-m-d', true);
+        if ($open_date == Dates::MIN_DATE) {
+            $open_date = '';
+        }
+        $open_time= $this->Opens->format('H:i:s', true);
+        if ($open_time == Dates::MIN_TIME) {
+            $open_time = '';
+        }
+        $close_date = $this->Closes->format('Y-m-d', true);
+        if ($close_date == Dates::MAX_DATE) {
+            $close_date = '';
+        }
+        $close_time= $this->Closes->format('H:i:s', true);
+        if ($close_time == Dates::MAX_TIME) {
+            $close_time = '';
+        }
         $ownername = COM_getDisplayName($this->owner_id);
         $T->set_var(array(
             'action_url' => Config::get('admin_url') . '/index.php',
@@ -508,6 +600,16 @@ class Poll
             'poll_open' => $this->is_open ? 'checked="checked"' : '',
             'login_req_chk' => $this->login_required ? 'checked="checked"' : '',
             'poll_hideresults' => $this->hideresults ? 'checked="checked"' : '',
+            'lang_opens' => $LANG_POLLS['opens'],
+            'lang_closes' => $LANG_POLLS['closes'],
+            'opens_date' => $open_date,
+            'opens_time' => $open_time,
+            'closes_date' => $close_date,
+            'closes_time' => $close_time,
+            'min_date' => Dates::MIN_DATE,
+            'max_date' => Dates::MAX_DATE,
+            'min_time' => Dates::MIN_TIME,
+            'max_time' => Dates::MAX_TIME,
             // user access info
             'lang_accessrights' => $LANG_ACCESS['accessrights'],
             'lang_owner' => $LANG_ACCESS['owner'],
@@ -527,6 +629,8 @@ class Poll
             'lang_answersvotes' => $LANG25[10],
             'lang_save' => $LANG_ADMIN['save'],
             'lang_cancel' => $LANG_ADMIN['cancel'],
+            'lang_datepicker' => $LANG_POLLS['datepicker'],
+            'lang_timepicker' => $LANG_POLLS['timepicker'],
         ) );
 
         // repeat for several questions
@@ -656,6 +760,8 @@ class Poll
             topic = '" . DB_escapeString($this->topic) . "',
             description = '" . DB_escapeString($this->dscp) . "',
             date = '" . $this->Date->toMySQL(true) . "',
+            opens = '" . $this->Opens->toMySQL(true) . "',
+            closes = '" . $this->Closes->toMySQL(true) . "',
             voters = '" . (int)$this->voters . "',
             questions = '" . (int)$this->questions . "',
             display = '" . (int)$this->inblock . "',
@@ -744,22 +850,6 @@ class Poll
 
         $retval = '';
 
-        $menu_arr = array (
-            array(
-                'url' => Config::get('admin_url') . '/index.php',
-                'text' => $LANG_ADMIN['list_all'],
-                'active'=>true,
-            ),
-            array(
-                'url' => Config::get('admin_url') . '/index.php?edit=x',
-                'text' => $LANG_ADMIN['create_new'],
-            ),
-            array(
-                'url' => $_CONF['site_admin_url'],
-                'text' => $LANG_ADMIN['admin_home']
-            ),
-        );
-
         // writing the actual list
         $header_arr = array(      # display 'text' and use table field 'field'
             array(
@@ -787,14 +877,20 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG_ACCESS['access'],
-                'field' => 'access',
-                'sort' => false,
+                'text' => $LANG25[3],
+                'field' => 'unixdate',
+                'sort' => true,
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG25[3],
-                'field' => 'unixdate',
+                'text' => $LANG_POLLS['opens'],
+                'field' => 'opens',
+                'sort' => true,
+                'align' => 'center',
+            ),
+            array(
+                'text' => $LANG_POLLS['closes'],
+                'field' => 'closes',
                 'sort' => true,
                 'align' => 'center',
             ),
@@ -889,8 +985,14 @@ class Poll
             break;
         case 'unixdate':
         case 'date_voted':
-            $dt->setTimestamp($fieldvalue);
-            $retval = $dt->format($_CONF['daytime'], true);
+        case 'opens':
+        case 'closes':
+            if ($fieldvalue != Dates::MAX_DATE . ' ' . Dates::MAX_TIME && 
+                $fieldvalue != Dates::MIN_DATE . ' ' . Dates::MIN_TIME
+            ) {
+                $dt->setTimestamp($fieldvalue);
+                $retval = $dt->format($_CONF['daytime'], true);
+            }
             break;
         case 'topic' :
             $filter = new \sanitizer();
@@ -911,16 +1013,18 @@ class Poll
             $retval = $access;
             break;
         case 'user_action':
-            if ($A['is_open']) {
-                if (!Voter::hasVoted($A['pid'])) {
-                    $retval = COM_createLink(
-                        $fieldvalue,
-                        Config::get('url') . "/index.php?pid={$A['pid']}"
-                    );
-                }
+            if (
+                $A['closes'] < $extras['now'] &&
+                $A['is_open'] &&
+                !Voter::hasVoted($A['pid'])
+            ) {
+                $retval = COM_createLink(
+                    $LANG_POLLS['vote'],
+                    Config::get('url') . "/index.php?pid={$A['pid']}"
+                );
             } else {
                 $retval = COM_createLink(
-                    $fieldvalue,
+                    $LANG_POLLS['results'],
                     Config::get('url') . "/index.php?results=x&pid={$A['pid']}"
                 );
             }
@@ -1296,13 +1400,15 @@ class Poll
                 (SELECT COUNT(v.id) FROM " . DB::table('voters') . " v WHERE v.pid = p.pid) AS vote_count
                 FROM " . DB::table('topics') . " p",
             'query_fields' => array('topic'),
-            'default_filter' => COM_getPermSQL(),
+            'default_filter' => "WHERE opens < '" . $_CONF['_now']->toMySQL(true) . "'" . COM_getPermSQL('AND'),
             'query' => '',
             'query_limit' => 0,
         );
         $extras = array(
             'token' => 'dummy',
+            'now' => $_CONF['_now']->toMySQL(true),
         );
+        //echo $query_arr['sql'] . ' ' . $query_arr['default_filter'];die;
 
         if (plugin_ismoderator_polls2()) {
             $retval .= '<div class="floatright"><a class="uk-button uk-button-small uk-button-danger" href="' .

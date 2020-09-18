@@ -56,6 +56,43 @@
             <input type="checkbox" id="open" value="1" name="is_open" {poll_open}>
           </div>
         </div>
+
+        <div class="uk-form-row">
+          <label class="uk-form-label">{lang_opens}</label>
+          <div class="uk-form-controls">
+            <div class="uk-form-icon">
+                <i class="uk-icon-calendar"></i>
+                <input type="text" id="opens_dt" name="opens_date" value="{opens_date}" size="12" maxlength="12"
+                    data-uk-datepicker="{format:'YYYY-MM-DD'}" title="{lang_datepicker}"
+                    placeholder="{min_date}"
+                    data-uk-tooltip />
+            </div>
+            <div class="uk-form-icon">
+                <i class="uk-icon-clock-o"></i>
+                <input type="text" id="opens_time" name="opens_time" value="{opens_time}" size="12" maxlength="12"
+                    data-uk-timepicker title="{lang_timepicker}" placeholder="{min_time}"
+                    data-uk-tooltip />
+            </div>
+        </div>
+
+        <div class="uk-form-row">
+          <label class="uk-form-label">{lang_closes}</label>
+          <div class="uk-form-controls">
+            <div class="uk-form-icon">
+                <i class="uk-icon-calendar"></i>
+                <input type="text" id="closes_dt" name="closes_date" value="{closes_date}" size="12" maxlength="12"
+                    data-uk-datepicker="{format:'YYYY-MM-DD'}" title="{lang_datepicker}"
+                    placeholder="{max_date}"
+                    data-uk-tooltip />
+            </div>
+            <div class="uk-form-icon">
+                <i class="uk-icon-clock-o"></i>
+                <input type="text" id="closes_time" name="closes_time" value="{closes_time}" size="12" maxlength="12"
+                    data-uk-timepicker title="{lang_timepicker}" placeholder="{max_time}"
+                    data-uk-tooltip />
+            </div>
+        </div>
+
         <div class="uk-form-row">
           <label class="uk-form-label" for="login_required">{lang_login_required}</label>
           <div class="uk-form-controls">

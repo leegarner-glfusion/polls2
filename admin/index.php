@@ -44,6 +44,7 @@ USES_lib_admin();
 use Polls2\Config;
 use Polls2\Menu;
 use Polls2\Poll;
+use Polls2\Views\Results;
 
 $display = '';
 
@@ -56,7 +57,7 @@ if (!plugin_ismoderator_polls2()) {
 // MAIN ========================================================================
 
 $action = '';
-$expected = array('edit','save','delete','lv','delvote','results');
+$expected = array('edit','save','delete','lv','delvote','results', 'presults');
 foreach($expected as $provided) {
     if (isset($_POST[$provided])) {
         $action = $provided;
@@ -146,7 +147,14 @@ case 'delvote' :
         break;
 
     case 'results':
-        $page .= Poll::getInstance($pid)->showResults();
+        $Results = new Results($pid);
+        $page .= $Results->Display();
+        break;
+
+    case 'presults':
+        $Results = new Results($pid);
+        echo $Results->Print();
+        exit;
         break;
 
     case 'delete':
