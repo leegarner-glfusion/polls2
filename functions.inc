@@ -48,7 +48,7 @@ if (!defined ('GVERSION')) {
 spl_autoload_register(function ($class)
 {
     // project-specific namespace prefix
-    $prefix = 'Polls2\\';
+    $prefix = 'Polls\\';
 
     // does the class use the namespace prefix?
     $len = strlen($prefix);
@@ -73,20 +73,13 @@ spl_autoload_register(function ($class)
         require $file;
     }
 });
-use Polls2\DB;
-use Polls2\Config;
-use Polls2\Poll;
-use Polls2\Voter;
-
-/*if ($_PO2_CONF === false) {
-    // Don't have a config yet, probably installing the plugin
-    $_PO2_CONF = array();
-}*/
+use Polls\DB;
+use Polls\Config;
+use Polls\Poll;
+use Polls\Voter;
 
 // May later rely on the class autoloader
 require_once __DIR__ . '/polls2.php';
-//$_PO2_CONF['url'] = $_CONF['site_url'] . '/' . $_PO2_CONF['pi_name'];
-//$_PO2_CONF['admin_url'] = $_CONF['site_admin_url'] . '/plugins/' . $_PO2_CONF['pi_name'];
 Config::set('url', $_CONF['site_url'] . '/' . Config::get('pi_name'));
 Config::set('admin_url', $_CONF['site_admin_url'] . '/plugins/' . Config::get('pi_name'));
 
@@ -129,12 +122,12 @@ function plugin_getmenuitems_polls2()
     $anon = (COM_isAnonUser()) ? true : false;
     if (
         Config::get('hidepollsmenu') == 1 || (
-            $anon && ($_CONF['loginrequired'] || Config::Get('pollsloginrequired'))
+            $anon && ($_CONF['loginrequired'] || Config::get('pollsloginrequired'))
         )
     ) {
         return false;
     }
-    $menuitems[$LANG_POLLS['polls']] = Config::get('url') . '/index.php';
+    $menuitems[ucfirst(Config::get('pi_name'))] = Config::get('url') . '/index.php';
     return $menuitems;
 }
 
@@ -216,21 +209,7 @@ function plugin_deletecomment_polls2($cid, $id)
 
     $retval = '';
 
-    $has_editPermissions = SEC_hasRights ('polls.edit');
-    $result = DB_query(
-        "SELECT owner_id,group_id,perm_owner,perm_group,perm_members,perm_anon FROM " .
-        DB::table('topics') .
-        " WHERE pid = '".DB_escapeString($id)."'");
-    $A = DB_fetchArray ($result);
-
-    if (
-        $has_editPermissions &&
-        SEC_hasAccess(
-            $A['owner_id'], $A['group_id'],
-            $A['perm_owner'], $A['perm_group'],
-            $A['perm_members'], $A['perm_anon']
-        ) == 3
-    ) {
+    if (Poll::hasRights('edit')) {
         CMT_deleteComment($cid, $id, 'polls');
         $retval .= COM_refresh(Config::get('url') . "/index.php?pid=$id");
     } else {
@@ -241,6 +220,7 @@ function plugin_deletecomment_polls2($cid, $id)
     $c = glFusion\Cache::getInstance()->deleteItemsByTag('whatsnew');
     return $retval;
 }
+
 
 function plugin_getwhatsnewcomment_polls2()
 {
@@ -300,7 +280,7 @@ function plugin_searchtypes_polls2()
 {
     global $LANG_POLLS;
 
-    return array('polls' => $LANG_POLLS['polls']);
+    return array(Config::get('pi_name') => ucfirst(Config::get('pi_name'));
 
 }
 
@@ -337,7 +317,7 @@ function plugin_dopluginsearch_polls2($query, $dateStart, $dateEnd, $topic, $typ
         . " WHERE (p.date <= '".$_CONF['_now']->toMySQL(true)."') "
         . COM_getPermSQL('AND', 0, 2, 'p');
 
-    if (!SEC_hasRights('polls.admin', $uid)) {
+    if (!Poll::hasRights('admin', $uid)) {
         $sql .= " AND ((p.hideresults = 0) OR (p.owner_id = {$uid})) ";
     }
 
@@ -345,7 +325,10 @@ function plugin_dopluginsearch_polls2($query, $dateStart, $dateEnd, $topic, $typ
         $sql .= "AND (p.owner_id = '{$author}') ";
     }
 
-    $search = new SearchCriteria('polls', array($LANG_POLLS['polls']));
+    $search = new SearchCriteria(
+        Config::get('pi_name'),
+        array(ucfirst(Config::get('pi_name')))
+    );
 
     $columns = array('title' => 'p.topic', 'description' => 'p.description');
     $sql .= $search->getDateRangeSQL('AND', 'p.date', $dateStart, $dateEnd);
@@ -487,7 +470,7 @@ function plugin_cclabel_polls2()
 
     if (plugin_ismoderator_polls2()) {
         return array(
-            $LANG_POLLS['polls'],
+            ucfirst(Config::get('pi_name')),
             Config::get('admin_url') . '/index.php',
             plugin_geticon_polls2()
         );
@@ -506,7 +489,7 @@ function plugin_getadminoption_polls2()
 
     if (plugin_ismoderator_polls2()) {
         return array(
-            $LANG_POLLS['polls'],
+            ucfirst(Config::get('pi_name')),
             Config::get('admin_url') . '/index.php',
             Poll::countPolls()
         );
@@ -679,7 +662,7 @@ function plugin_templatesetvars_polls2($templatename, &$template)
     global $LANG_POLLS;
 
     if ($templatename == 'header') {
-        $template->set_var ('button_polls', $LANG_POLLS['polls']);
+        $template->set_var ('button_polls', ucfirst(Config::get('pi_name')));
     }
 }
 
@@ -976,15 +959,17 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
                     if (empty($A['pid'])) {
                         $props['url'] = Config::get('url') . '/index.php?pid='.$pid.'&amp;aid=-1';
                     } else {
-                        $pollEdit = SEC_hasRights('polls.edit');
                         // Users who have already voted but cannot see the results cannot view link
-                        if ($pollEdit || (!$pollEdit && !($A['hideresults'] == 1 && (isset($_COOKIE['poll-' . $A['pid']]) || Voter::hasVoted($A['pid']))))) {
+                        if (
+                            Poll::hasRights('edit') ||
+                            (!$A['hideresults'] && Voter::hasVoted($A['pid'], $A['group_id']))
+                        ) {
                             $props['url'] = Config::get('url') . '/index.php?pid=' . $A['pid'];
                         }
                     }
                     break;
                 case 'label':
-                    $props['label'] = $LANG_POLLS['polls'];
+                    $props['label'] = ucfirst(Config::get('pi_name'));
                     break;
                 case 'status':
                     $props['status'] = 1; // stub - default
@@ -1052,7 +1037,7 @@ function plugin_ismoderator_polls2()
 {
     static $isMod = NULL;
     if ($isMod === NULL) {
-        $isMod = SEC_hasRights('polls2.admin,polls2.edit', 'OR');
+        $isMod = Poll::hasRights('admin,edit', 'OR');
     }
     return $isMod;
 }

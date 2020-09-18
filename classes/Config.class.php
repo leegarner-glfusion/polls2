@@ -1,6 +1,6 @@
 <?php
 /**
- * Class to read and manipulate Polls2 configuration values.
+ * Class to read and manipulate Polls configuration values.
  *
  * @author      Lee Garner <lee@leegarner.com>
  * @copyright   Copyright (c) 2020 Lee Garner <lee@leegarner.com>
@@ -11,7 +11,7 @@
  *              GNU Public License v2 or later
  * @filesource
  */
-namespace Polls2;
+namespace Polls;
 
 
 /**
@@ -26,7 +26,7 @@ final class Config
 
 
     /**
-     * Get the Polls2 configuration object.
+     * Get the Polls configuration object.
      * Creates an instance if it doesn't already exist.
      *
      * @return  object      Configuration object
@@ -42,7 +42,7 @@ final class Config
 
 
     /**
-     * Create an instance of the Polls2 configuration object.
+     * Create an instance of the polls configuration object.
      */
     private function __construct()
     {

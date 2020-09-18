@@ -42,9 +42,9 @@ if (!in_array('polls2', $_PLUGINS)) {
     COM_404();
     die();
 }
-use Polls2\Poll;
-use Polls2\Voter;
-use Polls2\Answer;
+use Polls\Poll;
+use Polls\Voter;
+use Polls\Answer;
 
 $retval = '';
 

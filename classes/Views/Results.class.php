@@ -11,10 +11,10 @@
  *              GNU Public License v2 or later
  * @filesource
  */
-namespace Polls2\Views;
-use Polls2\Poll;
-use Polls2\Answer;
-use Polls2\Config;
+namespace Polls\Views;
+use Polls\Poll;
+use Polls\Answer;
+use Polls\Config;
 
 /**
  * Class for a single poll.
@@ -92,8 +92,7 @@ class Results
         $filter = new \sanitizer();
         $filter->setPostmode('text');
 
-        $access = $this->Poll->hasAccess();
-        if ($this->Poll->isNew() || $access == 0) {
+        if ($this->Poll->isNew() || !$this->Poll->canViewResults() == 0) {
             // Invalid poll or no access
             return $retval;
         }
@@ -281,7 +280,7 @@ class Results
         $Poll = self::getInstance($pid);
         if (
             !$Poll->isNew() &&
-            ($force || $Poll->hasAccess()== 3)
+            ($force || Poll::hasRights('edit'))
         ) {
             $pid = DB_escapeString($pid);
             DB_delete($_TABLES['polltopics'], 'pid', $pid);

@@ -35,9 +35,9 @@
 // +--------------------------------------------------------------------------+
 
 require_once '../lib-common.php';
-use Polls2\Poll;
-use Polls2\Menu;
-use Polls2\Config;
+use Polls\Poll;
+use Polls\Menu;
+use Polls\Config;
 
 if (!in_array(Config::get('pi_name'), $_PLUGINS)) {
     COM_404();

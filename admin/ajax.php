@@ -31,7 +31,7 @@ if (!plugin_ismoderator_polls2()) {
     echo json_encode($retval);
     exit;
 }
-use Polls2\Poll;
+use Polls\Poll;
 
 if (isset($_POST['action'])) {
     $action = $_POST['action'];

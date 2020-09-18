@@ -65,6 +65,8 @@ $LANG_POLLS = array(
 'timepicker' => 'Time Picker',
 'closes' => 'Poll Closes',
 'opens' => 'Poll Opens',
+'voting_group' => 'Voting Group',
+'results_group' => 'Results Group',
 );
 
 ###############################################################################
@@ -132,7 +134,7 @@ $PLG_polls_MESSAGE3002 = $LANG32[9];
 
 // Localization of the Admin Configuration UI
 $LANG_configsections['polls2'] = array(
-    'label' => 'Polls',
+    'label' => 'Polls2',
     'title' => 'Polls Configuration'
 );
 

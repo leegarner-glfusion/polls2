@@ -4,4 +4,6 @@
 Release TBD
   * Refactor into object classes.
   * Fix updating creation date whenever a poll is saved.
+  * Remove UNIX-style permissions, use group for access to voting and results.
+  * Add opening and closing date/time fields to control the voting window.
 

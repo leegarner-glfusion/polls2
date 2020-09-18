@@ -11,8 +11,7 @@
  *              GNU Public License v2 or later
  * @filesource
  */
-namespace Polls2;
-use Polls2\DB;
+namespace Polls;
 
 
 /**

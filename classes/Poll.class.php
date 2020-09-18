@@ -11,9 +11,8 @@
  *              GNU Public License v2 or later
  * @filesource
  */
-namespace Polls2;
-use Polls2\DB;
-use Polls2\Models\Dates;
+namespace Polls;
+use Polls\Models\Dates;
 
 
 /**
@@ -86,27 +85,27 @@ class Poll
 
     /** Voting Group ID.
      * @var integer */
-    private $group_id = 13;
+    private $group_id = 2;
 
     /** Results Group ID.
      * @var integer */
-    private $results_grp = 13;
+    private $results_grp = 2;
 
     /** Owner permission.
      * @var integer */
-    private $perm_owner = 3;
+    //private $perm_owner = 3;
 
     /** Group permission.
      * @var integer */
-    private $perm_group = 2;
+    //private $perm_group = 2;
 
     /** Logged-In User permission.
      * @var integer */
-    private $perm_members = 2;
+    //private $perm_members = 2;
 
     /** Anonymous permission.
      * @var integer */
-    private $perm_anon = 2;
+    //private $perm_anon = 2;
 
     /** Is this a new record?
      * @var boolean */
@@ -138,6 +137,13 @@ class Poll
             if ($this->Read()) {
                 $this->isNew = false;
             }
+        } else {
+            // Creating a new poll, set the default groups based on the
+            // global login-required setting.
+            if (Config::get('pollsloginrequired')) {
+                $this->group_id = 13;
+                $this->results_grp = 13;
+            }
         }
         $this->_Questions = Question::getByPoll($this->pid);
     }
@@ -156,6 +162,23 @@ class Poll
 
 
     /**
+     * Get all polls for operations which must cycle through each one.
+     *
+     * @return  array       Array of Poll objects
+     */
+    public static function XgetAll()
+    {
+        $retval = array();
+        $sql = "SELECT * FROM " . DB::table('topics');
+        $res = DB_query($sql);
+        while ($A = DB_fetchArray($res, false)) {
+            $retval[$A['pid']] = new self($A);
+        }
+        return $retval;
+    }
+
+
+    /**
      * Get all the currently open polls.
      *
      * @param   boolean $inblock    True if the in_block flag must be set
@@ -163,11 +186,14 @@ class Poll
      */
     public static function getOpen($inblock=false)
     {
+        global $_CONF;
+
         $in_block = $inblock ? ' AND display = 1' : '';
-        $sql = "SELECT p.*, count(v.id) as vote_count FROM " . DB::table('topics') . " p
-            LEFT JOIN " . DB::table('voters') . " v
-            ON v.pid = p.pid
+        $sql = "SELECT p.*, 
+            (SELECT count(v.id) FROM " . DB::table('voters') . " v
+                WHERE v.pid = p.pid) as vote_count FROM " . DB::table('topics') . " p
             WHERE is_open = 1 $in_block
+            AND '" . $_CONF['_now']->toMySQL(true) . "' BETWEEN opens AND closes
             ORDER BY pid ASC";
         $res = DB_query($sql);
         $retval = array();
@@ -268,14 +294,25 @@ class Poll
         global $_CONF;
 
         if (
+            !$this->is_open ||
             $this->Opens->toMySQL(true) > $_CONF['_now']->toMySQL(true) ||
             $this->Closes->toMySQL(true) < $_CONF['_now']->toMySQL(true)
         ) {
             return 0;
-        } elseif ($this->is_open) {
+        } else {
             return 1;
         }
-        return 0;
+    }
+
+
+    /**
+     * Check if the current user can view the poll results.
+     *
+     * @return  integer     1 if viewing allowed, 0 if not
+     */
+    public function canViewResults()
+    {
+        return SEC_inGroup($this->results_grp);
     }
 
 
@@ -288,7 +325,7 @@ class Poll
      */
     public function canVote()
     {
-        return $this->isOpen();
+        return $this->isOpen() && SEC_inGroup($this->group_id);
     }
 
 
@@ -345,6 +382,18 @@ class Poll
     public function getCommentcode()
     {
         return (int)$this->commentcode;
+    }
+
+
+    public function getVotingGroup()
+    {
+        return (int)$this->group_id;
+    }
+
+
+    public function getResultsGroup()
+    {
+        return (int)$this->results_grp;
     }
 
 
@@ -433,13 +482,10 @@ class Poll
         $this->commentcode = (int)$A['commentcode'];
         $this->owner_id = (int)$A['owner_id'];
         $this->group_id = (int)$A['group_id'];
+        $this->results_grp = (int)$A['results_grp'];
         if ($fromdb) {
             $this->voters = (int)$A['vote_count'];
             $this->questions = (int)$A['questions'];
-            $this->perm_owner = (int)$A['perm_owner'];
-            $this->perm_group = (int)$A['perm_group'];
-            $this->perm_members = (int)$A['perm_members'];
-            $this->perm_anon = (int)$A['perm_anon'];
             if (!isset($A['date']) || $A['date'] === NULL) {
                 $this->Date = clone $_CONF['_now'];
             } else {
@@ -448,17 +494,6 @@ class Poll
             $this->setOpenDate($A['opens']);
             $this->setClosingDate($A['closes']);
         } else {
-            list(
-                $this->perm_owner,
-                $this->perm_group,
-                $this->perm_members,
-                $this->perm_anon
-            ) = SEC_getPermissionValues(
-                $A['perm_owner'],
-                $A['perm_group'],
-                $A['perm_members'],
-                $A['perm_anon']
-            );
             if (empty($A['opens_date'])) {
                 $A['opens_date'] = Dates::MIN_DATE;
             }
@@ -497,32 +532,9 @@ class Poll
             $lang_create_or_edit = $LANG_ADMIN['create_new'];
         }
 
-        // writing the menu on top
-        $menu_arr = array (
-            array(
-                'url' => Config::get('admin_url') . '/index.php',
-                'text' => $LANG_ADMIN['list_all'],
-            ),
-            array(
-                'url' => Config::get('admin_url') . '/index.php?edit=x',
-                'text' => $lang_create_or_edit,
-                'active' => true,
-            ),
-            array(
-                'url' => $_CONF['site_admin_url'],
-                'text' => $LANG_ADMIN['admin_home'],
-            ),
-        );
-
         $retval .= COM_startBlock(
             $LANG25[5], '',
             COM_getBlockTemplate ('_admin_block', 'header')
-        );
-
-        $retval .= ADMIN_createMenu(
-            $menu_arr,
-            $LANG_POLLS['editinstructions'],
-            plugin_geticon_polls2()
         );
 
         $T = new \Template(__DIR__ . '/../templates/admin/');
@@ -534,9 +546,8 @@ class Poll
 
         if (!empty($this->pid)) {       // if not a new record
             // Get permissions for poll
-            $access = $this->hasAccess();
             $this->old_pid = $this->pid;
-            if ($access < 3) {
+            if (!self::hasRights('edit')) {
                 // User doesn't have write access...bail
                 $retval .= COM_startBlock ($LANG25[21], '',
                                COM_getBlockTemplate ('_msg_block', 'header'));
@@ -562,7 +573,6 @@ class Poll
             $this->group_id = (int)SEC_getFeatureGroup ('polls.edit');
             $this->commentcode = (int)$_CONF['comment_code'];
             SEC_setDefaultPermissions($A, Config::get('default_permissions'));
-            $access = 3;
         }
 
         $open_date = $this->Opens->format('Y-m-d', true);
@@ -622,14 +632,16 @@ class Poll
             'owner_name' => $ownername,
             'owner' => $ownername,
             'owner_id' => $this->owner_id,
-            'lang_group' => $LANG_ACCESS['group'],
-            'group_dropdown' => SEC_getGroupDropdown($this->group_id, $access),
-            'lang_permissions' => $LANG_ACCESS['permissions'],
-            'lang_permissionskey' => $LANG_ACCESS['permissionskey'],
-            'permissions_editor' => SEC_getPermissionsHTML(
-                $this->perm_owner, $this->perm_group, $this->perm_members, $this->perm_anon
-            ),
-            'lang_permissions_msg' => $LANG_ACCESS['permmsg'],
+            'lang_voting_group' => $LANG_POLLS['voting_group'],
+            'lang_results_group' => $LANG_POLLS['results_group'],
+            'group_dropdown' => SEC_getGroupDropdown($this->group_id, 3),
+            'res_grp_dropdown' => SEC_getGroupDropdown($this->results_grp, 3),
+            //'lang_permissions' => $LANG_ACCESS['permissions'],
+            //'lang_permissionskey' => $LANG_ACCESS['permissionskey'],
+            //'permissions_editor' => SEC_getPermissionsHTML(
+            //    $this->perm_owner, $this->perm_group, $this->perm_members, $this->perm_anon
+            //),
+            //'lang_permissions_msg' => $LANG_ACCESS['permmsg'],
             'lang_answersvotes' => $LANG25[10],
             'lang_save' => $LANG_ADMIN['save'],
             'lang_cancel' => $LANG_ADMIN['cancel'],
@@ -835,6 +847,26 @@ class Poll
 
 
     /**
+     * Wrapper for SEC_hasRights(), prepends the privilege with the plugin name.
+     *
+     * @param   string|array    $privs  Privileges needed, e.g. 'edit', 'admin'
+     * @param   string          $oper   Operator
+     * @return  boolean     True if the user has the requested privilege
+     */
+    public static function hasRights($privs, $oper='AND')
+    {
+        $pi_name = Config::get('pi_name');
+        if (is_string($privs)) {
+            $privs = explode(',', $privs);
+        }
+        foreach ($privs as $idx=>$priv) {
+            $privs[$idx] = "{$pi_name}.{$priv}";
+        }
+        return SEC_hasRights($privs, $oper);
+    }
+
+
+    /**
      * Uses lib-admin to list the pollzer definitions and allow updating.
      *
      * @return  string  HTML for the list
@@ -954,32 +986,19 @@ class Poll
 
         $retval = '';
 
-        if (isset($A['owner_id'])) {    // only pertains to poll lists
-            $access = SEC_hasAccess(
-                $A['owner_id'], $A['group_id'],
-                $A['perm_owner'], $A['perm_group'],
-                $A['perm_members'], $A['perm_anon']
-            );
-        } else {
-            $access = 2;
-        }
-        if ($access < 1) {
-            return $retval;
-        }
-
         $dt = new \Date('now',$_USER['tzid']);
 
         switch($fieldname) {
         case 'edit':
-            if ($access == 3) {
-                $retval = COM_createLink(
-                    '<i class="uk-icon-edit"></i>',
-                    Config::get('admin_url') . "/index.php?edit=x&amp;pid={$A['pid']}"
-                );
-            }
+            $retval = COM_createLink(
+                '<i class="uk-icon-edit"></i>',
+                Config::get('admin_url') . "/index.php?edit=x&amp;pid={$A['pid']}"
+            );
             break;
         case 'unixdate':
-        case 'date_voted':
+                $dt->setTimestamp($fieldvalue);
+                $retval = $dt->format($_CONF['daytime'], true);
+                break;
         case 'opens':
         case 'closes':
             if ($fieldvalue != Dates::MAX_DATE . ' ' . Dates::MAX_TIME && 
@@ -999,25 +1018,18 @@ class Poll
                 Config::get('url') . "/index.php?pid={$A['pid']}"
             );
             break;
-        case 'access':
-            if ($access == 3) {
-                $access = $LANG_ACCESS['edit'];
-            } else {
-                $access = $LANG_ACCESS['readonly'];
-            }
-            $retval = $access;
-            break;
         case 'user_action':
             if (
                 $A['closes'] < $extras['now'] &&
                 $A['is_open'] &&
-                !Voter::hasVoted($A['pid'])
+                !Voter::hasVoted($A['pid']) &&
+                SEC_inGroup($A['group_id'])
             ) {
                 $retval = COM_createLink(
                     $LANG_POLLS['vote'],
                     Config::get('url') . "/index.php?pid={$A['pid']}"
                 );
-            } else {
+            } elseif (SEC_inGroup($A['results_grp'])) {
                 $retval = COM_createLink(
                     $LANG_POLLS['results'],
                     Config::get('url') . "/index.php?results=x&pid={$A['pid']}"
@@ -1059,16 +1071,12 @@ class Poll
             );
             break;
         case 'delete':
-            if ($access == 3) {
-                $attr['title'] = $LANG_ADMIN['delete'];
-                $attr['onclick'] = "return doubleconfirm('" . $LANG25[41] . "','" . $LANG25[42] . "');";
-                $retval = COM_createLink(
-                    '<i class="uk-icon-remove uk-text-danger"></i>',
-                    Config::get('admin_url') . '/index.php'
-                        . '?delete=x&amp;pid=' . $A['pid'] . '&amp;' . CSRF_TOKEN . '=' . $extras['token'], $attr);
-            } else {
-                $retval = $icon_arr['blank'];
-            }
+            $attr['title'] = $LANG_ADMIN['delete'];
+            $attr['onclick'] = "return doubleconfirm('" . $LANG25[41] . "','" . $LANG25[42] . "');";
+            $retval = COM_createLink(
+                '<i class="uk-icon-remove uk-text-danger"></i>',
+                Config::get('admin_url') . '/index.php'
+                    . '?delete=x&amp;pid=' . $A['pid'] . '&amp;' . CSRF_TOKEN . '=' . $extras['token'], $attr);
             break;
         default:
             $retval = $fieldvalue;
@@ -1156,7 +1164,7 @@ class Poll
                 (
                     $this->hideresults == 1 &&
                     (
-                        SEC_hasRights('polls.edit') ||
+                        self::hasRights('edit') ||
                         (
                             isset($_USER['uid'])
                             && ($_USER['uid'] == $this->owner_id)
@@ -1170,8 +1178,7 @@ class Poll
             }
             $poll->set_var('poll_results', $results);
 
-            $access = $this->hasAccess();
-            if (($access == 3) && SEC_hasRights('polls.edit')) {
+            if (self::hasRights('edit')) {
                 $editlink = COM_createLink(
                     $LANG25[27],
                     Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid
@@ -1237,7 +1244,7 @@ class Poll
 
             $retval = $poll->finish($poll->parse('output', 'block')) . LB;
             if ($showall && ($this->commentcode >= 0 AND $displaytype != 2)) {
-                $delete_option = (SEC_hasRights('polls.edit') && $this->hasAccess() == 3) ? true : false;
+                $delete_option = self::hasRights('edit') ? true : false;
 
                 USES_lib_comment();
 
@@ -1395,7 +1402,8 @@ class Poll
                 (SELECT COUNT(v.id) FROM " . DB::table('voters') . " v WHERE v.pid = p.pid) AS vote_count
                 FROM " . DB::table('topics') . " p",
             'query_fields' => array('topic'),
-            'default_filter' => "WHERE opens < '" . $_CONF['_now']->toMySQL(true) . "'" . COM_getPermSQL('AND'),
+            'default_filter' => "WHERE opens < '" . $_CONF['_now']->toMySQL(true) . "' AND (" .
+                SEC_buildAccessSql('', 'group_id') . SEC_buildAccessSql('OR', 'results_grp') . ')',
             'query' => '',
             'query_limit' => 0,
         );
@@ -1442,8 +1450,7 @@ class Poll
         $filter->setPostmode('text');
         $retval = '';
 
-        $access = $this->hasAccess();
-        if ($this->isNew() || $access == 0) {
+        if ($this->isNew() || !$this->canViewResults()) {
             // Invalid poll or no access
             return $retval;
         }
@@ -1452,7 +1459,7 @@ class Poll
             (
                 !$this->isOpen() ||
                 (isset($_USER['uid']) && $_USER['uid'] == $this->owner_id) ||
-                ($this->hideresults == 1 && SEC_hasRights('polls.edit'))
+                ($this->hideresults == 1 && self::hasRights('edit'))
             )
         ) {
             // OK to show results
@@ -1484,7 +1491,7 @@ class Poll
             'num_votes' => COM_numberFormat($this->voters),
             'lang_votes' => $LANG_POLLS['votes'],
         ) );
-        if ($access == 3) {
+        if (self::hasRights('edit')) {
             $editlink = COM_createLink(
                 $LANG25[27],
                 Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid );
@@ -1574,7 +1581,7 @@ class Poll
         $retval .= $poll->finish($poll->parse('output', 'result' ));
 
         if ($scale > 399 && $this->commentcode >= 0 && $displaytype != 2) {
-            $delete_option = (SEC_hasRights('polls.edit') && $access == 3) ? true : false;
+            $delete_option = self::hasRights('edit') ? true : false;
             USES_lib_comment();
 
             $page = isset($_GET['page']) ? COM_applyFilter($_GET['page'],true) : 0;
@@ -1615,7 +1622,7 @@ class Poll
         $Poll = self::getInstance($pid);
         if (
             !$Poll->isNew() &&
-            ($force || $Poll->hasAccess()== 3)
+            ($force || self::hasRights('edit'))
         ) {
             $pid = DB_escapeString($pid);
             Question::deletePoll($this->pid);
@@ -1686,7 +1693,7 @@ class Poll
             ),
             array(
                 'text' => $LANG_POLLS['date_voted'],
-                'field' => 'date_voted',
+                'field' => 'unixdate',
                 'sort' => true,
             ),
         );
@@ -1701,7 +1708,7 @@ class Poll
             'form_url'     => Config::get('admin_url') . '/index.php?lv=x&amp;pid='.urlencode($this->pid),
         );
 
-        $sql = "SELECT * FROM " . DB::table('voters') . " AS voters
+        $sql = "SELECT *, `date` as unixdate FROM " . DB::table('voters') . " AS voters
             LEFT JOIN " . DB::table('users') . " AS users ON voters.uid=users.uid
             WHERE voters.pid='" . DB_escapeString($this->pid) . "'";
 
@@ -1720,6 +1727,13 @@ class Poll
         return $retval;
     }
 
+
+    /**
+     * Change the owner ID of polls when the user ID is changed.
+     *
+     * @param   integer $origUID    Original user ID
+     * @param   integer $destUID    New user ID
+     */
     public static function moveUser($origUID, $destUID)
     {
         DB_query("UPDATE " . DB::table('topics') .

@@ -37,6 +37,7 @@
 if (!defined ('GVERSION')) {
     die ('This file can not be used on its own.');
 }
+use Polls2\DB;
 
 function polls_upgrade()
 {
@@ -83,6 +84,35 @@ function polls_upgrade()
             DB_query("UPDATE `{$_TABLES['polltopics']}` SET `date` = '1970-01-01 00:00:00' WHERE CAST(`date` AS CHAR(20)) = '0000-00-00 00:00:00';");
             DB_query("UPDATE `{$_TABLES['polltopics']}` SET `date` = '1970-01-01 00:00:00' WHERE CAST(`date` AS CHAR(20)) = '1000-01-01 00:00:00';");
             DB_query("ALTER TABLE `{$_TABLES['polltopics']}` CHANGE COLUMN `date` `date` DATETIME NULL DEFAULT NULL;",1);
+
+        case '2.2.4':
+            // Consolidate the permission array to just voting and results group IDs.
+            // If login is required, make sure the group is not "All Users".
+            // Else if anonymous has access, set the group to "All Users".
+            // Otherwise use the existing group ID.
+            // Set the results access group to the same as the voting group.
+            $res = DB_query("SELECT pid, group_id, perm_group, perm_members, perm_anon, login_required
+                FROM " . DB::table('topics'));
+            while ($A = DB_fetchArray($res, false)) {
+                $voting_grp = $A['group_id'];
+                if ($A['perm_members'] == 2) {
+                    $voting_grp = 13;
+                }
+                if ($A['login_required']) {
+                   if ($voting_grp == 2) {
+                       $voting_grp = 13;
+                   }
+                } elseif ($A['perm_anon'] == 2) {
+                    $voting_grp = 2;
+                }
+                $voting_grp = (int)$voting_grp;
+                if ($voting_grp != $A['group_id']) {
+                    $sql = "UPDATE " . DB::table('topics') . "
+                        SET results_grp = $voting_grp, group_id = $voting_grp
+                        WHERE pid = '" . DB_escapeString($A['pid']) . "'";
+                    DB_query($sql);
+                }
+            }
 
         default :
             DB_query("UPDATE {$_TABLES['plugins']} SET pi_version='".$_PO_CONF['pi_version']."',pi_gl_version='".$_PO_CONF['gl_version']."' WHERE pi_name='polls' LIMIT 1");

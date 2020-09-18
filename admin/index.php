@@ -41,10 +41,10 @@ require_once '../../../lib-common.php';
 require_once '../../auth.inc.php';
 
 USES_lib_admin();
-use Polls2\Config;
-use Polls2\Menu;
-use Polls2\Poll;
-use Polls2\Views\Results;
+use Polls\Config;
+use Polls\Menu;
+use Polls\Poll;
+use Polls\Views\Results;
 
 $display = '';
 
@@ -107,8 +107,7 @@ case 'delvote' :
         break;
 
     case 'edit':
-        $title = $LANG25[5];
-        //$page .= POLLS_edit($pid);
+        $page = Menu::Admin();
         $page .= Poll::getInstance($pid)->editPoll();
         break;
 
@@ -147,6 +146,7 @@ case 'delvote' :
         break;
 
     case 'results':
+        $page = Menu::Admin();
         $Results = new Results($pid);
         $page .= $Results->Display();
         break;

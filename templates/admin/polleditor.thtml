@@ -137,12 +137,19 @@
           </div>
         </div>
         <div class="uk-form-row">
-          <label class="uk-form-label" for="group">{lang_group}</label>
+          <label class="uk-form-label" for="group">{lang_voting_group}</label>
           <div class="uk-form-controls">
             {group_dropdown}
           </div>
         </div>
+        <div class="uk-form-row">
+          <label class="uk-form-label">{lang_results_group}</label>
+          <div class="uk-form-controls">
+            {res_grp_dropdown}
+          </div>
+        </div>
 
+{!if 0}
         <table cellspacing="0" cellpadding="2" width="100%">
           <tr>
             <td colspan="2"><b>{lang_permissions}</b></td>
@@ -157,11 +164,10 @@
             <td></td><td>{lang_permissions_msg}</td>
           </tr>
         </table>
-
+{!endif}
       </li>
     </ul>
   </div>
-
 
   <button class="uk-button uk-button-primary" type="submit" name="save" value="{lang_save}">{lang_save}</button>
 {!if delete_button}

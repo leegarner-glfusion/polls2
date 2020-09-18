@@ -22,8 +22,8 @@
 if (!defined ('GVERSION')) {
     die ('This file can not be used on its own.');
 }
-use Polls2\Config;
-use Polls2\DB;
+use Polls\Config;
+use Polls\DB;
 
 global $_DB_table_prefix;
 
