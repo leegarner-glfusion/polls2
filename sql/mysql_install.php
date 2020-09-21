@@ -19,7 +19,7 @@
 if (!defined ('GVERSION')) {
     die ('This file can not be used on its own.');
 }
-use Polls2\DB;
+use Polls\DB;
 
 $_SQL[DB::key('answers')] = "CREATE TABLE " . DB::table('answers') . " (
   pid varchar(128) NOT NULL default '',
