@@ -637,7 +637,7 @@ class Poll
             'lang_voting_group' => $LANG_POLLS['voting_group'],
             'lang_results_group' => $LANG_POLLS['results_group'],
             'group_dropdown' => SEC_getGroupDropdown($this->voting_gid, 3),
-            'res_grp_dropdown' => SEC_getGroupDropdown($this->results_gid, 3),
+            'res_grp_dropdown' => SEC_getGroupDropdown($this->results_gid, 3, 'results_gid'),
             //'lang_permissions' => $LANG_ACCESS['permissions'],
             //'lang_permissionskey' => $LANG_ACCESS['permissionskey'],
             //'permissions_editor' => SEC_getPermissionsHTML(
