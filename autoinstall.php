@@ -42,14 +42,16 @@ global $_DB_dbms;
 
 require_once __DIR__ . '/functions.inc';
 require_once __DIR__ . '/sql/mysql_install.php';
-use Polls2\DB;
-use Polls2\Config;
+use Polls\DB;
+use Polls\Config;
+
+$ucPI_NAME = ucfirst(Config::PI_NAME);
 
 // +--------------------------------------------------------------------------+
 // | Plugin installation options                                              |
 // +--------------------------------------------------------------------------+
 
-$INSTALL_plugin['polls2'] = array(
+$INSTALL_plugin[Config::PI_NAME] = array(
     'installer' => array(
         'type' => 'installer',
         'version' => '1',
@@ -85,22 +87,22 @@ $INSTALL_plugin['polls2'] = array(
     ),
     array(
         'type' => 'group',
-        'group' => 'polls2 Admin',
-        'desc' => 'Users in this group can administer the Polls2 plugin',
+        'group' => Config::PI_NAME . ' Admin',
+        'desc' => "Users in this group can administer the $ucPI_NAME plugin",
         'variable' => 'admin_group_id',
         'addroot' => true,
         'admin' => true,
     ),
     array(
         'type' => 'feature',
-        'feature' => 'polls2.admin',
-        'desc' => 'Full admin access to Polls2',
+        'feature' => Config::PI_NAME . '.admin',
+        'desc' => 'Full admin access to ' . $ucPI_NAME,
         'variable' => 'admin_feature_id',
     ),
     array(
         'type' => 'feature',
-        'feature' => 'polls2.edit',
-        'desc' => 'Ability to edit Polls2',
+        'feature' => Config::PI_NAME . '.edit',
+        'desc' => 'Ability to edit Polls',
         'variable' => 'edit_feature_id',
     ),
     array(
@@ -117,9 +119,9 @@ $INSTALL_plugin['polls2'] = array(
     ),
     array(
         'type' => 'block',
-        'name' => 'polls_block',
-        'title' => 'Polls',
-        'phpblockfn' => 'phpblock_polls2',
+        'name' => Config::PI_NAME . '_block',
+        'title' => $ucPI_NAME,
+        'phpblockfn' => 'phpblock_' . Config::PI_NAME,
         'block_type' => 'phpblock',
         'is_enabled' => 0,
     ),
@@ -187,15 +189,15 @@ function plugin_autouninstall_polls2()
         ),
         /* give the full name of the group, as in the db */
         'groups' => array(
-            'Polls2 Admin',
+            ucfirst(Config::PI_NAME) . ' Admin',
         ),
         /* give the full name of the feature, as in the db */
         'features' => array(
-            'polls2.edit',
+            Config::PI_NAME . '.edit',
         ),
         /* give the full name of the block, including 'phpblock_', etc */
         'php_blocks' => array(
-            'phpblock_polls2',
+            'phpblock_' . Config::PI_NAME,
         ),
         /* give all vars with their name */
         'vars'=> array()

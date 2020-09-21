@@ -20,6 +20,14 @@ namespace Polls;
  */
 final class Config
 {
+    /** Plugin Name.
+     */
+    public const PI_NAME = 'polls2';
+
+    /** Key used for DB tables and other places.
+     */
+    public const KEY = 'poll2';
+
     /** Array of config items (name=>val).
      * @var array */
     private $properties = NULL;
@@ -48,7 +56,7 @@ final class Config
     {
         if ($this->properties === NULL) {
             $this->properties = \config::get_instance()
-                ->get_config('polls2');
+                ->get_config(self::PI_NAME);
         }
     }
 

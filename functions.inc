@@ -71,9 +71,9 @@ use Polls\Poll;
 use Polls\Voter;
 
 // May later rely on the class autoloader
-require_once __DIR__ . '/polls2.php';
-Config::set('url', $_CONF['site_url'] . '/' . Config::get('pi_name'));
-Config::set('admin_url', $_CONF['site_admin_url'] . '/plugins/' . Config::get('pi_name'));
+require_once __DIR__ . '/' . Config::PI_NAME . '.php';
+Config::set('url', $_CONF['site_url'] . '/' . Config::PI_NAME);
+Config::set('admin_url', $_CONF['site_admin_url'] . '/plugins/' . Config::PI_NAME);
 
 /*
 * load the language file(s), including custom strings if any
@@ -709,23 +709,28 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
     global $_CONF, $_TABLES, $LANG_PO_AUTOTAG;
 
     $skip = 0;
+    $pi_name = Config::get('pi_name');
 
     if ($op == 'tagname' ) {
-        return array('poll_vote', 'poll_result', 'poll');
+        return array(
+            Config::KEY . '_vote',
+            Config::KEY . '_result',
+            Config::KEY,
+        );
     } elseif ( $op == 'desc' ) {
         switch($content) {
-            case 'poll_vote' :
-                return $LANG_PO_AUTOTAG['desc_poll_vote'];
-                break;
-            case 'poll_result' :
-                return $LANG_PO_AUTOTAG['desc_poll_result'];
-                break;
-            case 'poll' :
-                return $LANG_PO_AUTOTAG['desc_poll'];
-                break;
-            default :
-                return '';
-                break;
+        case Config::KEY . '_vote':
+            return $LANG_PO_AUTOTAG['desc_poll_vote'];
+            break;
+        case Config::KEY . '_result' :
+            return $LANG_PO_AUTOTAG['desc_poll_result'];
+            break;
+        case Config::KEY:
+            return $LANG_PO_AUTOTAG['desc_poll'];
+            break;
+        default :
+            return '';
+            break;
         }
     } elseif ($op == 'parse') {
         $tag = str_replace('&nbsp;',' ',$autotag['tagstr']);
@@ -763,8 +768,8 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
                     $skip++;
                 } elseif (substr ($part, 0, 8) == 'showall:') {
                     $a = explode (':', $part);
-                    $val = (int) $a[1];
-                    if ( $val == 1 ) {
+                    $val = isset($a[1]) ? (int)$a[1] : 1;
+                    if ( $val != 0 ) {
                         $showall = true;
                     }
                     $skip++;
@@ -790,33 +795,34 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
         $pid = COM_applyFilter($autotag['parm1']);
 
         switch ($autotag['tag']) {
-            case 'poll':
-                $filter = new sanitizer();
-                $filter->setPostmode('text');
+        case Config::KEY:
+            $filter = new sanitizer();
+            $filter->setPostmode('text');
 
-                if (!empty($autotag['parm2'])) {
-                    $title = COM_applyFilter($autotag['parm2']);
-                } else {
-                    $title = DB_getItem(
-                        DB::table('topics'),
-                        'topic',
-                        "pid = '$pid'"
-                    );
-                }
-                if ( $title == '' ) {
-                    $retval = '';
-                } else {
-                    $retval = COM_createLink(
-                        $filter->filterData($title),
-                        Config::get('url') . '/index.php?pid=' . $pid);
-                }
-                break;
-        case 'poll_vote':
-        case 'poll_result':
-            if ($autotag['tag'] == 'poll_vote') {
-                $retval = POLLS_showPoll(400, $pid, $showall, 2);
+            if (!empty($autotag['parm2'])) {
+                $title = COM_applyFilter($autotag['parm2']);
             } else {
-                $retval = POLLS_pollResults($pid, 0,'', false, 2);
+                $title = DB_getItem(
+                    DB::table('topics'),
+                    'topic',
+                    "pid = '$pid'"
+                );
+            }
+            if ( $title == '' ) {
+                $retval = '';
+            } else {
+                $retval = COM_createLink(
+                    $filter->filterData($title),
+                    Config::get('url') . '/index.php?pid=' . $pid
+                );
+            }
+            break;
+        case Config::KEY . '_vote':
+        case Config::KEY . '_result':
+            if ($autotag['tag'] == Config::KEY . '_vote') {
+                $retval = Poll::getInstance($pid)->Render($showall, 2);
+            } else {
+                $retval = Poll::getInstance($pid)->showResults();
             }
 
             if ( $retval != '' ) {
@@ -827,9 +833,9 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
 
         $content = str_replace($autotag['tagstr'], $retval, $content);
     }
-
     return $content;
 }
+
 
 /**
 * Return information for a poll

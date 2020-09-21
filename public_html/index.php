@@ -4,7 +4,7 @@
 // +--------------------------------------------------------------------------+
 // | index.php                                                                |
 // |                                                                          |
-// | Display poll results and past polls2.                                     |
+// | Display poll results and past polls.                                     |
 // +--------------------------------------------------------------------------+
 // | Copyright (C) 2009-2018 by the following authors:                        |
 // |                                                                          |

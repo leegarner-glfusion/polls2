@@ -21,10 +21,10 @@ namespace Polls;
 class DB
 {
     private static $tables = array(
-        'topics' => 'poll2topics',
-        'questions' => 'poll2questions',
-        'answers' => 'poll2answers',
-        'voters' => 'poll2voters',
+        'topics' => Config::KEY . 'topics',
+        'questions' => Config::KEY . 'questions',
+        'answers' => Config::KEY . 'answers',
+        'voters' => Config::KEY . 'voters',
         // For consistency, core glFusion tables:
         'comments' => 'comments',
         'users' => 'users',
