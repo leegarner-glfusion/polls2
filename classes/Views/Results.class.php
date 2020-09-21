@@ -92,9 +92,9 @@ class Results
         $filter = new \sanitizer();
         $filter->setPostmode('text');
 
-        if ($this->Poll->isNew() || !$this->Poll->canViewResults() == 0) {
+        if ($this->Poll->isNew() || !$this->Poll->canViewResults()) {
             // Invalid poll or no access
-            return $retval;
+            return '';
         }
         if (
             $this->Poll->hideResults() == 1 &&
@@ -139,7 +139,7 @@ class Results
             'lang_votes' => $LANG_POLLS['votes'],
             'admin_url' => Config::get('admin_url'),
         ) );
-        if ($access == 3) {
+        if (Poll::hasRights('edit')) {
             $editlink = COM_createLink(
                 $LANG25[27],
                 Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid);
@@ -223,7 +223,7 @@ class Results
 
         if (
             $this->showComments && $this->Poll->getCommentcode() >= 0 && $this->displaytype != SELF::AUTOTAG) {
-            $delete_option = (SEC_hasRights('polls.edit') && $access == 3) ? true : false;
+            $delete_option = Poll::hasRights('edit') ? true : false;
             USES_lib_comment();
 
             $page = isset($_GET['page']) ? COM_applyFilter($_GET['page'],true) : 0;
