@@ -4,7 +4,7 @@
  *
  * @author      Lee Garner <lee@leegarner.com>
  * @copyright   Copyright (c) 2020 Lee Garner <lee@leegarner.com>
- * @package     polls2
+ * @package     polls
  * @version     v1.1.0
  * @since       v0.7.0
  * @license     http://opensource.org/licenses/gpl-2.0.php
@@ -17,7 +17,7 @@ require_once '../../../lib-common.php';
 
 // This is for administrators only.  It's called by Javascript,
 // so don't try to display a message
-COM_errorLog(print_r($_POST,true));
+//COM_errorLog(print_r($_POST,true));
 if (!plugin_ismoderator_polls2()) {
     COM_accessLog("User {$_USER['username']} tried to illegally access the shop admin ajax function.");
     $retval = array(
@@ -74,7 +74,7 @@ header('Content-Type: application/json');
 header("Cache-Control: no-cache, must-revalidate");
 //A date in the past
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-COM_errorLog(var_export($retval,true));
+//COM_errorLog(var_export($retval,true));
 
 echo json_encode($retval);
 exit;

@@ -37,14 +37,6 @@ if (!defined ('GVERSION')) {
     die('This file can not be used on its own.');
 }
 
-/*
-* Check and see if we need to load the plugin configuration
-*/
-/*if (!isset($_PO2_CONF['pollsloginrequired'])) {
-    $po_config = config::get_instance();
-    $_PO2_CONF = $po_config->get_config('polls2');
-}*/
-
 spl_autoload_register(function ($class)
 {
     // project-specific namespace prefix

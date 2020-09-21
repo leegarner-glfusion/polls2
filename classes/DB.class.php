@@ -4,7 +4,7 @@
  *
  * @author      Lee Garner <lee@leegarner.com>
  * @copyright   Copyright (c) 2020 Lee Garner <lee@leegarner.com>
- * @package     polls2
+ * @package     polls
  * @version     v3.0.0
  * @since       v3.0.0
  * @license     http://opensource.org/licenses/gpl-2.0.php
