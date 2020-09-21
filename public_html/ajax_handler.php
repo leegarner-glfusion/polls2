@@ -92,7 +92,10 @@ function POLLS_saveVote_AJAX($pid, $aid)
 
     $retval = array('html' => '','statusMessage' => '');
     $Poll = Poll::getInstance($pid);
-    if ($Poll->alreadyVoted() {
+    if (!$Poll->canVote()) {
+        $retval['statusMessage'] = 'This poll is not available for voting';
+        $retval['html'] = $Poll::listPolls();
+    } elseif ($Poll->alreadyVoted() {
         $retval['statusMessage'] = 'You have already voted on this poll';
         $retval['html'] = $Poll->showResults();
     } else {
@@ -106,11 +109,8 @@ function POLLS_saveVote_AJAX($pid, $aid)
             Answer::increment($aid[$i]);
         }
         Voter::create($pid);
-        $result = DB_query($sql);
+        $eMsg = $LANG_POLLS['savedvotemsg'] . ' "' . $Poll->getTopic() . '"';
     }
-
-    $eMsg = $LANG_POLLS['savedvotemsg'] . ' "'
-        . DB_getItem ($_TABLES['polltopics'], 'topic', "pid = '".DB_escapeString($pid)."'").'"';
 
     $retval['statusMessage'] = $eMsg;
     $retval['html'] = POLLS_pollResults($pid,400,'','',2);
