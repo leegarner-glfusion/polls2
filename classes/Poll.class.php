@@ -1183,6 +1183,7 @@ class Poll
             }
             $poll->set_var(array(
                 'poll_id' => $this->pid,
+                'old_pid' => $this->old_pid,
                 'num_votes' => COM_numberFormat($this->voters),
                 'poll_vote_url' => Config::get('url') . '/index.php',
                 'ajax_url' => Config::get('url') . '/ajax_handler.php',

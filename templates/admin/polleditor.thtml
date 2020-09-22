@@ -1,7 +1,7 @@
 {# begin {templatelocation} #}
 <form id="polleditor" class="uk-form uk-form-horizontal" action="{action_url}" method="post">
   <input type="hidden" name="{sectoken_name}" value="{sectoken}">
-  <input type="hidden" value="{poll_id}" name="old_pid">
+  <input type="hidden" value="{old_pid}" name="old_pid">
 
   <ul class="uk-tab" data-uk-tab="{connect:'#pe-form'}">
     <li><a href="#">{$LANG_POLLS[general]}</a></li>
