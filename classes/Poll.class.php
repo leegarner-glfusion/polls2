@@ -1388,7 +1388,6 @@ class Poll
      */
     public function alreadyVoted()
     {
-        return false;
         return Voter::hasVoted($this->pid, $this->voting_gid);
     }
 
