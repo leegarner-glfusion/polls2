@@ -5,12 +5,11 @@
 {!if polls_url}
     <a class="uk-align-right" href="{polls_url}">{$LANG_POLLS['back_to_list']}</a>
 {!endif}
-<h3>
 {!if poll_topic}
-    {poll_topic}
+    <h3>{poll_topic}</h3>
 {!endif}
-{!!if {isAdmin} && {isOpen} !!}
-    (Poll is Open)
+{!if isOpen}
+    <div class="uk-alert uk-alert-danger">{$LANG_POLLS['msg_results_open']}</div>
 {!endif}
 {!if poll_description}
   <div class="uk-panel uk-panel-box">{poll_description}</div>

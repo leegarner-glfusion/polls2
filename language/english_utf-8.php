@@ -68,6 +68,7 @@ $LANG_POLLS = array(
 'voting_group' => 'Voting Group',
 'results_group' => 'Results Group',
 'back_to_list' => 'Back to List',
+'msg_results_open' => 'Early results, poll is open',
 );
 
 ###############################################################################
