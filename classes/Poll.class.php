@@ -14,6 +14,7 @@
 namespace Polls;
 use Polls\Models\Dates;
 use Polls\Models\Groups;
+use Polls\Models\Modes;
 use Polls\Views\Results;
 
 
@@ -23,10 +24,6 @@ use Polls\Views\Results;
  */
 class Poll
 {
-    const DISP_NORMAL = 0;
-    const DISP_BLOCK = 1;
-    const DISP_AUTOTAG = 2;
-
     /** Poll ID.
      * @var string */
     private $pid = '';
@@ -127,7 +124,7 @@ class Poll
 
     /** Display modifier. 0 for normal, 1 for block, 2 for autotag.
      * @var integer */
-    private $disp_type = self::DISP_NORMAL;
+    private $disp_type = Modes::NORMAL;
 
 
     /**
@@ -1151,17 +1148,20 @@ class Poll
         // If the current user can't vote, decide what to do or display
         if (!$this->canVote()) {
             if ($this->canViewResults()) {
-                if ($this->disp_type == self::DISP_NORMAL) {
+                if ($this->disp_type == Modes::NORMAL) {
                     // not in a block or autotag, just refresh to the results page
                     COM_refresh(Config::get('url') . '/index.php?results&pid=' . $this->pid);
-                } elseif ($this->disp_type == self::DISP_AUTOTAG) {
-                    // In an autotag or block
-                    return (new Results($this->pid))->Render();
+                } elseif ($this->disp_type == Modes::AUTOTAG) {
+                    // In an autotag
+                    return (new Results($this->pid))
+                        ->withDisplayType($this->disp_type)
+                        ->Render();
                 } else {
                     // in a block, return nothing
                     return $retval;
                 }
             } else {
+                // Can't vote, and can't view results. Return nothing.
                 return $retval;
             }
         }
@@ -1187,14 +1187,14 @@ class Poll
                 'poll_vote_url' => Config::get('url') . '/index.php',
                 'ajax_url' => Config::get('url') . '/ajax_handler.php',
                 'polls_url' => Config::get('url') . '/index.php',
-                'poll_description' => $this->disp_type != self::DISP_BLOCK ? $this->dscp : '',
+                'poll_description' => $this->disp_type != Modes::BLOCK ? $this->dscp : '',
             ) );
                                                 
             if ($nquestions == 1 || $this->disp_showall) {
                 // Only one question (block) or showing all (main form)
                 $poll->set_var('lang_vote', $LANG_POLLS['vote']);
                 $poll->set_var('showall',true);
-                if ($this->disp_type == self::DISP_AUTOTAG) {
+                if ($this->disp_type == Modes::AUTOTAG) {
                     $poll->set_var('autotag',true);
                 } else {
                     $poll->unset_var('autotag');
@@ -1290,12 +1290,12 @@ class Poll
                 $poll->set_var('poll_comments', '');
                 $poll->set_var('poll_comments_url', '');
             }
-
             $retval = $poll->finish($poll->parse('output', 'block')) . LB;
+
             if (
                 $this->disp_showall &&
                 $this->commentcode >= 0 &&
-                $this->disp_type != self::DISP_AUTOTAG
+                $this->disp_type != Modes::AUTOTAG
             ) {
                 $delete_option = self::hasRights('edit') ? true : false;
 

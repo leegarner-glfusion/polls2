@@ -70,6 +70,7 @@ use Polls\Config;
 use Polls\Poll;
 use Polls\Voter;
 use Polls\Views\Results;
+use Polls\Models\Modes;
 
 // May later rely on the class autoloader
 require_once __DIR__ . '/' . Config::PI_NAME . '.php';
@@ -579,7 +580,7 @@ function phpblock_polls2()
     $retval = '';
     $Polls = Poll::getOpen(true);
     foreach ($Polls as $Poll) {
-        $retval .= $Poll->withDisplaytype(Poll::DISP_BLOCK)
+        $retval .= $Poll->withDisplaytype(Modes::BLOCK)
             ->withShowall(0)
             ->Render(false, 1);
     }
@@ -825,7 +826,7 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
             if ($autotag['tag'] == Config::KEY . '_vote') {
                 $retval = Poll::getInstance($pid)
                     ->withShowall($showall)
-                    ->withDisplaytype(Poll::DISP_AUTOTAG)
+                    ->withDisplaytype(Modes::AUTOTAG)
                     ->Render();
             } else {
                 $Results = new Results($pid);

@@ -15,6 +15,8 @@ namespace Polls\Views;
 use Polls\Poll;
 use Polls\Answer;
 use Polls\Config;
+use Polls\Models\Modes;
+
 
 /**
  * Class for a single poll.
@@ -22,9 +24,6 @@ use Polls\Config;
  */
 class Results
 {
-    const AUTOTAG = 2;
-    const PRINT = 4;
-
     private $cmt_order = 'DESC';
     private $cmt_mode = '';
     private $displaytype = 0;
@@ -149,6 +148,7 @@ class Results
         global $_CONF, $_TABLES, $_USER, $_IMAGE_TYPE,
            $LANG01, $LANG_POLLS, $_COM_VERBOSE, $LANG25;
 
+        $retval = '';
         $filter = new \sanitizer();
         $filter->setPostmode('text');
 
@@ -156,18 +156,16 @@ class Results
             // Invalid poll or no access
             return '';
         }
+
         if (
-            $this->Poll->hideResults() == 1 &&
-            (
-                !$this->Poll->isOpen() ||
-                (isset($_USER['uid']) && $_USER['uid'] == $this->Poll->getOwnerID()) ||
-                Poll::hasRights('edit')
-            )
+            !$this->Poll->hideResults() ||
+            !$this->Poll->isOpen() ||
+            (isset($_USER['uid']) && $_USER['uid'] == $this->Poll->getOwnerID()) ||
+            Poll::hasRights('edit')
         ) {
-            // OK to show results
-            $retval = '';
+            // The poll owner or admin is checking early results.
         } else {
-            if ($this->displaytype == self::AUTOTAG) {
+            if ($this->displaytype == Modes::AUTOTAG) {
                 $retval = '<div class="poll-autotag-message">' . $LANG_POLLS['pollhidden']. "</div>";
             } else if ($this->displaytype == 1 ) {
                 $retval = '';
@@ -189,8 +187,9 @@ class Results
             'question' => 'pollquestion.thtml',
             'comments' => 'pollcomments.thtml',
             'votes_bar' => 'pollvotes_bar.thtml',
-            'votes_num' => 'pollvotes_num.thtml'
+            'votes_num' => 'pollvotes_num.thtml',
         ) );
+
         $poll->set_var(array(
             //'layout_url'    => $_CONF['layout_url'],
             'poll_topic'    => $filter->filterData($this->Poll->getTopic()),
@@ -199,6 +198,7 @@ class Results
             'lang_votes' => $LANG_POLLS['votes'],
             'admin_url' => Config::get('admin_url') . '/index.php',
             'polls_url' => $this->isAdmin ? '' : Config::get('url') . '/index.php',
+            'isOpen' => $this->Poll->isOpen(),
         ) );
 
         if (Poll::hasRights('edit')) {
@@ -276,7 +276,7 @@ class Results
         }
 
         $poll->set_var('lang_polltopics', $LANG_POLLS['polltopics'] );
-        if ($this->displaytype !== self::PRINT) {
+        if ($this->displaytype !== Modes::PRINT) {
             $retval .= '<a class="uk-button uk-button-success" target="_blank" href="' .
                 Config::get('admin_url') . '/index.php?presults=x&pid=' .
                 urlencode($this->pid) . '">Print</a>' . LB;
@@ -284,7 +284,7 @@ class Results
         $retval .= $poll->finish($poll->parse('output', 'result' ));
 
         if (
-            $this->showComments && $this->Poll->getCommentcode() >= 0 && $this->displaytype != SELF::AUTOTAG) {
+            $this->showComments && $this->Poll->getCommentcode() >= 0 && $this->displaytype != Modes::AUTOTAG) {
             $delete_option = Poll::hasRights('edit') ? true : false;
             USES_lib_comment();
 
@@ -322,7 +322,7 @@ class Results
         $retval .= '<html><head>' . LB;
         $retval .= '<link rel="stylesheet" type="text/css" href="' . _css_out() . '">' . LB;
         $retval .= '</head><body>' . LB;
-        $retval .= $this->withDisplayType(self::PRINT)->withComments(false)->Render();
+        $retval .= $this->withDisplayType(Modes::PRINT)->withComments(false)->Render();
         $retval .= '</body></html>' . LB;
         return $retval;
     }
