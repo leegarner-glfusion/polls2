@@ -37,7 +37,7 @@
     <br />
 {!endif}
 {!if poll_description}
-    <div class="uk-panel uk-panel-box">{poll_description}</div>
+    <div class="uk-panel-box">{poll_description}</div>
 {!endif}
     <form class="uk-form uk-form-horizontal uk-width-1-1" action="{poll_vote_url}" id="vote{poll_id}" method="post">
         <input type="hidden" name="pid" value="{poll_id}">
