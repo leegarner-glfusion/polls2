@@ -315,15 +315,12 @@ class Answer
      */
     public static function increment($pid, $qid, $aid)
     {
-        DB_change(
-            DB::table('answers'),
-            'votes',
-            "votes + 1",
-            array('pid', 'qid', 'aid'),
-            array(DB_escapeString($pid),  (int)$qid, (int)$aid, true),
-            '',
-            true
-        );
+        $sql = "UPDATE " . DB::table('answers') . "
+            SET votes = votes + 1
+            WHERE pid = '" . DB_escapeString($pid) . "'
+            AND qid = '" . (int)$qid . "'
+            AND aid = '" . (int)$aid . "'";
+        DB_query($sql, 1);
     }
 
 
