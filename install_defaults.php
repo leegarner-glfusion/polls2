@@ -33,7 +33,7 @@
 if (!defined ('GVERSION')) {
     die('This file can not be used on its own!');
 }
-use Polls2\Config;
+use Polls\Config;
 $pi_name = Config::get('pi_name');
 
 /*
