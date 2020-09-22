@@ -1052,7 +1052,7 @@ class Poll
             if ($fieldvalue != Dates::MAX_DATE . ' ' . Dates::MAX_TIME && 
                 $fieldvalue != Dates::MIN_DATE . ' ' . Dates::MIN_TIME
             ) {
-                $dt->setTimestamp($fieldvalue);
+                $dt = new \Date($fieldvalue, $_USER['tzid']);
                 $retval = $dt->format($_CONF['daytime'], true);
             }
             break;
