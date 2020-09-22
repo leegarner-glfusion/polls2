@@ -69,6 +69,7 @@ use Polls\DB;
 use Polls\Config;
 use Polls\Poll;
 use Polls\Voter;
+use Polls\Views\Results;
 
 // May later rely on the class autoloader
 require_once __DIR__ . '/' . Config::PI_NAME . '.php';
@@ -578,7 +579,9 @@ function phpblock_polls2()
     $retval = '';
     $Polls = Poll::getOpen(true);
     foreach ($Polls as $Poll) {
-        $retval .= $Poll->Render(false, 1);
+        $retval .= $Poll->withDisplaytype(Poll::DISP_BLOCK)
+            ->withShowall(0)
+            ->Render(false, 1);
     }
     return $retval;
 }
@@ -628,7 +631,7 @@ function plugin_displaycomment_polls2($id, $cid, $title, $order, $format, $page,
             //$retval .= POLLS_pollVote($pid);
             $retval .= $Poll->Render();
         } else {
-            $retval .= $Poll->showResults(400, '', '');
+            $retval .= (new Results($Poll->getID()))->Render();
         }
     } else {
         return false;
@@ -820,9 +823,13 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
         case Config::KEY . '_vote':
         case Config::KEY . '_result':
             if ($autotag['tag'] == Config::KEY . '_vote') {
-                $retval = Poll::getInstance($pid)->Render($showall, 2);
+                $retval = Poll::getInstance($pid)
+                    ->withShowall($showall)
+                    ->withDisplaytype(Poll::DISP_AUTOTAG)
+                    ->Render();
             } else {
-                $retval = Poll::getInstance($pid)->showResults();
+                $Results = new Results($pid);
+                $retval = $Results->Render();
             }
 
             if ( $retval != '' ) {

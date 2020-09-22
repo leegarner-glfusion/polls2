@@ -14,6 +14,7 @@
 namespace Polls;
 use Polls\Models\Dates;
 use Polls\Models\Groups;
+use Polls\Views\Results;
 
 
 /**
@@ -22,6 +23,10 @@ use Polls\Models\Groups;
  */
 class Poll
 {
+    const DISP_NORMAL = 0;
+    const DISP_BLOCK = 1;
+    const DISP_AUTOTAG = 2;
+
     /** Poll ID.
      * @var string */
     private $pid = '';
@@ -115,6 +120,14 @@ class Poll
     /** Questions for this poll.
      * @var array */
     private $_Questions = array();
+
+    /** Display modifier. Nonzero to show all questions, zero to show only one.
+     * @var integer */
+    private $disp_showall = 1;
+
+    /** Display modifier. 0 for normal, 1 for block, 2 for autotag.
+     * @var integer */
+    private $disp_type = self::DISP_NORMAL;
 
 
     /**
@@ -319,6 +332,32 @@ class Poll
 
 
     /**
+     * Set the showall flag.
+     *
+     * @param   integer $flag   1 to show all questions, 0 for only the first.
+     * @return  object  $this
+     */
+    public function withShowall($flag)
+    {
+        $this->disp_showall = $flag ? 1 : 0;
+        return $this;
+    }
+
+
+    /**
+     * Set the display type.
+     *
+     * @param   integer $flag   0 for normal, 1 if in a block, 2 for autotag.
+     * @return  object  $this
+     */
+    public function withDisplaytype($flag)
+    {
+        $this->disp_type = (int)$flag;
+        return $this;
+    }
+
+
+    /**
      * Check if the current user may vote in this poll.
      * Used to collect results from different fields that may be added,
      * such as a closing date.
@@ -327,7 +366,9 @@ class Poll
      */
     public function canVote()
     {
-        return $this->isOpen() && SEC_inGroup($this->voting_gid);
+        return SEC_inGroup($this->voting_gid) &&
+            $this->isOpen() &&
+            !$this->alreadyVoted();
     }
 
 
@@ -1094,14 +1135,9 @@ class Poll
      *
      * Shows an HTML formatted poll for the given topic ID
      *
-     * @param      string      $pid      ID for poll topic
-     * @param      boolean     $showall  Show only the first question in the poll or all?
-     * @param        int        $displaytype       Possible values 0 = Normal, 1 = In Block, 2 = autotag
-     * @see function COM_pollResults
-     * @see function COM_showPoll
      * @return       string  HTML Formatted Poll
      */
-    public function Render($showall = true, $displaytype = 0)
+    public function Render()
     {
         global $_CONF, $LANG_POLLS, $LANG01, $_USER, $LANG25, $_IMAGE_TYPE;
 
@@ -1112,14 +1148,22 @@ class Poll
 
         $retval = '';
 
-        if (
-            $displaytype == 0 &&    // not in a block or autotag
-            (
-                $this->alreadyVoted() ||
-                !$this->is_open
-            )
-        ) {
-            COM_refresh(Config::get('url') . '/index.php?results&pid=' . $this->pid);
+        // If the current user can't vote, decide what to do or display
+        if (!$this->canVote()) {
+            if ($this->canViewResults()) {
+                if ($this->disp_type == self::DISP_NORMAL) {
+                    // not in a block or autotag, just refresh to the results page
+                    COM_refresh(Config::get('url') . '/index.php?results&pid=' . $this->pid);
+                } elseif ($this->disp_type == self::DISP_AUTOTAG) {
+                    // In an autotag or block
+                    return (new Results($this->pid))->Render();
+                } else {
+                    // in a block, return nothing
+                    return $retval;
+                }
+            } else {
+                return $retval;
+            }
         }
 
         $Questions = Question::getByPoll($this->pid);
@@ -1143,13 +1187,14 @@ class Poll
                 'poll_vote_url' => Config::get('url') . '/index.php',
                 'ajax_url' => Config::get('url') . '/ajax_handler.php',
                 'polls_url' => Config::get('url') . '/index.php',
+                'poll_description' => $this->dscp,
             ) );
                                                 
-            if ($nquestions == 1 || $showall) {
+            if ($nquestions == 1 || $this->disp_showall) {
                 // Only one question (block) or showing all (main form)
                 $poll->set_var('lang_vote', $LANG_POLLS['vote']);
                 $poll->set_var('showall',true);
-                if ($displaytype == 2) {
+                if ($this->disp_type == self::DISP_AUTOTAG) {
                     $poll->set_var('autotag',true);
                 } else {
                     $poll->unset_var('autotag');
@@ -1202,7 +1247,7 @@ class Poll
                 $poll->set_var('poll_question', " ".$filterS->filterData($Q->getQuestion()));
                 $poll->set_var('question_id', $j);
                 $notification = "";
-                if ($showall == false) {
+                if (!$this->disp_showall) {
                     $nquestions--;
                     $notification = $LANG25[35] . " $nquestions " . $LANG25[36];
                     $nquestions = 1;
@@ -1247,7 +1292,11 @@ class Poll
             }
 
             $retval = $poll->finish($poll->parse('output', 'block')) . LB;
-            if ($showall && ($this->commentcode >= 0 AND $displaytype != 2)) {
+            if (
+                $this->disp_showall &&
+                $this->commentcode >= 0 &&
+                $this->disp_type != self::DISP_AUTOTAG
+            ) {
                 $delete_option = self::hasRights('edit') ? true : false;
 
                 USES_lib_comment();
@@ -1429,188 +1478,6 @@ class Poll
         return $retval;
     }
 
-
-    /**
-     * Shows the results of a poll.
-     * Shows the poll results for a given poll topic.
-     *
-     * @param        string      $pid        ID for poll topic to show
-     * @param        int         $scale      Size in pixels to scale formatted results to
-     * @param        string      $order      'ASC' or 'DESC' for Comment ordering (SQL statment ordering)
-     * @param        string      $mode       Comment Mode possible values 'nocomment', 'flat', 'nested', 'threaded'
-     * @param        int        $displaytype       Possible values 0 = Normal, 1 = In Block, 2 = autotag
-     * @see POLLS_pollVote
-     * @see POLLS_showPoll
-     * @return     string   HTML Formated Poll Results
-     */
-    public function showResults($scale=400, $order='', $mode='', $displaytype = 0)
-    {
-        global $_CONF, $_USER, $_IMAGE_TYPE,
-           $LANG01, $LANG_POLLS, $_COM_VERBOSE, $LANG25;
-
-        USES_lib_comments();
-
-        $filter = new \sanitizer();
-        $filter->setPostmode('text');
-        $retval = '';
-
-        if ($this->isNew() || !$this->canViewResults()) {
-            // Invalid poll or no access
-            return $retval;
-        }
-        if (
-            $this->hideresults == 1 &&
-            (
-                !$this->isOpen() ||
-                (isset($_USER['uid']) && $_USER['uid'] == $this->owner_id) ||
-                ($this->hideresults == 1 && self::hasRights('edit'))
-            )
-        ) {
-            // OK to show results
-            $retval = '';
-        } else {
-            if ($displaytype == 2) {
-                $retval = '<div class="poll-autotag-message">' . $LANG_POLLS['pollhidden']. "</div>";
-            } else if ($displaytype == 1 ) {
-                $retval = '';
-            } else {
-                $retval = COM_showMessageText($LANG_POLLS['pollhidden'],'', true,'error');
-                $retval .= self::listPolls();
-            }
-            return $retval;
-        }
-
-        $poll = new \Template(__DIR__ . '/../templates/');
-        $poll->set_file(array(
-            'result' => 'pollresult.thtml',
-            'question' => 'pollquestion.thtml',
-            'comments' => 'pollcomments.thtml',
-            'votes_bar' => 'pollvotes_bar.thtml',
-            'votes_num' => 'pollvotes_num.thtml'
-        ) );
-        $poll->set_var(array(
-            //'layout_url'    => $_CONF['layout_url'],
-            'poll_topic'    => $filter->filterData($this->topic),
-            'poll_id'   => $this->pid,
-            'num_votes' => COM_numberFormat($this->voters),
-            'lang_votes' => $LANG_POLLS['votes'],
-        ) );
-        if (self::hasRights('edit')) {
-            $editlink = COM_createLink(
-                $LANG25[27],
-                Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid );
-            $poll->set_var(array(
-                'edit_link' => $editlink,
-                'edit_url' => Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid,
-                'edit_icon' => COM_createLink(
-                    '<i class="uk-icon-edit tooltip"></i>',
-                    Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid,
-                    array(
-                        'title' => $LANG25[27],
-                    )
-                ),
-            ) );
-        }
-        if (Config::get('answerorder') == 'voteorder'){
-            $order = "votes DESC";
-        } else {
-            $order = "aid";
-        }
-
-        $nquestions = count($this->_Questions);
-        for ($j = 0; $j < $nquestions; $j++) {
-            if ($nquestions >= 1) {
-                $counter = ($j + 1) . "/$nquestions: " ;
-            }
-            $Q = $this->_Questions[$j];
-            $poll->set_var('poll_question', $counter . $filter->filterData($Q->getQuestion()));
-            $Answers = Answer::getByQuestion($Q->getQid(), $this->pid);
-            $nanswers = count($Answers);
-            $q_totalvotes = 0;
-            foreach ($Answers as $A) {
-                $q_totalvotes += $A->getVotes();
-            }
-            for ($i=1; $i<=$nanswers; $i++) {
-                $A = $Answers[$i - 1];
-                if ($q_totalvotes == 0) {
-                    $percent = 0;
-                } else {
-                    $percent = $A->getVotes() / $q_totalvotes;
-                }
-                $poll->set_var(array(
-                    'cssida' =>  1,
-                    'cssidb' =>  2,
-                    'answer_text' => $filter->filterData($A->getAnswer()),
-                    'remark_text' => $filter->filterData($A->getRemark()),
-                    'answer_counter' => $i,
-                    'answer_odd' => (($i - 1) % 2),
-                    'answer_num' => COM_numberFormat($A->getVotes()),
-                    'answer_percent' => sprintf('%.2f', $percent * 100),
-                ) );
-                if ($scale < 120) {
-                    $poll->parse('poll_votes', 'votes_num', true);
-                } else {
-                    $width = (int) ($percent * 100 );
-                    $poll->set_var('bar_width', $width);
-                    $poll->parse('poll_votes', 'votes_bar', true);
-                }
-            }
-            $poll->parse('poll_questions', 'question', true);
-            $poll->clear_var('poll_votes');
-            if (($scale < 100) && ($j < 1)) {
-                $url = Config::get('url') . "/index.php?pid={$this->pid}";
-                $poll->set_var('notification', COM_createLink($LANG25[40], $url). "<br>");
-                break;
-            }
-        }
-        if ($this->commentcode >= 0 ) {
-            $num_comments = CMT_getCount('polls', $this->pid);
-            $poll->set_var('num_comments',COM_numberFormat($num_comments));
-            $poll->set_var('lang_comments', $LANG01[3]);
-            $comment_link = CMT_getCommentLinkWithCount(
-                'polls',
-                $this->pid,
-                Config::get('url') . '/index.php?pid=' . $this->pid,
-                $num_comments,
-                0
-            );
-            $poll->set_var('poll_comments_url', $comment_link['link_with_count']);
-            $poll->parse('poll_comments', 'comments', true);
-        } else {
-            $poll->set_var('poll_comments_url', '');
-            $poll->set_var('poll_comments', '');
-        }
-
-        $poll->set_var('lang_polltopics', $LANG_POLLS['polltopics'] );
-        $retval .= $poll->finish($poll->parse('output', 'result' ));
-
-        if ($scale > 399 && $this->commentcode >= 0 && $displaytype != 2) {
-            $delete_option = self::hasRights('edit') ? true : false;
-            USES_lib_comment();
-
-            $page = isset($_GET['page']) ? COM_applyFilter($_GET['page'],true) : 0;
-            if (isset($_POST['order'])) {
-                $order  =  $_POST['order'] == 'ASC' ? 'ASC' : 'DESC';
-            } elseif (isset($_GET['order']) ) {
-                $order =  $_GET['order'] == 'ASC' ? 'ASC' : 'DESC';
-            } else {
-                $order = 'DESC';
-            }
-            if (isset($_POST['mode'])) {
-                $mode = COM_applyFilter($_POST['mode']);
-            } elseif (isset($_GET['mode'])) {
-                $mode = COM_applyFilter($_GET['mode']);
-            } else {
-                $mode = '';
-            }
-            $retval .= CMT_userComments(
-                $this->pid, $filter->filterData($this->topic), 'polls',
-                $order, $mode, 0, $page, false,
-                $delete_option, $this->commentcode, $this->owner_id
-            );
-        }
-        return $retval;
-    }
 
     /**
      * Delete a poll.

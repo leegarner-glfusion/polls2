@@ -25,35 +25,37 @@
   });
 </script>
 {!endif}
+
 <div id="pollautotag_{poll_id}">
 {!if edit_url}
-  <span class="uk-align-right"><a href="{edit_url}" class="uk-aling-right uk-icon uk-icon-edit tm-meta-icon"></a></span>
+    <span class="uk-align-right"><a href="{edit_url}" class="uk-aling-right uk-icon uk-icon-edit tm-meta-icon"></a></span>
 {!endif}
+    <a class="uk-align-right" href="{polls_url}">{$LANG_POLLS['back_to_list']}</a>
 {!if poll_topic}
-  <h3>{poll_topic}</h3>
+    <h3>{poll_topic}</h3>
 {!elseif edit_icon}
-  <br />
+    <br />
 {!endif}
 {!if poll_description}
-  <div class="uk-panel uk-panel-box">{poll_description}</div>
+    <div class="uk-panel uk-panel-box">{poll_description}</div>
 {!endif}
-  <form class="uk-form uk-form-horizontal uk-width-1-1" action="{poll_vote_url}" id="vote{poll_id}" method="post">
-    <input type="hidden" name="pid" value="{poll_id}">
-    {poll_questions}
-    <span class="uk-text-small">{poll_notification}</span><br>
+    <form class="uk-form uk-form-horizontal uk-width-1-1" action="{poll_vote_url}" id="vote{poll_id}" method="post">
+        <input type="hidden" name="pid" value="{poll_id}">
+        {poll_questions}
+        <span class="uk-text-small">{poll_notification}</span><br>
 
 {!if poll_login_required}
-    <div class="uk-alert uk-alert-danger">
-      {lang_login_required}
-    </div>
+        <div class="uk-alert uk-alert-danger">
+            {lang_login_required}
+        </div>
 {!else}
-    <button class="uk-button uk-button-primary" id="votebutton" name="votebutton" type="submit" value="{lang_vote}">{lang_vote}</button>
-    {poll_results}
+        <button class="uk-button uk-button-primary" id="votebutton" name="votebutton" type="submit" value="{lang_vote}">{lang_vote}</button>
+        {poll_results}
 {!endif}
 
-  </form>
-  <span class="uk-text-small">
-    <a href="{polls_url}">{lang_polltopics}</a> | {num_votes} {lang_votes} {poll_comments}
-  </span>
+    </form>
+    <span class="uk-text-small">
+        <a href="{polls_url}">{lang_polltopics}</a> | {num_votes} {lang_votes} {poll_comments}
+    </span>
 </div>
 {# end {templatelocation} #}

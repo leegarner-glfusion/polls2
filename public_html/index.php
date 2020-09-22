@@ -38,6 +38,7 @@ require_once '../lib-common.php';
 use Polls\Poll;
 use Polls\Menu;
 use Polls\Config;
+use Polls\Views\Results;
 
 if (!in_array(Config::get('pi_name'), $_PLUGINS)) {
     COM_404();
@@ -142,12 +143,15 @@ case 'votebutton':
             COM_refresh(Config::get('url') . '/index.php');
         }
     } else {
-        $page .= $Poll->Render();
+        $page .= (new Results($Poll->getID()))->Render();
     }
     break;
 
 case 'results':
-    $page .= $Poll->showResults(400, $order, $mode);
+    $page .= (new Results($Poll->getID()))
+        ->withCommentMode($mode)
+        ->withCommentOrder($order)
+        ->Render();
     break;
 
 default:
@@ -168,7 +172,10 @@ default:
         ) {
             $page .= $Poll->Render();
         } else {
-            $page .= $Poll->showResults(400, $order, $mode);
+            $page .= (new Results($Poll->getID()))
+                ->withCommentMode($mode)
+                ->withCommentOrder($order)
+                ->Render();
         }
     } else {
         $title = $LANG_POLLS['pollstitle'];

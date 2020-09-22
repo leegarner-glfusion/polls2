@@ -36,17 +36,17 @@
 
 require_once '../lib-common.php';
 
-use \glFusion\Cache\Cache;
-
 if (!in_array('polls2', $_PLUGINS)) {
     COM_404();
     die();
 }
+use \glFusion\Cache\Cache;
 use Polls\Poll;
 use Polls\Voter;
 use Polls\Answer;
+use Polls\Views\Results;
 
-$retval = '';
+$retval = array();
 
 $pid = '';
 $aid = 0;
@@ -62,22 +62,18 @@ if ( $pid == '' || $aid == 0 ) {
     $retval['statusMessage'] = 'Error Processing Poll Vote';
     $retval['html'] = POLLS_showPoll('400', $pid, true, 2);
 } else {
-    // get number of questions
-    $questions_sql = "SELECT question,qid FROM {$_TABLES['pollquestions']} "
-    . "WHERE pid='".DB_escapeString($pid)."' ORDER BY qid";
-    $questions = DB_query($questions_sql);
-    $nquestions = DB_numRows($questions);
-
-    if (
+    $Poll = Poll::getInstance($pid);
+    if (!$Poll->canVote()) {
+        $retval['statusMessage'] = 'This poll is not open for voting';
+    } elseif (
         isset($_POST['aid']) &&
-        count($_POST['aid']) == $nquestions &&
+        count($_POST['aid']) == $Poll->numQuestions()
     ) {
         $retval = POLLS_saveVote_AJAX($pid,$aid);
     } else {
-        $eMsg = $LANG_POLLS['answer_all'] . ' "'
-            . DB_getItem ($_TABLES['polltopics'], 'topic', "pid = '".DB_escapeString($pid)."'") . '"';
+        $eMsg = $LANG_POLLS['answer_all'] . ' "' . $Poll->getTopic() . '"';
         $retval['statusMessage'] = $eMsg;
-        $retval['html'] = POLLS_showPoll('400', $pid, true, 2);
+        //$retval['html'] = POLLS_showPoll('400', $pid, true, 2);
     }
 }
 $c = Cache::getInstance()->deleteItemsByTag('story');
@@ -95,26 +91,25 @@ function POLLS_saveVote_AJAX($pid, $aid)
     if (!$Poll->canVote()) {
         $retval['statusMessage'] = 'This poll is not available for voting';
         $retval['html'] = $Poll::listPolls();
-    } elseif ($Poll->alreadyVoted() {
+    } elseif ($Poll->alreadyVoted()) {
         $retval['statusMessage'] = 'You have already voted on this poll';
-        $retval['html'] = $Poll->showResults();
+        $retval['html'] = (new Results($pid))->Render();
     } else {
         SEC_setCookie(
             'poll-' . $pid,
             implode('-', $aid),
             time() + $_PO_CONF['pollcookietime']
-        )
+        );
         $answers = count($aid);
         for ($i = 0; $i < $answers; $i++) {
-            Answer::increment($aid[$i]);
+            Answer::increment($pid, $i, $aid[$i]);
         }
         Voter::create($pid);
         $eMsg = $LANG_POLLS['savedvotemsg'] . ' "' . $Poll->getTopic() . '"';
+        $retval['statusMessage'] = $eMsg;
+        $retval['html'] = (new Results($pid))->Render();
     }
-
-    $retval['statusMessage'] = $eMsg;
-    $retval['html'] = POLLS_pollResults($pid,400,'','',2);
-
     return $retval;
 }
+
 ?>

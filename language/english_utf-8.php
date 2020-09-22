@@ -67,6 +67,7 @@ $LANG_POLLS = array(
 'opens' => 'Poll Opens',
 'voting_group' => 'Voting Group',
 'results_group' => 'Results Group',
+'back_to_list' => 'Back to List',
 );
 
 ###############################################################################

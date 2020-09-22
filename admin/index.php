@@ -88,15 +88,11 @@ switch ($action) {
 case 'delvote' :
         if (!isset($_GET['id'])) {
             $page = Poll::adminList();
-            //$page = POLLS_list();
         } elseif (SEC_checktoken()) {
             $id = COM_applyFilter($_GET['id'],true);
             Poll::deleteVote($id);
-            //POLLS_deleteVote($id);
-            //$page = POLLS_list();
             $page = Poll::adminList();
         } else {
-            //$page = POLLS_list();
             $page = Poll::adminList();
         }
         break;
@@ -121,11 +117,6 @@ case 'delvote' :
                 $old_pid = $pid;
             }
             if (!empty ($pid)) {
-                //$statuscode = (isset($_POST['statuscode'])) ? COM_applyFilter($_POST['statuscode'], true) : 0;
-                //$mainpage = (isset($_POST['mainpage'])) ? COM_applyFilter($_POST['mainpage']) : '';
-                //$open = (isset($_POST['open'])) ? COM_applyFilter($_POST['open']) : '';
-                //$login_required = (isset($_POST['login_required'])) ? COM_applyFilter($_POST['login_required']) : '';
-                //$hideresults = (isset($_POST['hideresults'])) ? COM_applyFilter($_POST['hideresults']) : '';
                 $msg = Poll::getInstance($_POST['old_pid'])->Save($_POST);
                 if (!empty($msg)) {
                     COM_setMsg($msg);
@@ -133,8 +124,11 @@ case 'delvote' :
                 COM_refresh(Config::get('admin_url') . '/index.php');
             } else {
                 $title = $LANG25[5];
-                $page .= COM_startBlock($LANG21[32], '',
-                COM_getBlockTemplate('_msg_block', 'header'));
+                $page .= COM_startBlock(
+                    $LANG21[32],
+                    '',
+                    COM_getBlockTemplate('_msg_block', 'header')
+                );
                 $page .= $LANG25[17];
                 $page .= COM_endBlock(COM_getBlockTemplate('_msg_block', 'footer'));
                 $page .= POLLS_edit ();
@@ -147,13 +141,11 @@ case 'delvote' :
 
     case 'results':
         $page = Menu::Admin();
-        $Results = new Results($pid);
-        $page .= $Results->Display();
+        $page .= (new Results($pid))->Render();
         break;
 
     case 'presults':
-        $Results = new Results($pid);
-        echo $Results->Print();
+        echo (new Results($pid))->Print();
         exit;
         break;
 
@@ -175,7 +167,6 @@ case 'delvote' :
         $page .= ($msg > 0) ? COM_showMessage ($msg, 'polls') : '';
         $page = Menu::Admin('listpolls');
         $page .= Poll::adminList();
-        //$page .= POLLS_list();
         break;
 }
 

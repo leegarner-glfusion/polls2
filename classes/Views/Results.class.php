@@ -31,8 +31,14 @@ class Results
     private $pid = '';
     private $showComments = 1;
     private $Poll = NULL;
+    private $isAdmin = false;
 
 
+    /**
+     * Set the poll ID if supplied, and the comment mode to the default.
+     *
+     * @param   string  $pid    Optionall Poll ID
+     */
     public function __construct($pid='')
     {
         global $_CONF;
@@ -44,36 +50,90 @@ class Results
     }
 
 
+    /**
+     * Set the ID of the poll to show, if not set in the constructor.
+     *
+     * @param   string|object  $pid    Poll ID or object
+     * @return  object  $this
+     */
     public function withPoll($pid)
     {
-        $this->pid = $pid;
-        $this->Poll = Poll::getInstance($pid);
+        if (is_string($pid)) {
+            $this->pid = $pid;
+            $this->Poll = Poll::getInstance($pid);
+        } elseif (is_object($pid) && $pid instanceof Poll) {
+            $this->pid = $pid->getID();
+            $this->Poll = $pid;
+        }
         return $this;
     }
 
 
+    /**
+     * Set the comment order, ASC or DESC.
+     *
+     * @param   string  $order  Comment display order
+     * @return  object  $this
+     */
     public function withCommentOrder($order)
     {
-        $this->cmt_order = $order;
+        if ($order == 'DESC') {
+            $this->cmt_order = $order;
+        } else {
+            $order = 'ASC';
+        }
         return $this;
     }
 
 
+    /**
+     * Set the display type. Normal (0), Autotag or Print.
+     *
+     * @param   integer $type   Display type flag.
+     * @return  object  $this
+     */
     public function withDisplayType($type)
     {
         $this->displaytype = (int)$type;
         return $this;
     }
 
+
+    /**
+     * Set the comment mode, e.g. "nested".
+     *
+     * @param   string  $mode   Comment display mode
+     * @return  object  $this
+     */
     public function withCommentMode($mode)
     {
         $this->cmt_mode = $mode;
         return $this;
     }
 
+
+    /**
+     * Set the flag to show comments, or not.
+     *
+     * @param   boolean $flag   True to show comments, False to suppress
+     * @return  object  $this
+     */
     public function withComments($flag)
     {
         $this->showComments = $flag ? 1 : 0;
+        return $this;
+    }
+
+
+    /**
+     * Set the Admin flag to indicate if this view is called from the admin area.
+     *
+     * @param   boolean $flag   True if this is an admin view, False if not
+     * @return  object  $this
+     */
+    public function withAdmin($flag)
+    {
+        $this->isAdmin = $flag ? 1 : 0;
         return $this;
     }
 
@@ -84,7 +144,7 @@ class Results
      *
      * @return     string   HTML Formated Poll Results
      */
-    public function Display()
+    public function Render()
     {
         global $_CONF, $_TABLES, $_USER, $_IMAGE_TYPE,
            $LANG01, $LANG_POLLS, $_COM_VERBOSE, $LANG25;
@@ -101,7 +161,7 @@ class Results
             (
                 !$this->Poll->isOpen() ||
                 (isset($_USER['uid']) && $_USER['uid'] == $this->Poll->getOwnerID()) ||
-                ($this->Poll->hideResults() == 1 && SEC_hasRights('polls.edit'))
+                Poll::hasRights('edit')
             )
         ) {
             // OK to show results
@@ -137,8 +197,10 @@ class Results
             'poll_id'   => $this->pid,
             'num_votes' => COM_numberFormat($this->Poll->getVoters()),
             'lang_votes' => $LANG_POLLS['votes'],
-            'admin_url' => Config::get('admin_url'),
+            'admin_url' => Config::get('admin_url') . '/index.php',
+            'polls_url' => $this->isAdmin ? '' : Config::get('url') . '/index.php',
         ) );
+
         if (Poll::hasRights('edit')) {
             $editlink = COM_createLink(
                 $LANG25[27],
@@ -260,7 +322,7 @@ class Results
         $retval .= '<html><head>' . LB;
         $retval .= '<link rel="stylesheet" type="text/css" href="' . _css_out() . '">' . LB;
         $retval .= '</head><body>' . LB;
-        $retval .= $this->withDisplayType(self::PRINT)->withComments(false)->Display();
+        $retval .= $this->withDisplayType(self::PRINT)->withComments(false)->Render();
         $retval .= '</body></html>' . LB;
         return $retval;
     }
