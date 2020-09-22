@@ -1187,7 +1187,7 @@ class Poll
                 'poll_vote_url' => Config::get('url') . '/index.php',
                 'ajax_url' => Config::get('url') . '/ajax_handler.php',
                 'polls_url' => Config::get('url') . '/index.php',
-                'poll_description' => $this->dscp,
+                'poll_description' => $this->disp_type != self::DISP_BLOCK ? $this->dscp : '',
             ) );
                                                 
             if ($nquestions == 1 || $this->disp_showall) {
@@ -1349,31 +1349,33 @@ class Poll
         $retval = '';
 
         if ($this->alreadyVoted()) {
-            COM_setMsg($LANG_POLLS['alreadyvoted']);
+            if (!COM_isAjax()) {
+                COM_setMsg($LANG_POLLS['alreadyvoted']);
+            }
             return false;
         }
-        $db_pid = DB_escapeString($this->pid);
+
+        // Set a browser cookie to block multiple votes from anonymous
+        SEC_setCookie(
+            'poll-' . $this->pid,
+            implode('-', $aid),
+            time() + Config::get('pollcookietime')
+        );
 
         // This call to DB-change will properly supress the insertion of quotes around $value in the sql
         $answers = count($aid);
         for ($i = 0; $i < $answers; $i++) {
-            DB_change(
-                DB::table('answers'),
-                'votes',
-                "votes + 1",
-                array('pid', 'qid', 'aid'),
-                array($db_pid, $i, COM_applyFilter($aid[$i], true)),
-                '',
-                true
-            );
+            Answer::increment($this->pid, $i, $aid[$i]);
         }
 
         // Record that this user has voted
         Voter::create($this->pid);
 
-        $eMsg = $LANG_POLLS['savedvotemsg'] . ' "' . $this->getTopic() . '"';
-            //. DB_getItem ($_TABLES['polltopics'], 'topic', "pid = '". $db_pid . "'").'"';
-        COM_setMsg($eMsg);
+        // Set a return message, if not called via ajax
+        if (!COM_isAjax()) {
+            $eMsg = $LANG_POLLS['savedvotemsg'] . ' "' . $this->getTopic() . '"';
+            COM_setMsg($eMsg);
+        }
         return true;
     }
 
@@ -1386,6 +1388,7 @@ class Poll
      */
     public function alreadyVoted()
     {
+        return false;
         return Voter::hasVoted($this->pid, $this->voting_gid);
     }
 

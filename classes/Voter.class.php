@@ -138,6 +138,12 @@ class Voter
     }
 
 
+    /**
+     * Change the user ID in the voter record if changed in the system.
+     *
+     * @param   integer $origUID    Original user ID
+     * @param   integer $destUID    New user ID
+     */
     public static function moveUser($origUID, $destUID)
     {
         DB_query("UPDATE " . DB::table('voters') . "

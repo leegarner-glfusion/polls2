@@ -60,7 +60,6 @@ if (isset ($_POST['pid'])) {
 
 if ( $pid == '' || $aid == 0 ) {
     $retval['statusMessage'] = 'Error Processing Poll Vote';
-    $retval['html'] = POLLS_showPoll('400', $pid, true, 2);
 } else {
     $Poll = Poll::getInstance($pid);
     if (!$Poll->canVote()) {
@@ -84,7 +83,7 @@ echo json_encode($return);
 
 function POLLS_saveVote_AJAX($pid, $aid)
 {
-    global $_USER, $_CONF, $_PO_CONF, $_TABLES, $LANG_POLLS;
+    global $_USER, $LANG_POLLS;
 
     $retval = array('html' => '','statusMessage' => '');
     $Poll = Poll::getInstance($pid);
@@ -95,17 +94,11 @@ function POLLS_saveVote_AJAX($pid, $aid)
         $retval['statusMessage'] = 'You have already voted on this poll';
         $retval['html'] = (new Results($pid))->Render();
     } else {
-        SEC_setCookie(
-            'poll-' . $pid,
-            implode('-', $aid),
-            time() + $_PO_CONF['pollcookietime']
-        );
-        $answers = count($aid);
-        for ($i = 0; $i < $answers; $i++) {
-            Answer::increment($pid, $i, $aid[$i]);
+        if ((new Poll($pid))->saveVote($aid)) {
+            $eMsg = $LANG_POLLS['savedvotemsg'] . ' "' . $Poll->getTopic() . '"';
+        } else {
+            $eMsg = "There was an error recording your vote";
         }
-        Voter::create($pid);
-        $eMsg = $LANG_POLLS['savedvotemsg'] . ' "' . $Poll->getTopic() . '"';
         $retval['statusMessage'] = $eMsg;
         $retval['html'] = (new Results($pid))->Render();
     }

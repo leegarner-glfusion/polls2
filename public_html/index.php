@@ -130,13 +130,6 @@ case 'votebutton':
         COM_setMsg("Your vote has already been recorded.");
         COM_refresh(Config::get('url') . '/index.php');
     } elseif (count($aid) == $Poll->numQuestions()) {
-        setcookie(
-            'poll-' . $pid, 'x',
-            time() + $_PO_CONF['pollcookietime'],
-            $_CONF['cookie_path'],
-            $_CONF['cookiedomain'],
-            $_CONF['cookiesecure']
-        );
         if ($Poll->saveVote($aid)) {
             COM_refresh(Config::get('url') . '/index.php?results=x&pid=' . $Poll->getID());
         } else {
