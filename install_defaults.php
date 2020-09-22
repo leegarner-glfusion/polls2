@@ -37,12 +37,10 @@ use Polls\Config;
 $pi_name = Config::get('pi_name');
 
 /*
- * Polls default settings
- *
+ * Polls default settings.
  * Initial Installation Defaults used when loading the online configuration
  * records. These settings are only used during the initial installation
  * and not referenced any more once the plugin is installed
- *
  */
 /** @var global config data */
 global $pollsConfigData;
@@ -183,14 +181,11 @@ $pollsConfigData = array(
 
 
 /**
-* Initialize Polls plugin configuration
-*
-* Creates the database entries for the configuation if they don't already
-* exist. Initial values will be taken from $_PO_CONF if available (e.g. from
-* an old config.php), uses $_PO2_DEFAULT otherwise.
-*
-* @return   boolean     true: success; false: an error occurred
-*/
+ * Initialize Polls plugin configuration.
+ * Creates the database entries for the configuation if they don't already exist.
+ *
+ * @return  boolean     true: success; false: an error occurred
+ */
 function plugin_initconfig_polls2()
 {
     global $_CONF, $pollsConfigData;
