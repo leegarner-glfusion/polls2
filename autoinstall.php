@@ -86,14 +86,6 @@ $INSTALL_plugin[Config::PI_NAME] = array(
         'sql' => $_SQL[DB::key('voters')],
     ),
     array(
-        'type' => 'group',
-        'group' => Config::PI_NAME . ' Admin',
-        'desc' => "Users in this group can administer the $ucPI_NAME plugin",
-        'variable' => 'admin_group_id',
-        'addroot' => true,
-        'admin' => true,
-    ),
-    array(
         'type' => 'feature',
         'feature' => Config::PI_NAME . '.admin',
         'desc' => 'Full admin access to ' . $ucPI_NAME,
@@ -107,13 +99,13 @@ $INSTALL_plugin[Config::PI_NAME] = array(
     ),
     array(
         'type' => 'mapping',
-        'group' => 'admin_group_id',
+        'findgroup' => 'Root',
         'feature' => 'edit_feature_id',
         'log' => 'Adding feature to the admin group',
     ),
     array(
         'type' => 'mapping',
-        'group' => 'admin_group_id',
+        'findgroup' => 'Root',
         'feature' => 'admin_feature_id',
         'log' => 'Adding feature to the admin group',
     ),
@@ -189,7 +181,6 @@ function plugin_autouninstall_polls2()
         ),
         /* give the full name of the group, as in the db */
         'groups' => array(
-            ucfirst(Config::PI_NAME) . ' Admin',
         ),
         /* give the full name of the feature, as in the db */
         'features' => array(
