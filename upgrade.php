@@ -38,10 +38,11 @@ if (!defined ('GVERSION')) {
     die ('This file can not be used on its own.');
 }
 use Polls\DB;
+use Polls\Config;
 
 function polls_upgrade()
 {
-    global $_TABLES, $_CONF, $_PO_CONF;
+    global $_TABLES, $_CONF;
 
     $currentVersion = DB_getItem($_TABLES['plugins'],'pi_version',"pi_name='polls'");
 
@@ -122,12 +123,26 @@ function polls_upgrade()
             DB_query("ALTER TABLE $tbl_topics ADD drop perm_group", 1);
             DB_query("ALTER TABLE $tbl_topics ADD drop perm_members", 1);
             DB_query("ALTER TABLE $tbl_topics ADD drop perm_anon", 1);
+            DB_query(
+                "DELETE FROM `{$_TABLES['groups']}` WHERE grp_id='" .
+                ucfirst(Config::PI_NAME) . " Admin'"
+            );
 
         default :
-            DB_query("UPDATE {$_TABLES['plugins']} SET pi_version='".$_PO_CONF['pi_version']."',pi_gl_version='".$_PO_CONF['gl_version']."' WHERE pi_name='polls' LIMIT 1");
+            DB_query(
+                "UPDATE {$_TABLES['plugins']}
+                SET pi_version='" . Config::get('pi_version') . "',
+                pi_gl_version='" . Config::get('gl_version') . "'
+                WHERE pi_name='" . Config::PI_NAME . "' LIMIT 1"
+            );
             break;
     }
-    if ( DB_getItem($_TABLES['plugins'],'pi_version',"pi_name='polls'") == $_PO_CONF['pi_version']) {
+    if (DB_getItem(
+        $_TABLES['plugins'],
+        'pi_version',
+        "pi_name='" . Config::PI_NAME . "'"
+        ) == Config::get('pi_version')
+    ) {
         return true;
     } else {
         return false;
