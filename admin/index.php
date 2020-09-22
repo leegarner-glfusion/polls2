@@ -141,7 +141,7 @@ case 'delvote' :
 
     case 'results':
         $page = Menu::Admin();
-        $page .= (new Results($pid))->Render();
+        $page .= (new Results($pid))->withAdmin(true)->Render();
         break;
 
     case 'presults':
