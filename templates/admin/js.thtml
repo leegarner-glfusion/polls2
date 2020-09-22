@@ -6,7 +6,7 @@
 *   @param  string  id      Sitemap ID, e.g. plugin name
 *   @param  string  type    Type of sitemap (XML or HTML)
 */
-var {namespace}_toggle = function(cbox, id, type, component) {
+var {pi_name}_toggle = function(cbox, id, type, component) {
     oldval = cbox.checked ? 0 : 1;
     var dataS = {
         "action" : "toggle",

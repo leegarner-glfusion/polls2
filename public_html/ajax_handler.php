@@ -60,6 +60,7 @@ if (isset ($_POST['pid'])) {
 
 if ( $pid == '' || $aid == 0 ) {
     $retval['statusMessage'] = 'Error Processing Poll Vote';
+    $retval['html'] = Poll::getInstance($pid)->Render();
 } else {
     $Poll = Poll::getInstance($pid);
     if (!$Poll->canVote()) {
@@ -72,7 +73,6 @@ if ( $pid == '' || $aid == 0 ) {
     } else {
         $eMsg = $LANG_POLLS['answer_all'] . ' "' . $Poll->getTopic() . '"';
         $retval['statusMessage'] = $eMsg;
-        //$retval['html'] = POLLS_showPoll('400', $pid, true, 2);
     }
 }
 $c = Cache::getInstance()->deleteItemsByTag('story');

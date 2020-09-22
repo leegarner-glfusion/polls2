@@ -52,7 +52,7 @@ class Menu
         $T = new \Template(__DIR__ . '/../templates/admin');
         $T->set_file('admin_js', 'js.thtml');
         $T->set_var(array(
-            'namespace' => __NAMESPACE__,
+            'pi_name' => Config::PI_NAME,
             'ajax_url' => Config::get('admin_url') . '/ajax.php',
         ) );
         $T->parse('output', 'admin_js');

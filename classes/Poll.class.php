@@ -168,6 +168,13 @@ class Poll
      */
     public static function getInstance($pid)
     {
+        if (empty($pid)) {
+            $Polls = self::getOpen();
+            if (isset($Polls[0])) {
+                return $Polls[0];
+            }
+            // else fall through and just return an empty poll object
+        }
         return new self($pid);
     }
 
@@ -1087,7 +1094,7 @@ class Poll
             }
             $retval .= "<input type=\"checkbox\" $switch value=\"1\" name=\"ena_check\"
                     id=\"togenabled{$A['pid']}\"
-                    onclick='" . __NAMESPACE__ . "_toggle(this,\"{$A['pid']}\",\"is_open\",".
+                    onclick='" . Config::PI_NAME . "_toggle(this,\"{$A['pid']}\",\"is_open\",".
                     "\"poll\");' />" . LB;
             break;
         case 'display':

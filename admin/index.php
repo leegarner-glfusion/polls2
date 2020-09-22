@@ -109,13 +109,6 @@ case 'delvote' :
 
     case 'save':
         if (SEC_checktoken()) {
-            $old_pid = (isset($_POST['old_pid'])) ? COM_sanitizeID(COM_applyFilter($_POST['old_pid'])): '';
-            if (empty($pid) && !empty($old_pid)) {
-                $pid = $old_pid;
-            }
-            if (empty($old_pid) && (!empty($pid))) {
-                $old_pid = $pid;
-            }
             if (!empty ($pid)) {
                 $msg = Poll::getInstance($_POST['old_pid'])->Save($_POST);
                 if (!empty($msg)) {
