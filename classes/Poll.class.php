@@ -571,15 +571,7 @@ class Poll
         global $_CONF, $_GROUPS, $_USER, $LANG25, $LANG_ACCESS,
            $LANG_ADMIN, $MESSAGE, $LANG_POLLS;
 
-        $retval = '';
-
-        if (!empty($this->pid)) {
-            $lang_create_or_edit = $LANG_ADMIN['edit'];
-        } else {
-            $lang_create_or_edit = $LANG_ADMIN['create_new'];
-        }
-
-        $retval .= COM_startBlock(
+        $retval = COM_startBlock(
             $LANG25[5], '',
             COM_getBlockTemplate ('_admin_block', 'header')
         );
@@ -615,11 +607,13 @@ class Poll
                     'lang_delete_confirm' => $MESSAGE[76]
                 ) );
             }
+            $Questions = Question::getByPoll($this->pid);
         } else {
             $this->owner_id = (int)$_USER['uid'];
             $this->voting_gid = (int)SEC_getFeatureGroup ('polls.edit');
             $this->commentcode = (int)$_CONF['comment_code'];
             SEC_setDefaultPermissions($A, Config::get('default_permissions'));
+            $Questions = array();
         }
 
         $open_date = $this->Opens->format('Y-m-d', true);
@@ -643,6 +637,7 @@ class Poll
             'action_url' => Config::get('admin_url') . '/index.php',
             'lang_pollid' => $LANG25[6],
             'poll_id' => $this->pid,
+            'old_pid' => $this->old_pid,
             'lang_donotusespaces' => $LANG25[7],
             'lang_topic' => $LANG25[9],
             'poll_topic' => htmlspecialchars ($this->topic),
@@ -695,13 +690,6 @@ class Poll
             'lang_datepicker' => $LANG_POLLS['datepicker'],
             'lang_timepicker' => $LANG_POLLS['timepicker'],
         ) );
-
-        // repeat for several questions
-        if ($this->old_pid != '') {
-            $Questions = Question::getByPoll($this->pid);
-        } else {
-            $Questions = array();
-        }
 
         $T->set_block('editor','questiontab','qt');
         $maxQ = Config::get('maxquestions');
@@ -1007,6 +995,8 @@ class Poll
         );
         $extras = array(
             'token' => SEC_createToken(),
+            '_now' => $_CONF['_now']->toMySQL(true),
+            'is_admin' => true,
         );
 
         $retval .= ADMIN_list (
@@ -1034,8 +1024,6 @@ class Poll
 
         $retval = '';
 
-        $dt = new \Date('now',$_USER['tzid']);
-
         switch($fieldname) {
         case 'edit':
             $retval = COM_createLink(
@@ -1044,9 +1032,10 @@ class Poll
             );
             break;
         case 'unixdate':
-                $dt->setTimestamp($fieldvalue);
-                $retval = $dt->format($_CONF['daytime'], true);
-                break;
+            $dt = new \Date('now',$_USER['tzid']);
+            $dt->setTimestamp($fieldvalue);
+            $retval = $dt->format($_CONF['daytime'], true);
+            break;
         case 'opens':
         case 'closes':
             if ($fieldvalue != Dates::MAX_DATE . ' ' . Dates::MAX_TIME && 
@@ -1057,18 +1046,28 @@ class Poll
             }
             break;
         case 'topic' :
-            $filter = new \sanitizer();
-            $filter->setPostmode('text');
-            $fieldvalue = $filter->filterData($fieldvalue);
-
-            $retval = COM_createLink(
-                $fieldvalue,
-                Config::get('url') . "/index.php?pid={$A['pid']}"
-            );
+            if (
+                $A['closes'] > $extras['_now'] &&
+                $A['is_open'] &&
+                !Voter::hasVoted($A['pid'], $A['group_id']) &&
+                SEC_inGroup($A['group_id'])
+            ) {
+                $retval = COM_createLink(
+                    htmlspecialchars($fieldvalue),
+                    Config::get('url') . "/index.php?pid={$A['pid']}"
+                );
+            } elseif (SEC_inGroup($A['results_gid'])) {
+                $retval = COM_createLink(
+                    htmlspecialchars($fieldvalue),
+                    Config::get('url') . "/index.php?results=x&pid={$A['pid']}"
+                );
+            } else {
+                $retval = htmlspecialchars($fieldvalue);
+            }
             break;
         case 'user_action':
             if (
-                $A['closes'] < $extras['now'] &&
+                $A['closes'] < $extras['_now'] &&
                 $A['is_open'] &&
                 !Voter::hasVoted($A['pid']) &&
                 SEC_inGroup($A['group_id'])
@@ -1107,10 +1106,13 @@ class Poll
         case 'voters':
         case 'vote_count':
             // add a link there to the list of voters
-            $retval = COM_createLink(
-                COM_numberFormat($fieldvalue),
-                Config::get('admin_url') . '/index.php?lv=x&amp;pid='.urlencode($A['pid'])
-            );
+            $retval = COM_numberFormat($fieldvalue);
+            if ($extras['is_admin']) {
+                $retval = COM_createLink(
+                    $retval,
+                    Config::get('admin_url') . '/index.php?lv=x&amp;pid='.urlencode($A['pid'])
+                );
+            }
             break;
         case 'results':
             $retval = COM_createLink(
@@ -1459,20 +1461,23 @@ class Poll
             'instructions' => "",
             'icon' => '', 'form_url' => '',
         );
+        $sql_now = $_CONF['_now']->toMySQL(true);
         $query_arr = array(
             'table' => 'polltopics',
             'sql' => "SELECT p.*, UNIX_TIMESTAMP(p.date) AS unixdate,
                 (SELECT COUNT(v.id) FROM " . DB::table('voters') . " v WHERE v.pid = p.pid) AS vote_count
                 FROM " . DB::table('topics') . " p",
             'query_fields' => array('topic'),
-            'default_filter' => "WHERE opens < '" . $_CONF['_now']->toMySQL(true) . "' AND (" .
-                SEC_buildAccessSql('', 'group_id') . SEC_buildAccessSql('OR', 'results_gid') . ')',
+            'default_filter' => "WHERE is_open = 1 AND (
+                (opens < '$sql_now' AND closes > '$sql_now' " . SEC_buildAccessSql('AND', 'group_id') .
+                ") OR closes < '$sql_now' " . SEC_buildAccessSql('AND', 'results_gid') . ')',
             'query' => '',
             'query_limit' => 0,
         );
         $extras = array(
             'token' => 'dummy',
-            'now' => $_CONF['_now']->toMySQL(true),
+            '_now' => $_CONF['_now']->toMySQL(true),
+            'is_admin' => false,
         );
         //echo $query_arr['sql'] . ' ' . $query_arr['default_filter'];die;
 
@@ -1506,10 +1511,13 @@ class Poll
             ($force || self::hasRights('edit'))
         ) {
             $pid = DB_escapeString($pid);
-            Question::deletePoll($this->pid);
-            Answer::deletePoll($this->pid);
-            Voter::deletePoll($this->pid);
+            // Delete all questions, answers and votes
+            Question::deletePoll($Poll->getID());
+            Answer::deletePoll($Poll->getID());
+            Voter::deletePoll($Poll->getID());
+            // Now delete the poll topic
             DB_delete(DB::table('topics'), 'pid', $pid);
+            // Finally, delete any comments and notify other plugins
             DB_delete(DB::table('comments'), array('sid', 'type'), array($pid,  'polls'));
             PLG_itemDeleted($pid, 'polls');
             if (!$force) {
