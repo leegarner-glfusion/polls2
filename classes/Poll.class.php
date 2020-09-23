@@ -147,6 +147,7 @@ class Poll
             $this->setID($pid);
             if ($this->Read()) {
                 $this->isNew = false;
+                $this->old_pid = $this->pid;
             }
         } else {
             // Creating a new poll, set the default groups based on the
@@ -585,7 +586,6 @@ class Poll
 
         if (!empty($this->pid)) {       // if not a new record
             // Get permissions for poll
-            $this->old_pid = $this->pid;
             if (!self::hasRights('edit')) {
                 // User doesn't have write access...bail
                 $retval .= COM_startBlock ($LANG25[21], '',
