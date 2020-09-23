@@ -58,6 +58,7 @@ final class Config
             $this->properties = \config::get_instance()
                 ->get_config(self::PI_NAME);
         }
+        $this->properties['pi_name'] = self::PI_NAME;
     }
 
 
