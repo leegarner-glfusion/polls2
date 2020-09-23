@@ -141,10 +141,14 @@ case 'votebutton':
     break;
 
 case 'results':
-    $page .= (new Results($Poll->getID()))
-        ->withCommentMode($mode)
-        ->withCommentOrder($order)
-        ->Render();
+    if ($Poll->canViewResults()) {
+        $page .= (new Results($Poll->getID()))
+            ->withCommentMode($mode)
+            ->withCommentOrder($order)
+            ->Render();
+    } else {
+        $page .= Poll::listPolls();
+    }
     break;
 
 default:
