@@ -68,7 +68,7 @@ $pollsConfigData = array(
         'group' => $pi_name,
     ),
     array(
-        'name' => 'hidemenu',
+        'name' => 'hidepollsmenu',
         'default_value' => '0',
         'type' => 'select',
         'subgroup' => 0,
