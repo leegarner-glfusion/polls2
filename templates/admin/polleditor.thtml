@@ -92,13 +92,14 @@
                     data-uk-tooltip />
             </div>
         </div>
-
+{!if 0}
         <div class="uk-form-row">
           <label class="uk-form-label" for="login_required">{lang_login_required}</label>
           <div class="uk-form-controls">
             <input type="checkbox" id="login_required" name="login_required" value="1" {login_req_chk}>
           </div>
         </div>
+{!endif}
         <div class="uk-form-row">
           <label class="uk-form-label" for="hideresults">{lang_hideresults}</label>
           <div class="uk-form-controls">
