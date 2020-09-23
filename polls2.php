@@ -29,7 +29,7 @@ global $_DB_table_prefix;
 
 Config::set('pi_name', 'polls2');
 Config::set('pi_display_name', 'Polls v2');
-Config::set('pi_version', '3.0.0');
+Config::set('pi_version', '2.3.0');
 Config::set('gl_version', '1.7.8');
 Config::set('pi_url', 'https://www.glfusion.org');
 
