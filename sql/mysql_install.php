@@ -51,23 +51,19 @@ $_SQL[DB::key('topics')] = "CREATE TABLE " . DB::table('topics') . " (
   `closes` datetime NOT NULL DEFAULT '9999-12-31 23:59:59',
   `display` tinyint(4) NOT NULL DEFAULT '0',
   `is_open` tinyint(1) NOT NULL DEFAULT '1',
-  `login_required` tinyint(1) NOT NULL DEFAULT '0',
   `hideresults` tinyint(1) NOT NULL DEFAULT '0',
   `commentcode` tinyint(4) NOT NULL DEFAULT '0',
   `statuscode` tinyint(4) NOT NULL DEFAULT '0',
   `owner_id` mediumint(8) unsigned NOT NULL DEFAULT '1',
   `group_id` mediumint(8) unsigned NOT NULL DEFAULT '1',
   `results_gid` mediumint(8) unsigned NOT NULL DEFAULT '1',
-  `perm_owner` tinyint(1) unsigned NOT NULL DEFAULT '3',
-  `perm_group` tinyint(1) unsigned NOT NULL DEFAULT '2',
-  `perm_members` tinyint(1) unsigned NOT NULL DEFAULT '2',
-  `perm_anon` tinyint(1) unsigned NOT NULL DEFAULT '2',
   PRIMARY KEY (`pid`),
   KEY `pollquestions_qid` (`pid`),
   KEY `pollquestions_date` (`date`),
   KEY `pollquestions_display` (`display`),
   KEY `pollquestions_commentcode` (`commentcode`),
-  KEY `pollquestions_statuscode` (`statuscode`)
+  KEY `pollquestions_statuscode` (`statuscode`),
+  KEY `idx_enabled` (`is_open`)
 ) ENGINE=MyISAM
 ";
 
