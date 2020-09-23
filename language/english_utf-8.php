@@ -69,6 +69,9 @@ $LANG_POLLS = array(
 'results_group' => 'Results Group',
 'back_to_list' => 'Back to List',
 'msg_results_open' => 'Early results, poll is open',
+'status' => 'Staus',
+'poll_closed' => 'Poll is Closed',
+'s_alreadyvoted'    => 'You have already voted',
 );
 
 ###############################################################################

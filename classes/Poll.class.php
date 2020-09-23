@@ -1082,6 +1082,17 @@ class Poll
                     Config::get('url') . "/index.php?results=x&pid={$A['pid']}"
                 );
             }
+        case 'poll_status':
+            if (Voter::hasVoted($A['pid'])) {
+                $retval = $LANG_POLLS['s_alreadyvoted'];
+            } elseif (
+                $A['closes'] < $extras['_now'] &&
+                $A['opens'] < $extras['_now']
+            ) {
+                $retval = $LANG25[33];
+            } else {
+                $retval = $LANG_POLLS['poll_closes'];
+            }
             break;
         case 'is_open':
             if ($fieldvalue == '1') {
@@ -1444,8 +1455,8 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => 'Action',
-                'field' => 'user_action',
+                'text' => $LANG_POLLS['status'],
+                'field' => 'poll_status',
                 'sort' => true,
                 'align' => 'center',
             ),
@@ -1468,9 +1479,9 @@ class Poll
                 (SELECT COUNT(v.id) FROM " . DB::table('voters') . " v WHERE v.pid = p.pid) AS vote_count
                 FROM " . DB::table('topics') . " p",
             'query_fields' => array('topic'),
-            'default_filter' => "WHERE is_open = 1 AND (
-                (opens < '$sql_now' AND closes > '$sql_now' " . SEC_buildAccessSql('AND', 'group_id') .
-                ") OR closes < '$sql_now' " . SEC_buildAccessSql('AND', 'results_gid') . ')',
+            'default_filter' => "WHERE is_open = 1 AND ('$sql_now' BETWEEN opens AND closes " .
+                SEC_buildAccessSql('AND', 'group_id') .
+                ") OR (closes < '$sql_now' " . SEC_buildAccessSql('AND', 'results_gid') . ')',
             'query' => '',
             'query_limit' => 0,
         );
