@@ -228,9 +228,20 @@ class Results
             $Answers = Answer::getByQuestion($Q->getQid(), $this->pid);
             $nanswers = count($Answers);
             $q_totalvotes = 0;
-            foreach ($Answers as $A) {
+            $max_votes = -1;
+
+            // If the poll has closed, get the winning scores.
+            foreach ($Answers as $idx=>$A) {
                 $q_totalvotes += $A->getVotes();
+                if ($A->getVotes() > $max_votes) {
+                    $max_votes = $A->getVotes();
+                }
             }
+            // For open polls, the winner is not highlighted.
+            if ($this->Poll->isOpen()) {
+                $max_votes = -1;
+            }
+
             for ($i=1; $i<=$nanswers; $i++) {
                 $A = $Answers[$i - 1];
                 if ($q_totalvotes == 0) {
@@ -247,6 +258,7 @@ class Results
                     'answer_odd' => (($i - 1) % 2),
                     'answer_num' => COM_numberFormat($A->getVotes()),
                     'answer_percent' => sprintf('%.2f', $percent * 100),
+                    'winner' => $A->getVotes() == $max_votes,
                 ) );
                 $width = (int) ($percent * 100 );
                 $poll->set_var('bar_width', $width);
