@@ -153,6 +153,8 @@ $LANG_confignames[Config::PI_NAME] = array(
     'aftersave' => 'Nach speichern der Umfrage',
     'default_permissions' => 'Standardeinstellungen Umfragen',
     'displayblocks' => 'Anzeige glFusion Blöcke',
+    'def_voting_gid' => 'Default group allowed to vote',
+    'def_results_gid' => 'Default group allowed to view results',
 );
 
 $LANG_configsubgroups[Config::PI_NAME] = array(

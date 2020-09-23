@@ -154,6 +154,8 @@ $LANG_confignames[Config::PI_NAME] = array(
     'aftersave' => 'Después de Guardar',
     'default_permissions' => 'Permisos por Defecto',
     'displayblocks' => 'Mostrar Bloques',
+    'def_voting_gid' => 'Default group allowed to vote',
+    'def_results_gid' => 'Default group allowed to view results',
 );
 
 $LANG_configsubgroups[Config::PI_NAME] = array(

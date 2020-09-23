@@ -155,6 +155,8 @@ $LANG_confignames[Config::PI_NAME] = array(
     'aftersave' => 'After Saving Poll',
     'default_permissions' => 'Poll Default Permissions',
     'displayblocks' => 'Display glFusion Blocks',
+    'def_voting_gid' => 'Default group allowed to vote',
+    'def_results_gid' => 'Default group allowed to view results',
 );
 
 $LANG_configsubgroups[Config::PI_NAME] = array(

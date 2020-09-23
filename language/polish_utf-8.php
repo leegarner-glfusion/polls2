@@ -154,6 +154,8 @@ $LANG_confignames[Config::PI_NAME] = array(
     'aftersave' => 'Po zapisaniu ankiety',
     'default_permissions' => 'Sondowanie domyślnych uprawnień',
     'displayblocks' => 'Wyświetl bloki glFusion',
+    'def_voting_gid' => 'Default group allowed to vote',
+    'def_results_gid' => 'Default group allowed to view results',
 );
 
 $LANG_configsubgroups[Config::PI_NAME] = array(
