@@ -94,22 +94,6 @@ class Poll
      * @var integer */
     private $results_gid = Groups::ALL_USERS;
 
-    /** Owner permission.
-     * @var integer */
-    //private $perm_owner = 3;
-
-    /** Group permission.
-     * @var integer */
-    //private $perm_group = 2;
-
-    /** Logged-In User permission.
-     * @var integer */
-    //private $perm_members = 2;
-
-    /** Anonymous permission.
-     * @var integer */
-    //private $perm_anon = 2;
-
     /** Is this a new record?
      * @var boolean */
     private $isNew = true;
@@ -137,7 +121,6 @@ class Poll
      */
     function __construct($pid = '')
     {
-        $this->setID(COM_makeSid());
         $this->setOpenDate();
         $this->setClosingDate();
         if (is_array($pid)) {
@@ -147,14 +130,14 @@ class Poll
             $this->setID($pid);
             if ($this->Read()) {
                 $this->isNew = false;
+                $this->old_pid = $this->pid;
             }
         } else {
             // Creating a new poll, set the default groups based on the
             // global login-required setting.
-            if (Config::get('pollsloginrequired')) {
-                $this->voting_gid = Groups::LOGGED_IN;
-                $this->results_gid = Groups::LOGGED_IN;
-            }
+            $this->voting_gid = Config::get('def_voting_gid');
+            $this->results_gid = Config::get('def_results_gid');
+            $this->setID(COM_makeSid());
         }
         $this->_Questions = Question::getByPoll($this->pid);
     }
@@ -585,7 +568,6 @@ class Poll
 
         if (!empty($this->pid)) {       // if not a new record
             // Get permissions for poll
-            $this->old_pid = $this->pid;
             if (!self::hasRights('edit')) {
                 // User doesn't have write access...bail
                 $retval .= COM_startBlock ($LANG25[21], '',
@@ -678,12 +660,6 @@ class Poll
             'lang_results_group' => $LANG_POLLS['results_group'],
             'group_dropdown' => SEC_getGroupDropdown($this->voting_gid, 3),
             'res_grp_dropdown' => SEC_getGroupDropdown($this->results_gid, 3, 'results_gid'),
-            //'lang_permissions' => $LANG_ACCESS['permissions'],
-            //'lang_permissionskey' => $LANG_ACCESS['permissionskey'],
-            //'permissions_editor' => SEC_getPermissionsHTML(
-            //    $this->perm_owner, $this->perm_group, $this->perm_members, $this->perm_anon
-            //),
-            //'lang_permissions_msg' => $LANG_ACCESS['permmsg'],
             'lang_answersvotes' => $LANG25[10],
             'lang_save' => $LANG_ADMIN['save'],
             'lang_cancel' => $LANG_ADMIN['cancel'],
@@ -813,11 +789,6 @@ class Poll
             owner_id = '" . (int)$this->owner_id . "',
             group_id = '" . (int)$this->voting_gid . "',
             results_gid = '" . (int)$this->results_gid . "'";
-            /*perm_owner = '" . (int)$this->perm_owner . "',
-            perm_group = '" . (int)$this->perm_group . "',
-            perm_members = '" . (int)$this->perm_members . "',
-            perm_anon = '" . (int)$this->perm_anon . "'";
-            login_required = '" . (int)$this->login_required . "',*/
         $sql = $sql1 . $sql2 . $sql3;
         //echo $sql;die;
         DB_query($sql, 1);
@@ -861,24 +832,6 @@ class Poll
             $msg = "An error occurred saving the poll";
         }
         return $msg;
-    }
-
-
-    /**
-     * Determine if a specific user has a given access level to the poll.
-     *
-     * @return  integer     Access level for the current user.
-     */
-    public function hasAccess()
-    {
-        return SEC_hasAccess(
-            $this->owner_id,
-            $this->voting_gid,
-            $this->perm_owner,
-            $this->perm_group,
-            $this->perm_members,
-            $this->perm_anon
-        );
     }
 
 
@@ -1426,14 +1379,6 @@ class Poll
 
         $retval = '';
 
-        if (
-            COM_isAnonUser() && (
-                $_CONF['loginrequired'] == 1 || Config::get('pollsloginrequired') == 1
-            )
-        ) {
-            return SEC_loginRequiredForm();
-        }
-
         USES_lib_admin();
 
         $header_arr = array(
@@ -1695,6 +1640,21 @@ class Poll
             true
         );
         return $this;
+    }
+
+
+    public static function getPermSQL($uid = 0, $pfx='')
+    {
+        if ($pfx != '') $pfx = $pfx . '.';
+
+        $sql = '(';
+        if ($uid > 0) {
+            $sql = "uid = '" . (int)$uid . "' OR ";
+        }
+        $sql .= SEC_buildAccessSql('', 'group_id') .
+            SEC_buildAccessSql('OR', 'results_gid');
+        $sql .= ')';    // close the paren
+        return $sql;
     }
 
 }

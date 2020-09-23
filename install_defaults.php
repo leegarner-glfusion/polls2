@@ -68,17 +68,6 @@ $pollsConfigData = array(
         'group' => $pi_name,
     ),
     array(
-        'name' => 'pollsloginrequired',
-        'default_value' => '0',
-        'type' => 'select',
-        'subgroup' => 0,
-        'fieldset' => 0,
-        'selection_array' => 0,
-        'sort' => 10,
-        'set' => true,
-        'group' => $pi_name,
-    ),
-    array(
         'name' => 'hidemenu',
         'default_value' => '0',
         'type' => 'select',
@@ -167,6 +156,28 @@ $pollsConfigData = array(
         'group' => $pi_name,
     ),
     array(
+        'name' => 'def_voting_gid',
+        'default_value' => '2',
+        'type' => 'select',
+        'subgroup' => 0,
+        'fieldset' => 0,
+        'selection_array' => 0,     // use helper function
+        'sort' => 100,
+        'set' => true,
+        'group' => $pi_name,
+    ),
+    array(
+        'name' => 'def_results_gid',
+        'default_value' => '2',
+        'type' => 'select',
+        'subgroup' => 0,
+        'fieldset' => 0,
+        'selection_array' => 0,     // use helper function
+        'sort' => 100,
+        'set' => true,
+        'group' => $pi_name,
+    ),
+    /*array(
         'name' => 'default_permissions',
         'default_value' => array (3, 2, 2, 2),
         'type' => '@select',
@@ -176,7 +187,7 @@ $pollsConfigData = array(
         'sort' => 100,
         'set' => true,
         'group' => $pi_name,
-    ),
+    ),*/
 );
 
 

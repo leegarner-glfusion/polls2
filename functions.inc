@@ -102,21 +102,21 @@ if (file_exists($langfile)) {
 // +---------------------------------------------------------------------------+
 
 /**
-* Returns the items for this plugin that should appear on the main menu
-*
+* Returns the items for this plugin that should appear on the main menu.
 * NOTE: this MUST return the url/value pairs in the following format
 * $<arrayname>[<label>] = <url>
 *
+* @todo: Change menu text from plugin name to $LANG_POLLS var
 * @return   mixed   menu entry, or boolean false if disabled / hidden
 */
 function plugin_getmenuitems_polls2()
 {
-    global $_CONF, $_USER, $LANG_POLLS;
+    global $_CONF, $LANG_POLLS;
 
-    $anon = (COM_isAnonUser()) ? true : false;
     if (
-        Config::get('hidepollsmenu') == 1 || (
-            $anon && ($_CONF['loginrequired'] || Config::get('pollsloginrequired'))
+        Config::get('hidepollsmenu') == 1 ||
+        (
+            COM_isAnonUser() && $_CONF['loginrequired']
         )
     ) {
         return false;
@@ -224,18 +224,11 @@ function plugin_getwhatsnewcomment_polls2()
 
     $tbl_topics = DB::table('topics');
     $tbl_comments = DB::table('comments');
-    $stwhere = '';
-    if( !COM_isAnonUser() ) {
-        $stwhere .= "({$tbl_topics}.owner_id IS NOT NULL AND {$tbl_topics}.perm_owner IS NOT NULL) OR ";
-        $stwhere .= "({$tbl_topics}.group_id IS NOT NULL AND {$tbl_topics}.perm_group IS NOT NULL) OR ";
-        $stwhere .= "({$tbl_topics}.perm_members IS NOT NULL)";
-    } else {
-        $stwhere .= "({$tbl_topics}.perm_anon IS NOT NULL)";
-    }
+    $stwhere = Poll::getPermSQL(0, $tbl_topics);
     $sql = "SELECT DISTINCT COUNT(*) AS dups, {$tbl_topics}.topic AS title,
             {$tbl_topics}.pid AS sid, UNIX_TIMESTAMP(max({$tbl_comments}.date)) AS lastdate
             FROM {$tbl_comments} LEFT JOIN {$tbl_topics} ON (({$tbl_topics}.pid = {$tbl_comments}.sid)"
-            . COM_getPermSQL( 'AND', 0, 2, $tbl_topics ) .
+            . 
             " AND ({$tbl_topics}.commentcode >= 0)" .
             /* COM_getLangSQL( 'pid', 'AND', $_TABLES['polltopics'] ) .*/ ")
             WHERE ({$tbl_comments}.queued = 0 AND {$tbl_comments}.date >= (DATE_SUB('".$_CONF['_now']->toMySQL(true)."', INTERVAL {$_CONF['newcommentsinterval']} SECOND)))
@@ -308,8 +301,8 @@ function plugin_dopluginsearch_polls2($query, $dateStart, $dateEnd, $topic, $typ
     $sql = "SELECT p.pid AS id, p.topic AS title, p.description AS description, UNIX_TIMESTAMP(p.date) AS date, "
         . " p.owner_id AS uid, p.voters AS hits, CONCAT('/$pi_name/index.php?pid=',p.pid) AS url "
         . " FROM {$tbl_topics} AS p "
-        . " WHERE (p.date <= '".$_CONF['_now']->toMySQL(true)."') "
-        . COM_getPermSQL('AND', 0, 2, 'p');
+        . " WHERE (p.date <= '".$_CONF['_now']->toMySQL(true)."') AND "
+        . Poll::getPermSQL(0, 'p');
 
     if (!Poll::hasRights('admin', $uid)) {
         $sql .= " AND ((p.hideresults = 0) OR (p.owner_id = {$uid})) ";
@@ -361,7 +354,7 @@ function plugin_dopluginsearch_comment_polls2($query, $datestart, $dateend, $top
     $sql .= "FROM {$_TABLES['users']} AS u, {$_TABLES['comments']} AS c ";
     $sql .= "LEFT JOIN " . DB::table('topics') . " a ON c.sid=a.pid ";
     $sql .= "WHERE (c.type='polls' AND c.queued = 0) AND (u.uid = c.uid) ";
-    $sql .= COM_getPermSQL ('AND');
+    $sql .= ' AND ' . Poll::getPermSQL();
 
     if (!empty($author)) {
         $sql .= "AND (c.uid = '$author') ";
@@ -393,7 +386,11 @@ function plugin_showstats_polls2($showsitestats)
 
     $retval = '';
 
-    $result = DB_query ("SELECT pid,topic,voters FROM " . DB::table('topics') . " WHERE (voters > 0)" . COM_getPermSQL ('AND') . " ORDER BY voters DESC LIMIT 10");
+    $result = DB_query(
+        "SELECT pid,topic,voters FROM " .
+        DB::table('topics') . " WHERE (voters > 0) AND " .
+        Poll::getPermSQL() . " ORDER BY voters DESC LIMIT 10"
+    );
     $nrows  = DB_numRows ($result);
 
     if ($nrows > 0) {
@@ -454,9 +451,9 @@ function plugin_statssummary_polls2()
 
 
 /**
-* This will put an option for polls in the command and control block on
-* moderation.php
+* This will put an option for polls in the command and control block.
 *
+* @todo: Change menu text from plugin name to $LANG_POLLS var
 */
 function plugin_cclabel_polls2()
 {
@@ -474,8 +471,9 @@ function plugin_cclabel_polls2()
 
 
 /**
-* returns the administrative option for this plugin
+* Returns the administrative option for this plugin.
 *
+* @todo: Change menu text from plugin name to $LANG_POLLS var
 */
 function plugin_getadminoption_polls2()
 {
@@ -490,6 +488,13 @@ function plugin_getadminoption_polls2()
     }
 }
 
+
+/**
+ * Handle changing a user ID.
+ *
+ * @param   integer $origUID    Original user ID
+ * @param   integer $destUID    New user ID
+ */
 function plugin_user_move_polls2($origUID, $destUID)
 {
     Poll::moveUser($origUID, $destUID);
@@ -642,16 +647,15 @@ function plugin_displaycomment_polls2($id, $cid, $title, $order, $format, $page,
 
 
 /**
-* Set template variables
-*
-* @param    string  $templatename   name of template, e.g. 'header'
-* @param    ref     $template       reference of actual template
-* @return   void
-*
-* Note: A plugin should use its name as a prefix for the names of its
+* Set template variables.
+* A plugin should use its name as a prefix for the names of its
 * template variables, e.g. 'polls_xxx' and 'lang_polls_xxx'.
 * 'button_polls' is an exception, as such a variable existed for header.thtml
 *
+* @todo: Change menu text from plugin name to $LANG_POLLS var
+* @param    string  $templatename   name of template, e.g. 'header'
+* @param    ref     $template       reference of actual template
+* @return   void
 */
 function plugin_templatesetvars_polls2($templatename, &$template)
 {
@@ -662,6 +666,12 @@ function plugin_templatesetvars_polls2($templatename, &$template)
     }
 }
 
+
+/**
+ * Get the plugin's CSS into the output header.
+ *
+ * @return  array   Array of CSS file paths.
+ */
 function plugin_getheadercss_polls2()
 {
     global $_CONF;
@@ -681,8 +691,7 @@ function plugin_getheadercss_polls2()
 /**
 * Update the Polls plugin
 *
-* @return   int     Number of message to display (true = generic success msg)
-*
+* @return   integer     Number of message to display (true = generic success msg)
 */
 function plugin_upgrade_polls2()
 {
@@ -893,10 +902,10 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
             case 'perms' :
                 $fields[] = 'owner_id';
                 $fields[] = 'group_id';
-                $fields[] = 'perm_owner';
-                $fields[] = 'perm_group';
-                $fields[] = 'perm_members';
-                $fields[] = 'perm_anon';
+                //$fields[] = 'perm_owner';
+                //$fields[] = 'perm_group';
+                //$fields[] = 'perm_members';
+                //$fields[] = 'perm_anon';
                 break;
             default:
                 break;
@@ -918,11 +927,7 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
         $where = " WHERE pid = '" . DB_escapeString($id) . "'";
         $permOp = 'AND';
     }
-    if ($uid > 0) {
-        $permSql = COM_getPermSql($permOp, $uid);
-    } else {
-        $permSql = COM_getPermSql($permOp);
-    }
+    $permSql = $permOp  . ' ' . Poll::getPermSQL($uid);
     $sql = "SELECT " . implode(',', $fields) . " FROM " . DB::table('topics') . " " . $where . $permSql;
     if ($id != '*') {
         $sql .= ' LIMIT 1';
@@ -993,10 +998,10 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
                     $props['perms'] = array(
                         'owner_id' => $A['owner_id'],
                         'group_id' => $A['group_id'],
-                        'perm_owner' => $A['perm_owner'],
-                        'perm_group' => $A['perm_group'],
-                        'perm_members' => $A['perm_members'],
-                        'perm_anon' => $A['perm_anon'],
+                        'perm_owner' => 3,
+                        'perm_group' => 3,
+                        'perm_members' => 2,
+                        'perm_anon' => 2,
                     );
                     break;
                 default:
@@ -1067,6 +1072,55 @@ function plugin_getconfigelementhelp_polls2($type, $option, $doclang = 'english'
     return array($retval,0);
 }
 
+
+/**
+ * Create an array of groups for the voting group configuration.
+ *
+ * @return  array               Array of groups as name=>ID
+ */
+function plugin_configmanager_select_def_voting_gid_polls2()
+{
+    global $_TABLES;
+
+    $A = array();
+
+    $sql = "SELECT grp_id, grp_name FROM {$_TABLES['groups']}
+            ORDER BY grp_name ASC";
+    $res = DB_query($sql);
+    if ($res && DB_numRows($res) > 0) {
+        while ($row = DB_fetchArray($res, false)) {
+            $row['grp_name'] = htmlspecialchars($row['grp_name']);
+            $A[$row['grp_name']] = $row['grp_id'];
+        }
+    }
+    return $A;
+}
+
+
+/**
+ * Create an array of groups for the results group configuration.
+ *
+ * @return  array               Array of groups as name=>ID
+ */
+function plugin_configmanager_select_def_results_gid_polls2()
+{
+    global $_TABLES;
+
+    $A = array();
+
+    $sql = "SELECT grp_id, grp_name FROM {$_TABLES['groups']}
+            ORDER BY grp_name ASC";
+    $res = DB_query($sql);
+    if ($res && DB_numRows($res) > 0) {
+        while ($row = DB_fetchArray($res, false)) {
+            $row['grp_name'] = htmlspecialchars($row['grp_name']);
+            $A[$row['grp_name']] = $row['grp_id'];
+        }
+    }
+    return $A;
+}
+
+
 /**
 * Helper function: count number of polls and total number of votes
 *
@@ -1080,11 +1134,14 @@ function POLLS2_countPollsAndVotes()
     $total_polls = 0;
     $total_answers = 0;
 
-    $result = DB_query ("SELECT COUNT(*) AS count FROM " . DB::table('topics') . COM_getPermSQL ());
+    $result = DB_query(
+        "SELECT COUNT(*) AS count FROM " . DB::table('topics') .
+        ' WHERE ' . Poll::getPermSQL()
+    );
     $A = DB_fetchArray($result);
     $total_polls = $A['count'];
 
-    $result = DB_query ("SELECT pid FROM " . DB::table('topics') . COM_getPermSQL ());
+    $result = DB_query ("SELECT pid FROM " . DB::table('topics') . ' WHERE ' . Poll::getPermSQL());
     $nrows = DB_numRows ($result);
     if ($nrows > 0) {
         $topics = '';
