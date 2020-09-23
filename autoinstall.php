@@ -116,6 +116,7 @@ $INSTALL_plugin[Config::PI_NAME] = array(
         'phpblockfn' => 'phpblock_' . Config::PI_NAME,
         'block_type' => 'phpblock',
         'is_enabled' => 0,
+        'group_id' => 1,
     ),
 );
 
