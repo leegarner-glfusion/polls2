@@ -20,6 +20,7 @@ if (!defined ('GVERSION')) {
     die ('This file cannot be used on its own.');
 }
 
+use Polls\Config;
 global $LANG32;
 
 $LANG_POLLS = array(
@@ -65,6 +66,8 @@ $LANG_POLLS = array(
 'opens' => 'Poll Opens',
 'voting_group' => 'Voting Group',
 'results_group' => 'Results Group',
+'back_to_list' => 'Back to List',
+'msg_results_open' => 'Early results, poll is open',
 );
 
 ###############################################################################
@@ -131,12 +134,12 @@ $PLG_polls_MESSAGE3002 = $LANG32[9];
 
 
 // Localization of the Admin Configuration UI
-$LANG_configsections['polls'] = array(
+$LANG_configsections[Config::PI_NAME] = array(
     'label' => 'Encuestas',
     'title' => 'Configuración Encuestas'
 );
 
-$LANG_confignames['polls'] = array(
+$LANG_confignames[Config::PI_NAME] = array(
     'pollsloginrequired' => '¿Requiere Inicio de Sesión?',
     'hidepollsmenu' => '¿Ocultar Entrada del Menú?',
     'maxquestions' => 'Max. Preguntas por Encuesta',
@@ -150,16 +153,16 @@ $LANG_confignames['polls'] = array(
     'displayblocks' => 'Mostrar Bloques',
 );
 
-$LANG_configsubgroups['polls'] = array(
+$LANG_configsubgroups[Config::PI_NAME] = array(
     'sg_main' => 'Principal'
 );
 
-$LANG_fs['polls'] = array(
+$LANG_fs[Config::PI_NAME] = array(
     'fs_main' => 'General',
     'fs_permissions' => 'Permisos'
 );
 
-$LANG_configSelect['polls'] = array(
+$LANG_configSelect[Config::PI_NAME] = array(
     0 => array(1=>'Sí', 0=>'No'),
     1 => array(true=>'No', false=>'Sí'),
     2 => array('submitorder'=>'Por envío', 'voteorder'=>'Por Votos'),

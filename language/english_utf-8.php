@@ -19,7 +19,7 @@
 if (!defined ('GVERSION')) {
     die ('This file cannot be used on its own.');
 }
-
+use Polls\Config;
 global $LANG32;
 
 $LANG_POLLS = array(
@@ -135,12 +135,12 @@ $PLG_polls_MESSAGE3002 = $LANG32[9];
 
 
 // Localization of the Admin Configuration UI
-$LANG_configsections['polls2'] = array(
-    'label' => 'Polls2',
+$LANG_configsections[Config::PI_NAME] = array(
+    'label' => ucfirst(Config::PI_NAME),
     'title' => 'Polls Configuration'
 );
 
-$LANG_confignames['polls2'] = array(
+$LANG_confignames[Config::PI_NAME] = array(
     'pollsloginrequired' => 'Polls Login Required',
     'hidepollsmenu' => 'Hide Polls Menu Entry',
     'maxquestions' => 'Max. Questions per Poll',
@@ -154,16 +154,16 @@ $LANG_confignames['polls2'] = array(
     'displayblocks' => 'Display glFusion Blocks',
 );
 
-$LANG_configsubgroups['polls2'] = array(
+$LANG_configsubgroups[Config::PI_NAME] = array(
     'sg_main' => 'Main Settings'
 );
 
-$LANG_fs['polls2'] = array(
+$LANG_fs[Config::PI_NAME] = array(
     'fs_main' => 'General Polls Settings',
     'fs_permissions' => 'Default Permissions'
 );
 
-$LANG_configSelect['polls2'] = array(
+$LANG_configSelect[Config::PI_NAME] = array(
     0 => array(1=>'True', 0=>'False'),
     1 => array(true=>'True', false=>'False'),
     2 => array('submitorder'=>'As Submitted', 'voteorder'=>'By Votes'),
