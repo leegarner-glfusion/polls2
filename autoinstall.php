@@ -185,6 +185,7 @@ function plugin_autouninstall_polls2()
         ),
         /* give the full name of the feature, as in the db */
         'features' => array(
+            Config::PI_NAME . '.admin',
             Config::PI_NAME . '.edit',
         ),
         /* give the full name of the block, including 'phpblock_', etc */
