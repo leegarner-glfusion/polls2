@@ -59,9 +59,15 @@ $title = $LANG_POLLS['pollstitle'];
 $filter = sanitizer::getInstance();
 $filter->setPostmode('text');
 
-$pid = isset($_POST['pid']) ? COM_applyFilter($_POST['pid']) : '';
-$type = isset($_POST['type']) ? COM_applyFilter($_POST['type']) : '';
+if (isset($_POST['pid'])) {
+    $pid = COM_applyFilter($_POST['pid']);
+} elseif (isset($_GET['pid'])) {
+    $pid = COM_applyFilter($_GET['pid']);
+} else {
+    $pid = '';
+}
 
+$type = isset($_POST['type']) ? COM_applyFilter($_POST['type']) : '';
 if ( $type != '' && $type != 'article' ) {
     if (!in_array($type,$_PLUGINS)) {
         $type = '';
