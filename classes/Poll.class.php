@@ -1652,17 +1652,24 @@ class Poll
     }
 
 
+    /**
+     * Create the SQL clause to check access to view the poll.
+     *
+     * @param   integer $uid    User ID to check, 0 to ignore
+     * @param   string  $pfx    Table prefix
+     * @return  string      SQL clause.
+     */
     public static function getPermSQL($uid = 0, $pfx='')
     {
         if ($pfx != '') $pfx = $pfx . '.';
 
-        $sql = '(';
+        $sql = ' (';
         if ($uid > 0) {
-            $sql = "uid = '" . (int)$uid . "' OR ";
+            $sql .= "owner_id = '" . (int)$uid . "' OR ";
         }
         $sql .= SEC_buildAccessSql('', 'group_id') .
             SEC_buildAccessSql('OR', 'results_gid');
-        $sql .= ')';    // close the paren
+        $sql .= ') ';    // close the paren
         return $sql;
     }
 
