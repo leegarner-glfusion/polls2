@@ -157,7 +157,7 @@ case 'delvote' :
     case 'listpolls':
     default:
         $title = $LANG25[18];
-        $page .= ($msg > 0) ? COM_showMessage ($msg, 'polls') : '';
+        $page .= ($msg > 0) ? COM_showMessage ($msg, Config::PI_NAME) : '';
         $page = Menu::Admin('listpolls');
         $page .= Poll::adminList();
         break;

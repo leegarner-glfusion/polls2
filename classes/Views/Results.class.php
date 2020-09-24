@@ -270,11 +270,11 @@ class Results
 
         if ($this->Poll->getCommentcode() >= 0 ) {
             USES_lib_comments();
-            $num_comments = CMT_getCount('polls', $this->pid);
+            $num_comments = CMT_getCount(Config::PI_NAME, $this->pid);
             $poll->set_var('num_comments',COM_numberFormat($num_comments));
             $poll->set_var('lang_comments', $LANG01[3]);
             $comment_link = CMT_getCommentLinkWithCount(
-                'polls',
+                Config::PI_NAME,
                 $this->pid,
                 Config::get('url') . '/index.php?pid=' . $this->pid,
                 $num_comments,
@@ -314,7 +314,7 @@ class Results
                 $this->withCommentMode(COM_applyFilter($_GET['mode']));
             }
             $retval .= CMT_userComments(
-                $this->pid, $filter->filterData($this->Poll->getTopic()), 'polls',
+                $this->pid, $filter->filterData($this->Poll->getTopic()), Config::PI_NAME,
                 $this->cmt_order, $this->cmt_mode, 0, $page, false,
                 $delete_option, $this->Poll->getCommentcode(), $this->Poll->getOwnerID()
             );
@@ -361,8 +361,8 @@ class Results
             DB_delete($_TABLES['pollanswers'], 'pid', $pid);
             DB_delete($_TABLES['pollquestions'], 'pid', $pid);
             DB_delete($_TABLES['pollvoters'], 'pid', $pid);
-            DB_delete($_TABLES['comments'], array('sid', 'type'), array($pid,  'polls'));
-            PLG_itemDeleted($pid, 'polls');
+            DB_delete($_TABLES['comments'], array('sid', 'type'), array($pid,  Config::PI_NAME));
+            PLG_itemDeleted($pid, Config::PI_NAME);
             if (!$force) {
                 // Don't redirect if this is done as part of user account deletion
                 COM_refresh(Config::get('admin_url') . '/index.php?msg=20');
@@ -427,7 +427,7 @@ class Results
         );
         $token = SEC_createToken();
         $retval .= ADMIN_list (
-            'polls', array(__CLASS__, 'getListField'), $header_arr,
+            Config::PI_NAME, array(__CLASS__, 'getListField'), $header_arr,
             $text_arr, $query_arr, $defsort_arr, '', $token
         );
         $retval .= COM_endBlock(COM_getBlockTemplate('_admin_block', 'footer'));
