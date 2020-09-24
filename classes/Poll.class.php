@@ -964,7 +964,8 @@ class Poll
         );
 
         $retval .= ADMIN_list (
-            'polls', array(__CLASS__, 'getListField'),
+            Config::PI_NAME . '_' . __FUNCTION__,
+            array(__CLASS__, 'getListField'),
             $header_arr, $text_arr, $query_arr, $defsort_arr, '', $extras
         );
         $retval .= COM_endBlock(COM_getBlockTemplate('_admin_block', 'footer'));
@@ -1253,12 +1254,12 @@ class Poll
             $poll->set_var('lang_polltopics', $LANG_POLLS['polltopics']);
             $poll->set_var('poll_notification', $notification);
             if ($this->commentcode >= 0 ) {
-                $num_comments = CMT_getCount('polls',$this->pid);
+                $num_comments = CMT_getCount(Config::PI_NAME, $this->pid);
                 $poll->set_var('num_comments',COM_numberFormat($num_comments));
                 $poll->set_var('lang_comments', $LANG01[3]);
 
                 $comment_link = CMT_getCommentLinkWithCount(
-                    'polls',
+                    Config::PI_NAME,
                     $this->pid,
                     Config::get('url') . '/index.php?pid=' . $this->pid,
                     $num_comments,
@@ -1302,7 +1303,7 @@ class Poll
                     $mode = '';
                 }
                 $retval .= CMT_userComments(
-                    $this->pid, $filterS->filterData($this->topic), 'polls',
+                    $this->pid, $filterS->filterData($this->topic), Config::PI_NAME,
                     $order, $mode, 0, $page, false,
                     $delete_option, $this->commentcode, $this->owner_id
                 );
@@ -1449,7 +1450,7 @@ class Poll
                 Config::get('admin_url') . '/index.php">Admin</a></div>' . LB;
         }
         $retval .= ADMIN_list(
-            'polls_pollList',
+            Config::PI_NAME . '_' . __FUNCTION__,
             array(__CLASS__, 'getListField'),
             $header_arr, $text_arr, $query_arr, $defsort_arr, '', $extras
         );
@@ -1481,8 +1482,8 @@ class Poll
             // Now delete the poll topic
             DB_delete(DB::table('topics'), 'pid', $pid);
             // Finally, delete any comments and notify other plugins
-            DB_delete(DB::table('comments'), array('sid', 'type'), array($pid,  'polls'));
-            PLG_itemDeleted($pid, 'polls');
+            DB_delete(DB::table('comments'), array('sid', 'type'), array($pid,  Config::PI_NAME));
+            PLG_itemDeleted($pid, Config::PI_NAME);
             if (!$force) {
                 // Don't redirect if this is done as part of user account deletion
                 COM_refresh(Config::get('admin_url') . '/index.php?msg=20');
@@ -1572,7 +1573,8 @@ class Poll
         );
         $token = SEC_createToken();
         $retval .= ADMIN_list (
-            'polls', array(__CLASS__, 'getListField'), $header_arr,
+            Config::PI_NAME . '_' . __FUNCTION__,
+            array(__CLASS__, 'getListField'), $header_arr,
             $text_arr, $query_arr, $defsort_arr, '', $token
         );
         $retval .= COM_endBlock(COM_getBlockTemplate('_admin_block', 'footer'));

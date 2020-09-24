@@ -140,6 +140,7 @@ function plugin_commentsupport_polls2()
     return true;
 }
 
+
 function plugin_getcommenturlid_polls2()
 {
     $retval = array();
@@ -173,9 +174,9 @@ function plugin_savecomment_polls2($title, $comment, $id, $pid, $postmode)
         return COM_refresh ($_CONF['site_url'] . '/index.php');
     }
 
-    $ret = CMT_saveComment ($title, $comment, $id, $pid, 'polls', $postmode);
+    $ret = CMT_saveComment ($title, $comment, $id, $pid, Config::PI_NAME, $postmode);
     if ($ret > 0) {
-        $retval .= CMT_commentForm ($title, $comment, $id, $pid, 'polls',
+        $retval .= CMT_commentForm ($title, $comment, $id, $pid, Config::PI_NAME,
                                    $LANG03[14], $postmode);
     } else { // success
         $retval = COM_refresh(Config::get('url') . "/index.php?pid=$id");
@@ -204,7 +205,7 @@ function plugin_deletecomment_polls2($cid, $id)
     $retval = '';
 
     if (Poll::hasRights('edit')) {
-        CMT_deleteComment($cid, $id, 'polls');
+        CMT_deleteComment($cid, $id, Config::PI_NAME);
         $retval .= COM_refresh(Config::get('url') . "/index.php?pid=$id");
     } else {
         COM_errorLog ("User {$_USER['username']} (IP: {$_SERVER['REMOTE_ADDR']}) "
@@ -245,7 +246,7 @@ function plugin_getwhatsnewcomment_polls2()
         for ($x = 0; $x < $nrows; $x++ ) {
             $A = DB_fetchArray($result);
             $cmtReturn['url'] = Config::get('url') . '/index.php?pid=' . $A['sid'] . '#comments';
-            $cmtReturn['type'] = 'polls';
+            $cmtReturn['type'] = Config::PI_NAME;
             $cmtReturn['dups'] = $A['dups'];
             $cmtReturn['title'] = $filter->filterData($A['title']);
             $cmtReturn['lastdate'] = $A['lastdate'];
@@ -353,7 +354,7 @@ function plugin_dopluginsearch_comment_polls2($query, $datestart, $dateend, $top
     $sql .= "CONCAT('/$pi_name/index.php?pid=',a.pid,'#comments') AS url ";
     $sql .= "FROM {$_TABLES['users']} AS u, {$_TABLES['comments']} AS c ";
     $sql .= "LEFT JOIN " . DB::table('topics') . " a ON c.sid=a.pid ";
-    $sql .= "WHERE (c.type='polls' AND c.queued = 0) AND (u.uid = c.uid) ";
+    $sql .= "WHERE (c.type='" . Config::PI_NAME . "' AND c.queued = 0) AND (u.uid = c.uid) ";
     $sql .= ' AND ' . Poll::getPermSQL();
 
     if (!empty($author)) {
