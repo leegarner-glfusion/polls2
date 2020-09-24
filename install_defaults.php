@@ -209,7 +209,9 @@ function plugin_initconfig_polls2()
             _addConfigItem($cfgItem);
         }
     } else {
-        COM_errorLog('initconfig error: Polls config group already exists');
+        COM_errorLog(
+            __FUNCTION__ . ': ' . Config::PI_NAME . ' config group already exists'
+        );
     }
     return true;
 }

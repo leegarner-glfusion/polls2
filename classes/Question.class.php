@@ -158,7 +158,6 @@ class Question
         for ($i = 0; $i < Config::get('maxanswers'); $i++) {
             if ($A['answer'][$this->qid][$i] == '') break;
             if (!isset($this->Answers[$i])) {
-                COM_errorLog("Answer now found, creating new answer $i for question {$this->qid}");
                 $this->Answers[$i] = new Answer;
             }
             $this->Answers[$i]->setAnswer($A['answer'][$this->qid][$i])

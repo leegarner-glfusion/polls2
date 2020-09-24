@@ -695,17 +695,10 @@ function plugin_getheadercss_polls2()
 */
 function plugin_upgrade_polls2()
 {
-    global $_CONF;
-
-    if ( @file_exists(__DIR__ . '/upgrade.php') ) {
-        require_once __DIR__ . '/upgrade.php';
-        return polls_upgrade();
-    } else {
-        // upgrades are done by the install script - return a generic error
-        COM_errorLog("Polls plugin upgrade function not implemented");
-        return 3001;
-    }
+    require_once __DIR__ . '/upgrade.php';
+    return polls_upgrade();
 }
+
 
 /**
 * Poll Autotags
