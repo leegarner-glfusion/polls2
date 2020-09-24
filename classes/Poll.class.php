@@ -102,6 +102,10 @@ class Poll
      * @var array */
     private $_Questions = array();
 
+    /** Selections made for this poll's questions.
+     * @var array */
+    private $_selections = array();
+
     /** Display modifier. Nonzero to show all questions, zero to show only one.
      * @var integer */
     private $disp_showall = 1;
@@ -338,6 +342,21 @@ class Poll
 
 
     /**
+     * Set the selected answer array to pre-select answers.
+     *
+     * @param   array   Array of questionID->answerID pairs
+     * @return  object  $this
+     */
+    public function withSelections($aid)
+    {
+        if (is_array($aid)) {
+            $this->_selections = $aid;
+        }
+        return $this;
+    }
+
+
+    /**
      * Check if the current user may vote in this poll.
      * Used to collect results from different fields that may be added,
      * such as a closing date.
@@ -463,8 +482,7 @@ class Poll
      */
     public function Read()
     {
-        // Clear out any existing items, in case we're reusing this instance.
-        $this->Answers = array();
+        $this->Questions = array();
 
         $sql = "SELECT p.*, count(*) as vote_count FROM " . DB::table('topics') . " p
             LEFT JOIN " . DB::table('voters') . " v
@@ -1203,11 +1221,6 @@ class Poll
                 $poll->set_var('edit_icon', $editlink);
                 $poll->set_var('edit_url', Config::get('admin_url').'/index.php?edit=x&amp;pid=' . $this->pid);
             }
-            if (array_key_exists('aid', $_POST)) {
-                $aid = $_POST['aid'];
-            } else {
-                $aid = array();
-            }
 
             for ($j = 0; $j < $nquestions; $j++) {
                 $Q = $Questions[$j];
@@ -1225,13 +1238,14 @@ class Poll
                 $nanswers = count($answers);
                 for ($i = 0; $i < $nanswers; $i++) {
                     $Answer = $answers[$i];
-                    if ($j < count($aid) && (int)$aid[$j] == $Answer->getAid()) {
-                        $poll->set_var('selected', ' checked="checked"');
+                    if (isset($this->_selections[$j]) && (int)$this->_selections[$j] == $Answer->getAid()) {
+                        $poll->set_var('selected', 'checked="checked"');
+                    } else {
+                        $poll->clear_var('selected');
                     }
                     $poll->set_var('answer_id', $Answer->getAid());
                     $poll->set_var('answer_text', $filterS->filterData($Answer->getAnswer()));
                     $poll->parse('poll_answers', 'panswer', true);
-                    $poll->clear_var('selected');
                 }
                 $poll->parse('poll_questions', 'pquestions', true);
                 $poll->clear_var('poll_answers');

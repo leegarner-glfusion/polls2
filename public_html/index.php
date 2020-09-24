@@ -59,7 +59,7 @@ $title = $LANG_POLLS['pollstitle'];
 $filter = sanitizer::getInstance();
 $filter->setPostmode('text');
 
-$pid = isset($_POST['pid']) ? COM_applyFilter($_POST['pid'],true) : 0;
+$pid = isset($_POST['pid']) ? COM_applyFilter($_POST['pid']) : '';
 $type = isset($_POST['type']) ? COM_applyFilter($_POST['type']) : '';
 
 if ( $type != '' && $type != 'article' ) {
@@ -90,19 +90,13 @@ if ($action == 'reply') {
     exit;
 }
 
-$pid = '';
 $aid = 0;
-if (isset ($_REQUEST['pid'])) {
-    $pid = COM_sanitizeID(COM_applyFilter ($_REQUEST['pid']));
+if ($pid != '') {
     if (isset ($_GET['aid'])) {
         $aid = -1; // only for showing results instead of questions
     } else if (isset ($_POST['aid'])) {
         $aid = $_POST['aid'];
     }
-} elseif (isset($_POST['id'])) {       // Refresh from comment tool bar
-    $pid = COM_sanitizeID(COM_applyFilter ($_POST['id']));
-} elseif ( isset($_GET['id']) ) {
-    $pid = COM_sanitizeID(COM_applyFilter($_GET['id']));
 }
 
 $order = '';
@@ -129,14 +123,16 @@ case 'votebutton':
     if ($Poll->alreadyVoted()) {
         COM_setMsg("Your vote has already been recorded.");
         COM_refresh(Config::get('url') . '/index.php');
-    } elseif (count($aid) == $Poll->numQuestions()) {
-        if ($Poll->saveVote($aid)) {
-            COM_refresh(Config::get('url') . '/index.php?results=x&pid=' . $Poll->getID());
-        } else {
-            COM_refresh(Config::get('url') . '/index.php');
-        }
     } else {
-        $page .= (new Results($Poll->getID()))->Render();
+        if (count($aid) == $Poll->numQuestions()) {
+            if ($Poll->saveVote($aid)) {
+                COM_refresh(Config::get('url') . '/index.php?results=x&pid=' . $Poll->getID());
+            } else {
+                COM_refresh(Config::get('url') . '/index.php');
+            }
+        } else {
+            $page .= $Poll->withSelections($aid)->Render();
+        }
     }
     break;
 
