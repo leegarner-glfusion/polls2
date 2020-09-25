@@ -269,27 +269,27 @@ function plugin_searchtypes_polls2()
     global $LANG_POLLS;
 
     return array(Config::get('pi_name') => ucfirst(Config::get('pi_name')));
-
 }
 
+
 /**
- * This searches for polls matching the user query and returns an array of
- * for the header and table rows back to search.php where it will be formatted and
- * printed.
+ * This searches for polls matching the user query.
+ * Returns a SearchCritaria object.
  *
- * @param    string $query     Keywords user is looking for
- * @param    string $dateStart Start date to get results for
- * @param    string $dateEnd   End date to get results for
- * @param    string $topic     The topic they were searching in
- * @param    string $type      Type of items they are searching, or 'all' (deprecated)
- * @param    int    $author    Get all results by this author
- * @param    string $keyType   search key type: 'all', 'phrase', 'any'
- * @param    int    $page      page number of current search (deprecated)
- * @param    int    $perpage   number of results per page (deprecated)
- * @return   SearchCriteria
-  */
-function plugin_dopluginsearch_polls2($query, $dateStart, $dateEnd, $topic, $type, $author, $keyType, $page, $perpage)
-{
+ * @param   string  $query     Keywords user is looking for
+ * @param   string  $dateStart Start date to get results for
+ * @param   string  $dateEnd   End date to get results for
+ * @param   string  $topic     The topic they were searching in
+ * @param   string  $type      Type of items they are searching, or 'all' (deprecated)
+ * @param   integer $author    Get all results by this author
+ * @param   string  $keyType   Search key type: 'all', 'phrase', 'any'
+ * @param   integer $page      Page number of current search (deprecated)
+ * @param   integer $perpage   Number of results per page (deprecated)
+ * @return  object      SearchCriteria
+ */
+function plugin_dopluginsearch_polls2(
+    $query, $dateStart, $dateEnd, $topic, $type, $author, $keyType, $page, $perpage
+) {
     global $_CONF, $_DB_dbms, $LANG09, $LANG_POLLS, $_USER;
 
     // Make sure the query is SQL safe
@@ -325,40 +325,39 @@ function plugin_dopluginsearch_polls2($query, $dateStart, $dateEnd, $topic, $typ
     $search->setSQL($sql);
     $search->setFTSQL($ftsql);
     $search->setRank(2);
-
     return $search;
 }
 
 
 /**
-* this searches the plugins comments matching the user query and returns an array of
-* for the header and table rows back to search.php where it will be formated and
-* printed
-*
-* @query            string          Keywords user is looking for
-* @datestart        date/time       Start date to get results for
-* @dateend          date/time       End date to get results for
-* @topic            string          The topic they were searching in
-* @type             string          Type of items they are searching
-* @author           string          Get all results by this author
-*
-*/
-function plugin_dopluginsearch_comment_polls2($query, $datestart, $dateend, $topic, $type, $author, $keyType, $page, $perpage)
+ * Get the SearchCriteria object to search comments matching the user query.
+ *
+ * @param   string  $query      Keywords user is looking for
+ * @param   string  $datestart  Start date to get results for
+ * @param   string  $dateend    End date to get results for
+ * @param   string  $topic      The topic they were searching in
+ * @param   string  $type       Type of items they are searching
+ * @param   integer $author     Get all results by this author (user ID)
+ * @return  object      SearchCriteria object
+ */
+function plugin_dopluginsearch_comment_polls2(
+    $query, $datestart, $dateend, $topic, $type, $author, $keyType, $page, $perpage
+)
 {
-    global $_USER, $_CONF, $LANG09;
+    global $_USER, $_CONF, $LANG09, $_TABLES;
 
     $query = trim(DB_escapeString(htmlspecialchars($query)));
     $pi_name = Config::get('pi_name');
 
-    $sql =  "SELECT c.cid AS id1, a.pid AS id, c.title AS title, c.comment AS description, UNIX_TIMESTAMP(c.date) AS date, c.uid AS uid, '0' AS hits, ";
-    $sql .= "CONCAT('/$pi_name/index.php?pid=',a.pid,'#comments') AS url ";
-    $sql .= "FROM {$_TABLES['users']} AS u, {$_TABLES['comments']} AS c ";
-    $sql .= "LEFT JOIN " . DB::table('topics') . " a ON c.sid=a.pid ";
-    $sql .= "WHERE (c.type='" . Config::PI_NAME . "' AND c.queued = 0) AND (u.uid = c.uid) ";
-    $sql .= ' AND ' . Poll::getPermSQL();
-
+    $sql =  "SELECT c.cid AS id1, a.pid AS id, c.title AS title,
+        c.comment AS description, UNIX_TIMESTAMP(c.date) AS date, c.uid AS uid, '0' AS hits,
+        CONCAT('/$pi_name/index.php?pid=',a.pid,'#comments') AS url
+        FROM {$_TABLES['users']} AS u, {$_TABLES['comments']} AS c
+        LEFT JOIN " . DB::table('topics') . " a ON c.sid=a.pid
+        WHERE (c.type='$pi_name' AND c.queued = 0) AND (u.uid = c.uid)
+        AND " . Poll::getPermSQL();
     if (!empty($author)) {
-        $sql .= "AND (c.uid = '$author') ";
+        $sql .= " AND (c.uid = '$author') ";
     }
 
     $search_c = new SearchCriteria('comments', 'Polls > '.$LANG09[66]);
@@ -368,7 +367,6 @@ function plugin_dopluginsearch_comment_polls2($query, $datestart, $dateend, $top
     $search_c->setSQL($sql);
     $search_c->setFTSQL($ftsql);
     $search_c->setRank(2);
-
     return $search_c;
 }
 
@@ -387,28 +385,31 @@ function plugin_showstats_polls2($showsitestats)
 
     $retval = '';
 
-    $result = DB_query(
-        "SELECT pid,topic,voters FROM " .
-        DB::table('topics') . " WHERE (voters > 0) AND " .
-        Poll::getPermSQL() . " ORDER BY voters DESC LIMIT 10"
-    );
+    $sql = "SELECT p.pid, p.topic, (
+            SELECT COUNT(v.id) FROM " . DB::table('voters') . " v
+            WHERE v.pid = p.pid) as voters
+        FROM " . DB::table('topics') . " p WHERE (voters > 0) AND " .
+        Poll::getPermSQL() . " ORDER BY voters DESC LIMIT 10";
+    $result = DB_query($sql);
     $nrows  = DB_numRows ($result);
-
     if ($nrows > 0) {
         $header_arr = array(
-            array('text'         => $LANG_POLLS['stats_topics'],
-                  'field'        => 'pid',
-                  'header_class' => 'stats-header-title'
+            array(
+                'text'         => $LANG_POLLS['stats_topics'],
+                'field'        => 'pid',
+                'header_class' => 'stats-header-title',
             ),
-            array('text'         => $LANG_POLLS['stats_votes'],
-                  'field'        => 'voters',
-                  'header_class' => 'stats-header-count',
-                  'field_class'  => 'stats-list-count'
+            array(
+                'text'         => $LANG_POLLS['stats_votes'],
+                'field'        => 'voters',
+                'header_class' => 'stats-header-count',
+                'field_class'  => 'stats-list-count',
             ),
         );
         $data_arr = array();
-        $text_arr = array('has_menu' => false,
-                          'title'    => $LANG_POLLS['stats_top10'],
+        $text_arr = array(
+            'has_menu' => false,
+            'title'    => $LANG_POLLS['stats_top10'],
         );
 
         $filter = new sanitizer();
@@ -431,6 +432,7 @@ function plugin_showstats_polls2($showsitestats)
 
     return $retval;
 }
+
 
 /**
 * New stats plugin API function for proper integration with the site stats
