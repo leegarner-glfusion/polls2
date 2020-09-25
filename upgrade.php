@@ -119,13 +119,16 @@ function polls_upgrade()
                     DB_query($sql);
                 }
             }
-            DB_query("ALTER TABLE $tbl_topics ADD drop perm_owner", 1);
-            DB_query("ALTER TABLE $tbl_topics ADD drop perm_group", 1);
-            DB_query("ALTER TABLE $tbl_topics ADD drop perm_members", 1);
-            DB_query("ALTER TABLE $tbl_topics ADD drop perm_anon", 1);
-            DB_query("ALTER TABLE $tbl_topics ADD drop login_required", 1);
-            DB_query("ALTER TABLE $tbl_topics ADD drop voters", 1);
-            DB_query("ALTER TABLE $tbl_topics ADD drop questions", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP perm_owner", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP perm_group", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP perm_members", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP perm_anon", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP login_required", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP voters", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP questions", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP statuscode", 1);
+            DB_query("ALTER TABLE $tbl_topics DROP KEY `pollquestions_statuscode`", 1);
+
             DB_query("ALTER TABLE $tbl_topics ADD KEY `idx_enabled` (`is_open`)", 1);
             DB_query(
                 "DELETE FROM `{$_TABLES['groups']}` WHERE grp_id='" .

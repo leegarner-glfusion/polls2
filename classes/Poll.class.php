@@ -677,7 +677,6 @@ class Poll
             'lang_mode' => $LANG25[1],
             'description' => $this->dscp,
             'lang_description' => $LANG_POLLS['description'],
-            //'status_options' => COM_optionList($_TABLES['statuscodes'], 'code,name', $T['statuscode']),
             'comment_options' => COM_optionList(DB::table('commentcodes'),'code,name',$this->commentcode),
             'lang_appearsonhomepage' => $LANG25[8],
             'lang_openforvoting' => $LANG25[33],
