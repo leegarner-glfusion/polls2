@@ -71,6 +71,7 @@ use Polls\Poll;
 use Polls\Voter;
 use Polls\Views\Results;
 use Polls\Models\Modes;
+use Polls\Models\Groups;
 
 // May later rely on the class autoloader
 require_once __DIR__ . '/' . Config::PI_NAME . '.php';
@@ -229,7 +230,7 @@ function plugin_getwhatsnewcomment_polls2()
     $sql = "SELECT DISTINCT COUNT(*) AS dups, {$tbl_topics}.topic AS title,
             {$tbl_topics}.pid AS sid, UNIX_TIMESTAMP(max({$tbl_comments}.date)) AS lastdate
             FROM {$tbl_comments} LEFT JOIN {$tbl_topics} ON (({$tbl_topics}.pid = {$tbl_comments}.sid)"
-            . 
+            .
             " AND ({$tbl_topics}.commentcode >= 0)" .
             /* COM_getLangSQL( 'pid', 'AND', $_TABLES['polltopics'] ) .*/ ")
             WHERE ({$tbl_comments}.queued = 0 AND {$tbl_comments}.date >= (DATE_SUB('".$_CONF['_now']->toMySQL(true)."', INTERVAL {$_CONF['newcommentsinterval']} SECOND)))
@@ -892,8 +893,9 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
             case 'author_name' :
                 $fields[] = 'owner_id';
                 break;
-            case 'hits' :
-                $fields[] = 'voters';
+            case 'hits':
+                $fields[] = '(SELECT COUNT(v.id) FROM ' . DB::table('voters') .
+                    ' AS v WHERE v.pid = ' . DB::table('topics') . '.pid) AS voters';
                 break;
             case 'perms' :
                 $fields[] = 'owner_id';
@@ -912,19 +914,18 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
 
     if (count($fields) == 0) {
         $retval = array();
-
         return $retval;
     }
 
     if ($id == '*') {
         $where = '';
-        $permOp = 'WHERE';
+        $permOp = ' WHERE ';
     } else {
-        $where = " WHERE pid = '" . DB_escapeString($id) . "'";
-        $permOp = 'AND';
+        $where = " WHERE pid = '" . DB_escapeString($id) . "' ";
+        $permOp = ' AND ';
     }
-    $permSql = $permOp  . ' ' . Poll::getPermSQL($uid);
-    $sql = "SELECT " . implode(',', $fields) . " FROM " . DB::table('topics') . " " . $where . $permSql;
+    $permSql = $permOp  . Poll::getPermSQL($uid);
+    $sql = 'SELECT ' . implode(',', $fields) . " FROM " . DB::table('topics') . " " . $where . $permSql;
     if ($id != '*') {
         $sql .= ' LIMIT 1';
     }
@@ -942,67 +943,66 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
         $props = array();
         foreach ($properties as $p) {
             switch ($p) {
-                case 'date-modified':
-                case 'date' :
-                    $props[$p] = $A['unixdate'];
-                    break;
-                case 'id':
-                    $props['id'] = $A['pid'];
-                    break;
-                case 'description' :
-                    $props['description'] = $filter->filterData($A['description']);
-                    break;
-                case 'searchidx' :
-                    if ( $A['description'] == '' ) {
-                        $props['searchidx'] = $A['topic'];
-                    } else {
-                        $props['searchidx'] = $A['topic'] . ' ' . $A['description'];
+            case 'date-modified':
+            case 'date' :
+                $props[$p] = $A['unixdate'];
+                break;
+            case 'id':
+                $props['id'] = $A['pid'];
+                break;
+            case 'description' :
+                $props['description'] = $filter->filterData($A['description']);
+                break;
+            case 'searchidx' :
+                $props['searchidx'] = $A['topic'];
+                if ($A['description'] != '') {
+                    $props['searchidx'] .= ' ' . $A['description'];
+                }
+                break;
+            case 'title':
+                $props['title'] = $filter->filterData($A['topic']);
+                break;
+            case 'url':
+                if (empty($A['pid'])) {
+                    $props['url'] = Config::get('url') . '/index.php?pid='.$pid.'&amp;aid=-1';
+                } else {
+                    // Users who have already voted but cannot see the results cannot view link
+                    if (
+                        Poll::hasRights('edit') ||
+                        (!$A['hideresults'] && Voter::hasVoted($A['pid'], $A['group_id']))
+                    ) {
+                        $props['url'] = Config::get('url') . '/index.php?pid=' . $A['pid'];
                     }
-                    break;
-                case 'title':
-                    $props['title'] = $filter->filterData($A['topic']);
-                    break;
-                case 'url':
-                    if (empty($A['pid'])) {
-                        $props['url'] = Config::get('url') . '/index.php?pid='.$pid.'&amp;aid=-1';
-                    } else {
-                        // Users who have already voted but cannot see the results cannot view link
-                        if (
-                            Poll::hasRights('edit') ||
-                            (!$A['hideresults'] && Voter::hasVoted($A['pid'], $A['group_id']))
-                        ) {
-                            $props['url'] = Config::get('url') . '/index.php?pid=' . $A['pid'];
-                        }
-                    }
-                    break;
-                case 'label':
-                    $props['label'] = ucfirst(Config::get('pi_name'));
-                    break;
-                case 'status':
-                    $props['status'] = 1; // stub - default
-                    break;
-                case 'author':
-                    $props['author'] = $A['owner_id'];
-                    break;
-                case 'author_name' :
-                    $props['author_name'] = COM_getDisplayName($A['owner_id']);
-                    break;
-                case 'hits' :
-                    $props['hits'] = $A['voters'];
-                    break;
-                case 'perms':
-                    $props['perms'] = array(
-                        'owner_id' => $A['owner_id'],
-                        'group_id' => $A['group_id'],
-                        'perm_owner' => 3,
-                        'perm_group' => 3,
-                        'perm_members' => $A['group_id'] == Groups::LOGGED_IN ? 2 : 0,
-                        'perm_anon' => $A['group_id'] == Groups::ALL_USERS ? 2 : 0,
-                    );
-                    break;
-                default:
-                    $props[$p] = '';
-                    break;
+                }
+                break;
+            case 'label':
+                $props['label'] = ucfirst(Config::get('pi_name'));
+                break;
+            case 'status':
+                $props['status'] = 1; // stub - default
+                break;
+            case 'author':
+                $props['author'] = $A['owner_id'];
+                break;
+            case 'author_name' :
+                $props['author_name'] = COM_getDisplayName($A['owner_id']);
+                break;
+            case 'hits' :
+                $props['hits'] = $A['voters'];
+                break;
+            case 'perms':
+                $props['perms'] = array(
+                    'owner_id' => $A['owner_id'],
+                    'group_id' => $A['group_id'],
+                    'perm_owner' => 3,
+                    'perm_group' => 3,
+                    'perm_members' => $A['group_id'] == Groups::LOGGED_IN ? 2 : 0,
+                    'perm_anon' => $A['group_id'] == Groups::ALL_USERS ? 2 : 0,
+                );
+                break;
+            default:
+                $props[$p] = '';
+                break;
             }
         }
 
