@@ -990,14 +990,14 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
                 case 'hits' :
                     $props['hits'] = $A['voters'];
                     break;
-                case 'perms' :
+                case 'perms':
                     $props['perms'] = array(
                         'owner_id' => $A['owner_id'],
                         'group_id' => $A['group_id'],
                         'perm_owner' => 3,
                         'perm_group' => 3,
-                        'perm_members' => 2,
-                        'perm_anon' => 2,
+                        'perm_members' => $A['group_id'] == Groups::LOGGED_IN ? 2 : 0,
+                        'perm_anon' => $A['group_id'] == Groups::ALL_USERS ? 2 : 0,
                     );
                     break;
                 default:
