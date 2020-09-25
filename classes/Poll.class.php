@@ -966,6 +966,12 @@ class Poll
                 'width' => '35px',
             ),
             array(
+                'text' => $LANG_ADMIN['reset'],
+                'field' => 'reset',
+                'sort' => false,
+                'align' => 'center',
+            ),
+            array(
                 'text' => $LANG_ADMIN['delete'],
                 'field' => 'delete',
                 'sort' => false,
@@ -1120,7 +1126,7 @@ class Poll
         case 'vote_count':
             // add a link there to the list of voters
             $retval = COM_numberFormat($fieldvalue);
-            if ($extras['is_admin']) {
+            if ($extras['is_admin'] && (int)$retval > 0) {
                 $retval = COM_createLink(
                     $retval,
                     Config::get('admin_url') . '/index.php?lv=x&amp;pid='.urlencode($A['pid'])
@@ -1128,9 +1134,22 @@ class Poll
             }
             break;
         case 'results':
+            if ($A['vote_count'] > 0) {
+                $retval = COM_createLink(
+                    '<i class="uk-icon-bar-chart"></i>',
+                    Config::get('admin_url') . '/index.php?results=x&pid=' . urlencode($A['pid'])
+                );
+            } else {
+                $retval = 'n/a';
+            }
+            break;
+        case 'reset':
             $retval = COM_createLink(
-                '<i class="uk-icon-bar-chart"></i>',
-                Config::get('admin_url') . '/index.php?results=x&pid=' . urlencode($A['pid'])
+                '<i class="uk-icon-refresh uk-text-danger"></i>',
+                Config::get('admin_url') . "/index.php?resetpoll&pid={$A['pid']}",
+                array(
+                    'onclick' => "return confirm('{$LANG_POLLS['confirm_poll_reset']}?');",
+                )
             );
             break;
         case 'delete':
@@ -1532,6 +1551,21 @@ class Poll
                 // apparently not an administrator, return ot the public-facing page
                 COM_refresh(Config::get('url') . '/index.php');
             }
+        }
+    }
+
+
+    /**
+     * Delete all the votes and reset answers to zero for the poll.
+     *
+     * @param   string  $pid    Poll ID
+     */
+    public static function deleteVotes($pid)
+    {
+        $Poll = new self($pid);
+        if (!$Poll->isNew()) {
+            Answer::deletePoll($Poll->getID());
+            Voter::deletePoll($Poll->getID());
         }
     }
 

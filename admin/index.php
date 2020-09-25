@@ -57,7 +57,7 @@ if (!plugin_ismoderator_polls2()) {
 // MAIN ========================================================================
 
 $action = '';
-$expected = array('edit','save','delete','lv','delvote','results', 'presults');
+$expected = array('edit','save','delete','lv','delvote','results', 'presults', 'resetpoll');
 foreach($expected as $provided) {
     if (isset($_POST[$provided])) {
         $action = $provided;
@@ -84,19 +84,6 @@ $page = '';
 $title = $LANG25[18];
 
 switch ($action) {
-
-case 'delvote' :
-        if (!isset($_GET['id'])) {
-            $page = Poll::adminList();
-        } elseif (SEC_checktoken()) {
-            $id = COM_applyFilter($_GET['id'],true);
-            Poll::deleteVote($id);
-            $page = Poll::adminList();
-        } else {
-            $page = Poll::adminList();
-        }
-        break;
-
     case 'lv' :
         $title = $LANG25[5];
         $page .= Poll::getInstance($pid)->listVotes();
@@ -140,6 +127,11 @@ case 'delvote' :
     case 'presults':
         echo (new Results($pid))->Print();
         exit;
+        break;
+
+    case 'resetpoll':
+        Poll::deleteVotes($pid);
+        COM_refresh(Config::get('admin_url') . '/index.php');
         break;
 
     case 'delete':
