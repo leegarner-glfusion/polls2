@@ -1085,15 +1085,15 @@ class Poll
                 );
             }
         case 'poll_status':
-            if (Voter::hasVoted($A['pid'])) {
+            if (Voter::hasVoted($A['pid'], $A['group_id'])) {
                 $retval = $LANG_POLLS['s_alreadyvoted'];
             } elseif (
                 $A['closes'] < $extras['_now'] &&
                 $A['opens'] < $extras['_now']
             ) {
-                $retval = $LANG25[33];
+                $retval = $LANG_POLLS['poll_closed'];
             } else {
-                $retval = $LANG_POLLS['poll_closes'];
+                $retval = $LANG25[33];
             }
             break;
         case 'is_open':
@@ -1446,7 +1446,7 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG_POLLS['status'],
+                'text' => $LANG_POLLS['message'],
                 'field' => 'poll_status',
                 'sort' => true,
                 'align' => 'center',
