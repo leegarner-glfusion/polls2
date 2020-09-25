@@ -51,7 +51,7 @@ class Voter
         }
 
         // For Anonymous we only have the cookie and IP address.
-        if (isset($_COOKIE['poll-' . $pid])) {
+        if (isset($_COOKIE[Config::PI_NAME . '-' . $pid])) {
             return true;
         }
 
@@ -99,8 +99,6 @@ class Voter
         } else {
             $userid = (int)$_USER['uid'];
         }
-
-        Poll::getInstance($pid)->updateVoters(1);
 
         // This always does an insert so no need to provide key_field and key_value args
         $sql = "INSERT IGNORE INTO " . DB::table('voters') . " SET

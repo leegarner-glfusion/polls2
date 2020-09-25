@@ -584,11 +584,11 @@ function plugin_enablestatechange_polls2($enable)
 function phpblock_polls2()
 {
     $retval = '';
-    $Polls = Poll::getOpen(true);
+    $Polls = Poll::getOpen(Modes::BLOCK);
     foreach ($Polls as $Poll) {
         $retval .= $Poll->withDisplaytype(Modes::BLOCK)
             ->withShowall(0)
-            ->Render(false, 1);
+            ->Render();
     }
     return $retval;
 }

@@ -20,6 +20,10 @@ namespace Polls\Models;
  */
 class Modes
 {
+    /** All display types.
+     */
+    public const ALL = -1;
+
     /** Displaying normally via the plugin's index.php.
      */
     public const NORMAL = 0;

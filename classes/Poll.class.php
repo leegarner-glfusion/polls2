@@ -40,16 +40,6 @@ class Poll
      * @var string */
     private $dscp = '';
 
-    /** Number of votes cast.
-     * @deprecate
-     * @var integer */
-    private $voters = 0;
-
-    /** Number of questions in the poll.
-     * @deprecate
-     * @var integer */
-    private $questions = 0;
-
     /** Date the poll was added.
      * @var object */
     private $Date = NULL;
@@ -113,6 +103,10 @@ class Poll
     /** Display modifier. 0 for normal, 1 for block, 2 for autotag.
      * @var integer */
     private $disp_type = Modes::NORMAL;
+
+    /** Number of votes cast.
+     * @var integer */
+    private $_vote_count = 0;
 
 
     /**
@@ -182,17 +176,18 @@ class Poll
      * @param   boolean $inblock    True if the in_block flag must be set
      * @return  array       Array of Poll objects
      */
-    public static function getOpen($inblock=false)
+    public static function getOpen($mode=Modes::ALL)
     {
         global $_CONF;
 
-        $in_block = $inblock ? ' AND display = 1' : '';
+        $in_block = $modes == Modes::BLOCK ? ' AND display = 1' : '';
         $sql = "SELECT p.*, 
             (SELECT count(v.id) FROM " . DB::table('voters') . " v
                 WHERE v.pid = p.pid) as vote_count FROM " . DB::table('topics') . " p
             WHERE is_open = 1 $in_block
-            AND '" . $_CONF['_now']->toMySQL(true) . "' BETWEEN opens AND closes
-            ORDER BY pid ASC";
+            AND '" . $_CONF['_now']->toMySQL(true) . "' BETWEEN opens AND closes " .
+            SEC_buildAccessSql('AND', 'group_id') .
+            " ORDER BY pid ASC";
         //echo $sql;die;
         $res = DB_query($sql);
         $retval = array();
@@ -203,9 +198,15 @@ class Poll
     }
 
 
+    /**
+     * Get a count of polls in the system.
+     * Only used for the admin menu, so no permission check is done.
+     *
+     * @return  integer     Number of polls in the system
+     */
     public static function countPolls()
     {
-        $result = DB_query("SELECT COUNT(*) AS cnt FROM " . DB::table('topics') . COM_getPermSQL());
+        $result = DB_query("SELECT COUNT(*) AS cnt FROM " . DB::table('topics'));
         $A = DB_fetchArray ($result);
         return (int)$A['cnt'];
     }
@@ -404,35 +405,67 @@ class Poll
     }
 
 
+    /**
+     * Get the owner ID for this poll.
+     *
+     * @return  integer     User ID of the poll owner
+     */
     public function getOwnerID()
     {
         return (int)$this->owner_id;
     }
 
 
-    public function getVoters()
+    /**
+     * Get the total number of votes cast in this poll.
+     * Read from the `voters` table when retrieving the poll.
+     *
+     * @return  integer     Number of votes case
+     */
+    public function numVotes()
     {
-        return (int)$this->voters;
+        return (int)$this->_vote_count;
     }
 
 
+    /**
+     * Get the question objects for this poll.
+     *
+     * @return  array       Array of Question objects
+     */
     public function getQuestions()
     {
         return $this->_Questions;
     }
 
+
+    /**
+     * Get the comment code setting for this poll.
+     *
+     * @return  integer     Comment code value
+     */
     public function getCommentcode()
     {
         return (int)$this->commentcode;
     }
 
 
+    /**
+     * Get the group ID that can vote in this poll.
+     *
+     * @return  integer     Voting group ID
+     */
     public function getVotingGroup()
     {
         return (int)$this->voting_gid;
     }
 
 
+    /**
+     * Get the group ID that can view the results for this poll.
+     *
+     * @return  integer     Results-viewing group ID
+     */
     public function getResultsGroup()
     {
         return (int)$this->results_gid;
@@ -525,8 +558,9 @@ class Poll
         $this->voting_gid = (int)$A['group_id'];
         $this->results_gid = (int)$A['results_gid'];
         if ($fromdb) {
-            $this->voters = (int)$A['vote_count'];
-            $this->questions = (int)$A['questions'];
+            if (isset($A['vote_count'])) {
+                $this->_vote_count = (int)$A['vote_count'];
+            }
             if (!isset($A['date']) || $A['date'] === NULL) {
                 $this->Date = clone $_CONF['_now'];
             } else {
@@ -791,8 +825,6 @@ class Poll
             date = '" . $this->Date->toMySQL(true) . "',
             opens = '" . $this->Opens->toMySQL(true) . "',
             closes = '" . $this->Closes->toMySQL(true) . "',
-            voters = '" . (int)$this->voters . "',
-            questions = '" . (int)$this->questions . "',
             display = '" . (int)$this->inblock . "',
             is_open = '" . (int)$this->is_open . "',
             hideresults = '" . (int)$this->hideresults . "',
@@ -954,7 +986,7 @@ class Poll
                 LEFT JOIN " . DB::table('voters') . " v
                 ON v.pid = p.pid",
             'query_fields' => array('topic'),
-            'default_filter' => COM_getPermSql('AND'),
+            'default_filter' => 'AND' . self::getPermSql(),
             'group_by' => 'p.pid',
         );
         $extras = array(
@@ -1123,8 +1155,6 @@ class Poll
     {
         global $_CONF, $LANG_POLLS, $LANG01, $_USER, $LANG25, $_IMAGE_TYPE;
 
-        USES_lib_comment();
-
         $filterS = new \sanitizer();
         $filterS->setPostmode('text');
 
@@ -1169,7 +1199,7 @@ class Poll
             $poll->set_var(array(
                 'poll_id' => $this->pid,
                 'old_pid' => $this->old_pid,
-                'num_votes' => COM_numberFormat($this->voters),
+                'num_votes' => COM_numberFormat($this->_vote_count),
                 'poll_vote_url' => Config::get('url') . '/index.php',
                 'ajax_url' => Config::get('url') . '/ajax_handler.php',
                 'polls_url' => Config::get('url') . '/index.php',
@@ -1254,6 +1284,8 @@ class Poll
             $poll->set_var('lang_polltopics', $LANG_POLLS['polltopics']);
             $poll->set_var('poll_notification', $notification);
             if ($this->commentcode >= 0 ) {
+                USES_lib_comment();
+
                 $num_comments = CMT_getCount(Config::PI_NAME, $this->pid);
                 $poll->set_var('num_comments',COM_numberFormat($num_comments));
                 $poll->set_var('lang_comments', $LANG01[3]);
@@ -1337,21 +1369,22 @@ class Poll
             return false;
         }
 
-        // Set a browser cookie to block multiple votes from anonymous
+        // Set a browser cookie to block multiple votes from anonymous.
+        // Done here since we have access to $aid.
         SEC_setCookie(
-            'poll-' . $this->pid,
+            Config::PI_NAME . '-' . $this->pid,
             implode('-', $aid),
             time() + Config::get('pollcookietime')
         );
 
-        // This call to DB-change will properly supress the insertion of quotes around $value in the sql
+        // Record that this user has voted
+        Voter::create($this->pid);
+
+        // Increment the vote count for each answer
         $answers = count($aid);
         for ($i = 0; $i < $answers; $i++) {
             Answer::increment($this->pid, $i, $aid[$i]);
         }
-
-        // Record that this user has voted
-        Voter::create($this->pid);
 
         // Set a return message, if not called via ajax
         if (!COM_isAjax()) {
@@ -1628,38 +1661,13 @@ class Poll
 
 
     /**
-     * Update the voter count for this poll.
-     *
-     * @todo    deprecate
-     * @param   integer $num    Number to add, default = 1
-     * @return  object  $this
-     */
-    public function updateVoters($num = 1)
-    {
-        global $_TABLES;
-
-        $num = (int)$num;
-        DB_change(
-            DB::table('topics'),
-            'voters',
-            "voters + $num",
-            'pid',
-            DB_escapeString($this->pid),
-            '',
-            true
-        );
-        return $this;
-    }
-
-
-    /**
      * Create the SQL clause to check access to view the poll.
      *
      * @param   integer $uid    User ID to check, 0 to ignore
      * @param   string  $pfx    Table prefix
      * @return  string      SQL clause.
      */
-    public static function getPermSQL($uid = 0, $pfx='')
+    public static function getPermSql($uid = 0, $pfx='')
     {
         if ($pfx != '') $pfx = $pfx . '.';
 

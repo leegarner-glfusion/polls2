@@ -194,7 +194,7 @@ class Results
             //'layout_url'    => $_CONF['layout_url'],
             'poll_topic'    => $filter->filterData($this->Poll->getTopic()),
             'poll_id'   => $this->pid,
-            'num_votes' => COM_numberFormat($this->Poll->getVoters()),
+            'num_votes' => COM_numberFormat($this->Poll->numVotes()),
             'lang_votes' => $LANG_POLLS['votes'],
             'admin_url' => Config::get('admin_url') . '/index.php',
             'polls_url' => $this->isAdmin ? '' : Config::get('url') . '/index.php',

@@ -44,8 +44,6 @@ $_SQL[DB::key('topics')] = "CREATE TABLE " . DB::table('topics') . " (
   `pid` varchar(128) NOT NULL,
   `topic` varchar(255) DEFAULT NULL,
   `description` text,
-  `voters` mediumint(8) unsigned DEFAULT NULL,
-  `questions` int(11) NOT NULL DEFAULT '0',
   `date` datetime DEFAULT NULL,
   `opens` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `closes` datetime NOT NULL DEFAULT '9999-12-31 23:59:59',
