@@ -560,7 +560,7 @@ class Poll
         //$this->login_required = isset($A['login_required']) && $A['login_required'] ? 1 : 0;
         $this->hideresults = isset($A['hideresults']) && $A['hideresults'] ? 1 : 0;
         $this->commentcode = (int)$A['commentcode'];
-        $this->owner_id = (int)$A['owner_id'];
+        $this->setOwner($A['owner_id']);
         $this->voting_gid = (int)$A['group_id'];
         $this->results_gid = (int)$A['results_gid'];
         if ($fromdb) {
