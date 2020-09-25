@@ -136,6 +136,7 @@ class Poll
             $this->voting_gid = Config::get('def_voting_gid');
             $this->results_gid = Config::get('def_results_gid');
             $this->setID(COM_makeSid());
+            $this->setOwner();
         }
         $this->_Questions = Question::getByPoll($this->pid);
     }
@@ -266,8 +267,13 @@ class Poll
      * @param   integer $uid    User ID of poll owner
      * @return  object  $this
      */
-    public function setOwner($uid)
+    public function setOwner($uid = 0)
     {
+        global $_USER;
+
+        if ($uid == 0) {
+            $uid = $_USER['uid'];
+        }
         $this->owner_id = (int)$uid;
         return $this;
     }
