@@ -127,7 +127,7 @@ case 'votebutton':
     // Get the answer array and check that the number is right, and the user hasn't voted
     $aid = (isset($_POST['aid']) && is_array($_POST['aid'])) ? $_POST['aid'] : array();
     if ($Poll->alreadyVoted()) {
-        COM_setMsg("Your vote has already been recorded.");
+        COM_setMsg($LANG_POLL['alreadyvoted'], 'error', true);
         COM_refresh(Config::get('url') . '/index.php');
     } else {
         if (count($aid) == $Poll->numQuestions()) {
@@ -137,6 +137,7 @@ case 'votebutton':
                 COM_refresh(Config::get('url') . '/index.php');
             }
         } else {
+            $page .= COM_showMessageText($LANG_POLLS['answer_all'], '', true, 'error');
             $page .= $Poll->withSelections($aid)->Render();
         }
     }
@@ -162,19 +163,16 @@ default:
             $eMsg = $LANG_POLLS['answer_all'] . ' "' . $filter->filterData($Poll->getTopic()) . '"';
             $page .= COM_showMessageText($eMsg,$LANG_POLLS['not_saved'],true,'error');
         }
-        if (!$Poll->isOpen()) {
-            $aid = -1; // poll closed - show result
-        }
-        if (
-            !$Poll->alreadyVoted()
-            && $aid != -1
-        ) {
-            $page .= $Poll->Render();
-        } else {
+        if (!$Poll->isOpen() && $Poll->canViewResults()) {
             $page .= (new Results($Poll->getID()))
                 ->withCommentMode($mode)
                 ->withCommentOrder($order)
                 ->Render();
+        } elseif ($Poll->canVote()) {
+            $page .= $Poll->Render();
+        } else {
+            COM_setMsg($LANG_POLLS['deny_msg'], 'error', true);
+            COM_refresh(Config::get('url') . '/index.php');
         }
     } else {
         $title = $LANG_POLLS['pollstitle'];
