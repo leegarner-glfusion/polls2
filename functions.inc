@@ -1055,16 +1055,18 @@ function plugin_getconfigelementhelp_polls2($type, $option, $doclang = 'english'
     global $_CONF;
 
     $retval = '';
-
-    $baseUrl = $_CONF['site_url'];
-    $cfg = 'docs/' . $doclang . '/polls.html';
-    if (@file_exists($_CONF['path_html'] . $cfg)) {
-        $descUrl = $baseUrl . '/' . $cfg;
+    if ($doclang !== 'english') {
+        $langs = array($doclang, 'english');
     } else {
-        $descUrl = $baseUrl . '/docs/english/polls.html';
+        $langs = array($doclang);
     }
-    $retval = $descUrl;
-
+    foreach ($langs as $doclang) {
+        $file = Config::PI_NAME . '/docs/' . $doclang . '/config.html';
+        if (file_exists($_CONF['path_html'] . '/' . $file)) {
+            $retval = $_CONF['site_url'] . '/' . $file;
+            break;
+        }
+    }
     return array($retval,0);
 }
 
