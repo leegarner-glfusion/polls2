@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-30 15:21-0700\n"
+"POT-Creation-Date: 2020-09-30 16:11-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,9 +22,9 @@ msgstr ""
 #: public_html/index.php:131 classes/Poll.class.php:1098
 #: classes/Poll.class.php:1398 classes/Views/Results.class.php:178
 #: classes/Poll.class.php:1106 classes/Poll.class.php:1415
-#: classes/Views/Results.class.php:177 public_html/index.php:131
+#: classes/Views/Results.class.php:177
 msgid "You have already voted"
-msgstr ""
+msgstr "Sie haben bereits abgestimmt"
 
 #: functions.inc:404 functions.inc:400 classes/Poll.class.php:1234
 #: functions.inc:407
@@ -46,15 +46,15 @@ msgstr "Top 10 der Umfragen"
 #: functions.inc:435 functions.inc:431 functions.inc:438
 msgid ""
 "It appears that there are no polls on this site or no one has ever voted."
-msgstr ""
+msgstr "Es wurden noch keine Umfragen erstellt."
 
 #: functions.inc:456 functions.inc:452 functions.inc:459
 msgid "Polls (Answers) in the system"
-msgstr ""
+msgstr "Anzahl Umfragen (Stimmen)"
 
 #: functions.inc:126
 msgid "Polls2"
-msgstr ""
+msgstr "Umfragen"
 
 #: classes/Poll.class.php:679 classes/Poll.class.php:687
 msgid "Description"
@@ -64,34 +64,34 @@ msgstr "Beschreibung"
 #: classes/Poll.class.php:953 classes/Poll.class.php:700
 #: classes/Poll.class.php:961
 msgid "Poll Opens"
-msgstr ""
+msgstr "Umfrage wird geöffnet"
 
 #: classes/Poll.class.php:692 classes/Poll.class.php:956
 #: classes/Poll.class.php:959 classes/Poll.class.php:701
 #: classes/Poll.class.php:967
 msgid "Poll Closes"
-msgstr ""
+msgstr "Umfrage geschlossen"
 
 #: classes/Poll.class.php:709 classes/Poll.class.php:717
 msgid "Voting Group"
-msgstr ""
+msgstr "Abstimmungsgruppe"
 
 #: classes/Poll.class.php:710 classes/Poll.class.php:718
 msgid "Results Group"
-msgstr ""
+msgstr "Ergebnisgruppe"
 
 #: classes/Poll.class.php:716 classes/Poll.class.php:724
 msgid "Date Picker"
-msgstr ""
+msgstr "Datumsauswahl"
 
 #: classes/Poll.class.php:717 classes/Poll.class.php:725
 msgid "Time Picker"
-msgstr ""
+msgstr "Zeitwähler"
 
 #: classes/Poll.class.php:806 classes/Poll.class.php:809
 #: classes/Poll.class.php:818
 msgid "Error: A poll name is required"
-msgstr ""
+msgstr "Fehler: Ein Umfragenname ist erforderlich."
 
 #: classes/Poll.class.php:938 classes/Poll.class.php:1089
 #: classes/Poll.class.php:1267 classes/Poll.class.php:941
@@ -99,135 +99,138 @@ msgstr ""
 #: classes/Poll.class.php:949 classes/Poll.class.php:1100
 #: classes/Poll.class.php:1281
 msgid "Results"
-msgstr ""
+msgstr "Ergebnisse"
 
 #: classes/Poll.class.php:1084 classes/Poll.class.php:1237
 #: classes/Poll.class.php:1087 classes/Poll.class.php:1241
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1251
 msgid "Vote"
-msgstr ""
+msgstr "Abstimmen"
 
 #: classes/Poll.class.php:1100 classes/Poll.class.php:1103
 #: classes/Poll.class.php:1111
 msgid "Poll is Closed"
-msgstr ""
+msgstr "Diese Umfrage ist derzeit geschlossen."
 
 #: classes/Poll.class.php:1152 classes/Poll.class.php:1155
 #: classes/Poll.class.php:1163
 msgid "Are you sure you want to delete all of the results for this poll?"
-msgstr ""
+msgstr "Möchten Sie wirklich alle Ergebnisse für diese Umfrage löschen?"
 
 #: classes/Poll.class.php:1245 classes/Poll.class.php:1249
 #: classes/Poll.class.php:1259
 msgid "Start Poll"
-msgstr ""
+msgstr "Umfrage starten"
 
 #: classes/Poll.class.php:1311 classes/Poll.class.php:1315
 #: classes/Views/Results.class.php:295 classes/Poll.class.php:1332
-#: classes/Views/Results.class.php:295
 msgid "Other polls"
-msgstr ""
+msgstr "Weitere Umfragen"
 
 #: classes/Poll.class.php:1470 classes/Poll.class.php:1474
 #: classes/Poll.class.php:1491
+#, fuzzy
 msgid "message"
-msgstr ""
+msgstr "Botschaft"
 
 #: classes/Poll.class.php:1483 public_html/index.php:58
 #: public_html/index.php:182 classes/Poll.class.php:1487
-#: classes/Poll.class.php:1504 public_html/index.php:58
-#: public_html/index.php:182
+#: classes/Poll.class.php:1504
 msgid "Polls in System"
-msgstr ""
+msgstr "Umfragen im System"
 
 #: classes/Poll.class.php:1612 classes/Poll.class.php:1616
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
-#: classes/Poll.class.php:1634 classes/Views/Results.class.php:360
+#: classes/Poll.class.php:1634
 msgid "User Name"
-msgstr ""
+msgstr "Benutzername"
 
 #: classes/Poll.class.php:1617 classes/Poll.class.php:1621
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
-#: classes/Poll.class.php:1639 classes/Views/Results.class.php:365
+#: classes/Poll.class.php:1639
 msgid "IP Address"
-msgstr ""
+msgstr "IP-Adresse"
 
 #: classes/Poll.class.php:1622 classes/Poll.class.php:1626
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
-#: classes/Poll.class.php:1644 classes/Views/Results.class.php:370
+#: classes/Poll.class.php:1644
 msgid "Date Voted"
-msgstr ""
+msgstr "Abgestimmt am"
 
 #: public_html/index.php:141 public_html/index.php:164
-#: public_html/ajax_handler.php:74 public_html/ajax_handler.php:74
-#: public_html/index.php:141 public_html/index.php:164
+#: public_html/ajax_handler.php:74
 msgid "Please answer all remaining questions"
-msgstr ""
+msgstr "Bitte alle übrigen Fragen beantworten"
 
-#: public_html/index.php:165 public_html/index.php:165
+#: public_html/index.php:165
 msgid "Result not saved"
-msgstr ""
+msgstr "Ergebnis nicht gespeichert"
 
-#: public_html/index.php:176 public_html/index.php:176
+#: public_html/index.php:176
 msgid ""
 "Access to this poll is denied. Either the poll has been moved/removed or you "
 "do not have sufficient permissions."
 msgstr ""
+"Der Zugang zu dieser Umfrage wird verweigert. Entweder wurde die Umfrage "
+"verschoben, entfernt, oder Du verfügst nicht über ausreichende "
+"Berechtigungen."
 
-#: admin/ajax.php:26 classes/Poll.class.php:625 admin/ajax.php:26
+#: admin/ajax.php:26 classes/Poll.class.php:625
 msgid "Access Denied"
-msgstr ""
+msgstr "Kein Zugang"
 
-#: admin/ajax.php:68 admin/ajax.php:68
+#: admin/ajax.php:68
 msgid "Item(s) have been updated"
-msgstr ""
+msgstr "Artikel wurden aktualisiert"
 
-#: admin/ajax.php:68 admin/ajax.php:68
+#: admin/ajax.php:68
 msgid "Item(s) are unchanged"
-msgstr ""
+msgstr "Artikel sind unverändert"
 
 #: classes/Poll.class.php:718 classes/Poll.class.php:726
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: classes/Poll.class.php:719 classes/Poll.class.php:727
 msgid "Poll Questions"
-msgstr ""
+msgstr "Umfrage Fragen"
 
 #: classes/Poll.class.php:720 classes/Poll.class.php:728
 msgid "Permissions"
-msgstr ""
+msgstr "Berechtigungen"
 
 #: classes/Poll.class.php:1236 classes/Views/Results.class.php:206
 #: classes/Poll.class.php:1246 classes/Views/Results.class.php:205
 msgid "Back to List"
-msgstr ""
+msgstr "Zurück zur Liste"
 
 #: classes/Poll.class.php:1422 public_html/ajax_handler.php:96
-#: classes/Poll.class.php:1439 public_html/ajax_handler.php:96
+#: classes/Poll.class.php:1439
 msgid "Your vote was saved for the poll"
-msgstr ""
+msgstr "Deine Stimme wurde gespeichert für die Umfrage"
 
 #: classes/Views/Results.class.php:171 classes/Views/Results.class.php:180
 #: classes/Views/Results.class.php:170 classes/Views/Results.class.php:179
 msgid "Poll results will be available only after the Poll has closed."
 msgstr ""
+"Die Umfrage-Ergebnisse stehen erst nach dem schließen der Umfrage zur "
+"Verfügung."
 
 #: classes/Views/Results.class.php:205 classes/Views/Results.class.php:204
 msgid "Early results, poll is open"
-msgstr ""
+msgstr "Frühe Ergebnisse, Umfrage ist noch offen."
 
-#: polls2.php:32 polls2.php:32
+#: polls2.php:32
 msgid "Polls v2"
 msgstr ""
 
 #: classes/Menu.class.php:38 classes/Poll.class.php:1609
 msgid "List All"
-msgstr ""
+msgstr "Listen Sie alle auf"
 
 #: classes/Menu.class.php:43 classes/Poll.class.php:1613
 msgid "Create New"
-msgstr ""
+msgstr "Erstelle neu"
 
 #: classes/Menu.class.php:47 classes/Poll.class.php:1617
 msgid "Admin Home"
@@ -235,7 +238,7 @@ msgstr ""
 
 #: classes/Menu.class.php:62 admin/index.php:85 admin/index.php:152
 msgid "Polls Administration"
-msgstr ""
+msgstr "Liste der Umfragen"
 
 #: classes/Menu.class.php:68 classes/Poll.class.php:1628
 #: classes/Poll.class.php:1656 classes/Views/Results.class.php:382
@@ -243,32 +246,36 @@ msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
 msgstr ""
+"Um eine Umfrage zu bearbeiten oder zu löschen, auf das Bearbeiten-Icon "
+"klicken. Um eine neue Umfrage zu eröffnen, bitte auf \"Neu anlegen\" klicken."
 
 #: classes/Poll.class.php:608 admin/index.php:89 admin/index.php:107
 msgid "Edit Poll"
-msgstr ""
+msgstr "Umfrage-Editor"
 
 #: classes/Poll.class.php:629
 msgid "You are trying to access a poll to which do not have access."
 msgstr ""
+"Du versuchst auf eine Umfrage zuzugreifen, für die Du keine Berechtigung "
+"hast."
 
 #: classes/Poll.class.php:630
 msgid "This attempt has been logged."
-msgstr ""
+msgstr "Dieser Versuch wurde aufgezeichnet. "
 
 #: classes/Poll.class.php:632
 #, php-format
 msgid "Please %s go back to the poll administration screen."
-msgstr ""
+msgstr "Bitte %s gehe zurück zur Umfrage-Verwaltung."
 
 #: classes/Poll.class.php:639 classes/Poll.class.php:647
 #: classes/Poll.class.php:986 classes/Poll.class.php:1169
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: classes/Poll.class.php:642 classes/Poll.class.php:648
 msgid "Are you sure you want to delete this item?"
-msgstr ""
+msgstr "Möchten Sie diesen Artikel wirklich löschen?"
 
 #: classes/Poll.class.php:679
 msgid "Poll ID"
@@ -276,99 +283,107 @@ msgstr ""
 
 #: classes/Poll.class.php:682
 msgid "Do not use spaces"
-msgstr ""
+msgstr "Verwenden Sie keine Leerzeichen."
 
 #: classes/Poll.class.php:683 classes/Poll.class.php:938
 #: classes/Poll.class.php:1474
 msgid "Topic"
-msgstr ""
+msgstr "Thema"
 
 #: classes/Poll.class.php:685
 msgid "Mode"
-msgstr ""
+msgstr "Modus"
 
 #: classes/Poll.class.php:689
 msgid "Appears on Pollblock"
-msgstr ""
+msgstr "Erscheint im Umfrageblock"
 
 #: classes/Poll.class.php:690 classes/Poll.class.php:973
 #: classes/Poll.class.php:1113
 msgid "Open for Voting"
-msgstr ""
+msgstr "Offen für Abstimmungen"
 
 #: classes/Poll.class.php:691
 msgid "Hide results while poll is open"
-msgstr ""
+msgstr "Ergebnisse ausblenden, während die Umfrage geöffnet ist?"
 
 #: classes/Poll.class.php:692
+#, fuzzy
 msgid "While the poll is open, only the owner &amp; root can see the results"
 msgstr ""
+"Während die Umfrage geöffnet ist, können nur der Eigentümer und Root die "
+"Ergebnisse sehen"
 
 #: classes/Poll.class.php:694
 msgid "The topic will be only displayed if there are more than 1 questions."
-msgstr ""
+msgstr "Das Thema wird nur angezeigt, wenn mehr als eine Frage vorhanden ist."
 
 #: classes/Poll.class.php:711
 msgid "Access Rights"
-msgstr ""
+msgstr "Zugangsrechte"
 
 #: classes/Poll.class.php:712
 msgid "Owner"
-msgstr ""
+msgstr "Inhaber"
 
 #: classes/Poll.class.php:721
 msgid "Answers / Votes / Remark"
-msgstr ""
+msgstr "Antworten / Stimmen / Anmerkung"
 
 #: classes/Poll.class.php:722
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: classes/Poll.class.php:723
 msgid "Cancel"
-msgstr ""
+msgstr "Stornieren"
 
 #: classes/Poll.class.php:741 classes/Poll.class.php:756
+#: classes/Poll.class.php:1236
 msgid "Question"
-msgstr ""
+msgstr "Frage"
 
 #: classes/Poll.class.php:757 classes/Views/Results.class.php:220
 msgid "To remove this question from the poll, remove its question text"
 msgstr ""
+"Entfernen Sie den Fragentext, um diese Frage aus der Umfrage zu entfernen."
 
 #: classes/Poll.class.php:931 classes/Poll.class.php:1289
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #: classes/Poll.class.php:943
-msgid "Voteers"
-msgstr ""
+msgid "Voters"
+msgstr "Wähler"
 
 #: classes/Poll.class.php:955 classes/Poll.class.php:1485
 msgid "Poll Created"
-msgstr ""
+msgstr "Umfrage erstellt"
 
 #: classes/Poll.class.php:980
 msgid "Reset"
-msgstr ""
+msgstr "Zurücksetzen"
 
 #: classes/Poll.class.php:1000
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above"
 msgstr ""
+"Um eine Umfrage zu ändern oder zu löschen, klicken Sie auf das "
+"Bearbeitungssymbol der Umfrage. Um eine neue Umfrage zu erstellen, klicken "
+"Sie oben auf \"Neu erstellen\"."
 
 #: classes/Poll.class.php:1131
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: classes/Poll.class.php:1133
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 #: classes/Poll.class.php:1171
 msgid "Are you sure you want to delete this Poll?"
-msgstr ""
+msgstr "Möchten Sie diese Umfrage wirklich löschen?"
 
 #: classes/Poll.class.php:1172
 msgid ""
@@ -376,52 +391,61 @@ msgid ""
 "and comments that are associated with this Poll will also be permanently "
 "deleted from the database"
 msgstr ""
-
-#: classes/Poll.class.php:1236
-msgid "Questoin"
-msgstr ""
+"Sind Sie absolut sicher, dass Sie diese Umfrage löschen möchten? Alle "
+"Fragen, Antworten und Kommentare, die mit dieser Umfrage verknüpft sind, "
+"werden ebenfalls dauerhaft aus der Datenbank gelöscht."
 
 #: classes/Poll.class.php:1306
 #, php-format
 msgid "This poll has %d more question"
 msgid_plural "This poll has $d more questions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Diese Umfrage hat %d weitere Frage."
+msgstr[1] "Diese Umfrage hat %d weitere Fragen."
 
 #: classes/Poll.class.php:1339 classes/Views/Results.class.php:280
 msgid "comments"
-msgstr ""
+msgstr "Bemerkungen"
 
 #: classes/Views/Results.class.php:210 admin/index.php:113
 msgid "Please enter a Poll ID"
-msgstr ""
+msgstr "Bitte geben Sie eine Umfrage-ID ein"
 
 #: admin/index.php:109
 msgid "Error Missing Field(s)"
-msgstr ""
+msgstr "Fehler: Fehlende Felder."
 
 #: functions.inc:189
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 #: functions.inc:372
 msgid "Coment"
+msgstr "Kommentar"
+
+#: classes/Poll.class.php:692
+msgid "While the poll is open, only the owner and Root can see the results"
 msgstr ""
+"Während die Umfrage geöffnet ist, können nur der Eigentümer und Root die "
+"Ergebnisse sehen"
 
 #: functions.inc:728
-msgid ""
-"HTML: renders a voting block for a Poll on this site.  usage: [poll_vote:"
-"<i>poll_id</i>]"
+#, fuzzy
+msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr ""
+"HTML: Rendert einen Abstimmungsblock für eine Umfrage auf dieser Site. "
+"Verwendung: "
 
-#: functions.inc:731
-msgid ""
-"HTML: renders the results of a Poll on this site.  usage: [poll_result:"
-"<i>poll_id</i>]"
+#: functions.inc:732
+#, fuzzy
+msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr ""
+"HTML: Rendert einen Abstimmungsblock für eine Umfrage auf dieser Site. "
+"Verwendung: "
 
-#: functions.inc:734
+#: functions.inc:736
 msgid ""
-"Link: to a Poll on this site.  link_text defaults to the Poll topic.  usage: "
-"[poll:<i>poll_id</i> {link_text}]"
+"Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
+"Link: zu einer Umfrage auf dieser Seite. link_text verwendet standardmäßig "
+"das Thema Umfrage. Verwendungszweck"
+

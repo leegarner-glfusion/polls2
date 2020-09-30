@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-30 15:21-0700\n"
+"POT-Creation-Date: 2020-09-30 16:33-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,371 +16,415 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1394
 #: public_html/index.php:131 classes/Poll.class.php:1098
 #: classes/Poll.class.php:1398 classes/Views/Results.class.php:178
 #: classes/Poll.class.php:1106 classes/Poll.class.php:1415
-#: classes/Views/Results.class.php:177
+#: classes/Views/Results.class.php:177 classes/Poll.class.php:1106
+#: classes/Poll.class.php:1415 classes/Views/Results.class.php:177
+#: public_html/index.php:131
 msgid "You have already voted"
-msgstr ""
+msgstr "Již jste hlasovali"
 
 #: functions.inc:404 functions.inc:400 classes/Poll.class.php:1234
-#: functions.inc:407
+#: functions.inc:407 classes/Poll.class.php:1234
 msgid "Poll Topic"
-msgstr ""
+msgstr "Téma hlasování"
 
 #: functions.inc:409 classes/Poll.class.php:1249 classes/Poll.class.php:1253
 #: classes/Views/Results.class.php:201 functions.inc:405
 #: classes/Poll.class.php:1263 classes/Poll.class.php:1479
 #: classes/Views/Results.class.php:200 functions.inc:412
+#: classes/Poll.class.php:1263 classes/Poll.class.php:1479
+#: classes/Views/Results.class.php:200
 msgid "Votes"
-msgstr ""
+msgstr "Hlasy"
 
 #: functions.inc:418 functions.inc:434 functions.inc:414 functions.inc:430
 #: functions.inc:421 functions.inc:437
 msgid "Top Ten Polls"
-msgstr ""
+msgstr "Deset nejlepších anket"
 
 #: functions.inc:435 functions.inc:431 functions.inc:438
 msgid ""
 "It appears that there are no polls on this site or no one has ever voted."
 msgstr ""
+"Zdá se, že na tomto webu nejsou žádné průzkumy veřejného mínění nebo nikdo "
+"nikdy nehlasoval."
 
 #: functions.inc:456 functions.inc:452 functions.inc:459
 msgid "Polls (Answers) in the system"
-msgstr ""
+msgstr "Ankety (odpovědi) v systému"
 
 #: functions.inc:126
 msgid "Polls2"
-msgstr "Umfragen 2"
+msgstr ""
 
 #: classes/Poll.class.php:679 classes/Poll.class.php:687
+#: classes/Poll.class.php:687
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #: classes/Poll.class.php:691 classes/Poll.class.php:950
 #: classes/Poll.class.php:953 classes/Poll.class.php:700
+#: classes/Poll.class.php:961 classes/Poll.class.php:700
 #: classes/Poll.class.php:961
-#, fuzzy
 msgid "Poll Opens"
-msgstr "Umfragen 2"
+msgstr "Anketa se otevře"
 
 #: classes/Poll.class.php:692 classes/Poll.class.php:956
 #: classes/Poll.class.php:959 classes/Poll.class.php:701
+#: classes/Poll.class.php:967 classes/Poll.class.php:701
 #: classes/Poll.class.php:967
 msgid "Poll Closes"
-msgstr ""
+msgstr "Anketa se zavře"
 
 #: classes/Poll.class.php:709 classes/Poll.class.php:717
+#: classes/Poll.class.php:717
 msgid "Voting Group"
-msgstr ""
+msgstr "Hlasovací skupina"
 
 #: classes/Poll.class.php:710 classes/Poll.class.php:718
+#: classes/Poll.class.php:718
 msgid "Results Group"
-msgstr ""
+msgstr "Skupina výsledků"
 
 #: classes/Poll.class.php:716 classes/Poll.class.php:724
+#: classes/Poll.class.php:724
 msgid "Date Picker"
-msgstr ""
+msgstr "Výběr data"
 
 #: classes/Poll.class.php:717 classes/Poll.class.php:725
+#: classes/Poll.class.php:725
 msgid "Time Picker"
-msgstr ""
+msgstr "Výběr času"
 
 #: classes/Poll.class.php:806 classes/Poll.class.php:809
-#: classes/Poll.class.php:818
+#: classes/Poll.class.php:818 classes/Poll.class.php:818
 msgid "Error: A poll name is required"
-msgstr ""
+msgstr "Chyba: Je vyžadován název ankety"
 
 #: classes/Poll.class.php:938 classes/Poll.class.php:1089
 #: classes/Poll.class.php:1267 classes/Poll.class.php:941
 #: classes/Poll.class.php:1092 classes/Poll.class.php:1271
 #: classes/Poll.class.php:949 classes/Poll.class.php:1100
-#: classes/Poll.class.php:1281
+#: classes/Poll.class.php:1281 classes/Poll.class.php:949
+#: classes/Poll.class.php:1100 classes/Poll.class.php:1281
 msgid "Results"
-msgstr ""
+msgstr "Výsledky"
 
 #: classes/Poll.class.php:1084 classes/Poll.class.php:1237
 #: classes/Poll.class.php:1087 classes/Poll.class.php:1241
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1251
+#: classes/Poll.class.php:1095 classes/Poll.class.php:1251
 msgid "Vote"
-msgstr ""
+msgstr "Hlasovat"
 
 #: classes/Poll.class.php:1100 classes/Poll.class.php:1103
-#: classes/Poll.class.php:1111
+#: classes/Poll.class.php:1111 classes/Poll.class.php:1111
 msgid "Poll is Closed"
-msgstr ""
+msgstr "Anketa je uzavřena"
 
 #: classes/Poll.class.php:1152 classes/Poll.class.php:1155
-#: classes/Poll.class.php:1163
+#: classes/Poll.class.php:1163 classes/Poll.class.php:1163
 msgid "Are you sure you want to delete all of the results for this poll?"
-msgstr ""
+msgstr "Opravdu chcete smazat všechny výsledky pro tento průzkum?"
 
 #: classes/Poll.class.php:1245 classes/Poll.class.php:1249
-#: classes/Poll.class.php:1259
+#: classes/Poll.class.php:1259 classes/Poll.class.php:1259
 msgid "Start Poll"
-msgstr ""
+msgstr "Spustit hlasování"
 
 #: classes/Poll.class.php:1311 classes/Poll.class.php:1315
 #: classes/Views/Results.class.php:295 classes/Poll.class.php:1332
+#: classes/Poll.class.php:1332 classes/Views/Results.class.php:295
 msgid "Other polls"
-msgstr ""
+msgstr "Další ankety"
 
 #: classes/Poll.class.php:1470 classes/Poll.class.php:1474
-#: classes/Poll.class.php:1491
+#: classes/Poll.class.php:1491 classes/Poll.class.php:1491
 msgid "message"
-msgstr ""
+msgstr "zpráva"
 
 #: classes/Poll.class.php:1483 public_html/index.php:58
 #: public_html/index.php:182 classes/Poll.class.php:1487
-#: classes/Poll.class.php:1504
+#: classes/Poll.class.php:1504 classes/Poll.class.php:1504
+#: public_html/index.php:58 public_html/index.php:182
 msgid "Polls in System"
-msgstr ""
+msgstr "Ankety v systému"
 
 #: classes/Poll.class.php:1612 classes/Poll.class.php:1616
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
-#: classes/Poll.class.php:1634
+#: classes/Poll.class.php:1634 classes/Poll.class.php:1634
+#: classes/Views/Results.class.php:360
 msgid "User Name"
-msgstr ""
+msgstr "Uživatelské jméno"
 
 #: classes/Poll.class.php:1617 classes/Poll.class.php:1621
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
-#: classes/Poll.class.php:1639
+#: classes/Poll.class.php:1639 classes/Poll.class.php:1639
+#: classes/Views/Results.class.php:365
 msgid "IP Address"
-msgstr ""
+msgstr "IP adresa"
 
 #: classes/Poll.class.php:1622 classes/Poll.class.php:1626
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
-#: classes/Poll.class.php:1644
+#: classes/Poll.class.php:1644 classes/Poll.class.php:1644
+#: classes/Views/Results.class.php:370
 msgid "Date Voted"
-msgstr ""
+msgstr "Datum hlasování"
 
 #: public_html/index.php:141 public_html/index.php:164
-#: public_html/ajax_handler.php:74
+#: public_html/ajax_handler.php:74 public_html/ajax_handler.php:74
+#: public_html/index.php:141 public_html/index.php:164
 msgid "Please answer all remaining questions"
-msgstr ""
+msgstr "Odpovězte prosím na všechny zbývající otázky"
 
-#: public_html/index.php:165
+#: public_html/index.php:165 public_html/index.php:165
 msgid "Result not saved"
-msgstr ""
+msgstr "Výsledek nebyl uložen"
 
-#: public_html/index.php:176
+#: public_html/index.php:176 public_html/index.php:176
 msgid ""
 "Access to this poll is denied. Either the poll has been moved/removed or you "
 "do not have sufficient permissions."
 msgstr ""
+"Přístup k tomuto průzkumu byl odepřen. Buď byla anketa přesunuta / odstraněna, "
+"nebo nemáte dostatečná oprávnění."
 
-#: admin/ajax.php:26 classes/Poll.class.php:625
+#: admin/ajax.php:26 classes/Poll.class.php:625 classes/Poll.class.php:625
+#: admin/ajax.php:26
 msgid "Access Denied"
-msgstr ""
+msgstr "Přístup odepřen"
 
-#: admin/ajax.php:68
+#: admin/ajax.php:68 admin/ajax.php:68
 msgid "Item(s) have been updated"
-msgstr ""
+msgstr "Položky byly aktualizovány"
 
-#: admin/ajax.php:68
+#: admin/ajax.php:68 admin/ajax.php:68
 msgid "Item(s) are unchanged"
-msgstr ""
+msgstr "Položky se nemění"
 
 #: classes/Poll.class.php:718 classes/Poll.class.php:726
+#: classes/Poll.class.php:726
 msgid "General"
-msgstr ""
+msgstr "Obecné"
 
 #: classes/Poll.class.php:719 classes/Poll.class.php:727
+#: classes/Poll.class.php:727
 msgid "Poll Questions"
-msgstr ""
+msgstr "Ankety"
 
 #: classes/Poll.class.php:720 classes/Poll.class.php:728
+#: classes/Poll.class.php:728
 msgid "Permissions"
-msgstr ""
+msgstr "Oprávnění"
 
 #: classes/Poll.class.php:1236 classes/Views/Results.class.php:206
 #: classes/Poll.class.php:1246 classes/Views/Results.class.php:205
+#: classes/Poll.class.php:1246 classes/Views/Results.class.php:205
 msgid "Back to List"
-msgstr ""
+msgstr "Zpět na seznam"
 
 #: classes/Poll.class.php:1422 public_html/ajax_handler.php:96
-#: classes/Poll.class.php:1439
+#: classes/Poll.class.php:1439 classes/Poll.class.php:1439
+#: public_html/ajax_handler.php:96
 msgid "Your vote was saved for the poll"
-msgstr ""
+msgstr "Váš hlas byl uložen pro hlasování"
 
 #: classes/Views/Results.class.php:171 classes/Views/Results.class.php:180
 #: classes/Views/Results.class.php:170 classes/Views/Results.class.php:179
+#: classes/Views/Results.class.php:170 classes/Views/Results.class.php:179
 msgid "Poll results will be available only after the Poll has closed."
-msgstr ""
+msgstr "Výsledky ankety budou k dispozici až po uzavření ankety."
 
 #: classes/Views/Results.class.php:205 classes/Views/Results.class.php:204
+#: classes/Views/Results.class.php:204
 msgid "Early results, poll is open"
-msgstr ""
+msgstr "Předčasné výsledky, hlasování je otevřené"
 
-#: polls2.php:32
-#, fuzzy
+#: polls2.php:32 polls2.php:32
 msgid "Polls v2"
-msgstr "Umfragen 2"
+msgstr "Ankety v2"
 
 #: classes/Menu.class.php:38 classes/Poll.class.php:1609
+#: classes/Menu.class.php:38 classes/Poll.class.php:1609
 msgid "List All"
-msgstr ""
+msgstr "Zobrazit vše"
 
 #: classes/Menu.class.php:43 classes/Poll.class.php:1613
+#: classes/Menu.class.php:43 classes/Poll.class.php:1613
 msgid "Create New"
-msgstr ""
+msgstr "Vytvořit nový"
 
 #: classes/Menu.class.php:47 classes/Poll.class.php:1617
+#: classes/Menu.class.php:47 classes/Poll.class.php:1617
 msgid "Admin Home"
-msgstr ""
+msgstr "Domovská stránka správce"
 
 #: classes/Menu.class.php:62 admin/index.php:85 admin/index.php:152
+#: classes/Menu.class.php:62 admin/index.php:85 admin/index.php:152
 msgid "Polls Administration"
-msgstr ""
+msgstr "Správa anket"
 
+#: classes/Menu.class.php:68 classes/Poll.class.php:1628
+#: classes/Poll.class.php:1656 classes/Views/Results.class.php:382
 #: classes/Menu.class.php:68 classes/Poll.class.php:1628
 #: classes/Poll.class.php:1656 classes/Views/Results.class.php:382
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
 msgstr ""
+"Chcete-li upravit nebo odstranit anketu, klikněte na ikonu úpravy ankety. "
+"Chcete-li vytvořit nový průzkum, klikněte výše na možnost „Vytvořit nový“."
 
 #: classes/Poll.class.php:608 admin/index.php:89 admin/index.php:107
+#: classes/Poll.class.php:608 admin/index.php:89 admin/index.php:107
 msgid "Edit Poll"
-msgstr ""
+msgstr "Upravit anketu"
 
-#: classes/Poll.class.php:629
+#: classes/Poll.class.php:629 classes/Poll.class.php:629
 msgid "You are trying to access a poll to which do not have access."
-msgstr ""
+msgstr "Pokoušíte se získat přístup k hlasování, ke kterému nemáte přístup."
 
-#: classes/Poll.class.php:630
+#: classes/Poll.class.php:630 classes/Poll.class.php:630
 msgid "This attempt has been logged."
-msgstr ""
+msgstr "Tento pokus byl zaznamenán."
 
-#: classes/Poll.class.php:632
+#: classes/Poll.class.php:632 classes/Poll.class.php:632
 #, php-format
 msgid "Please %s go back to the poll administration screen."
-msgstr ""
+msgstr "Prosím% s vraťte se na obrazovku správy ankety."
 
 #: classes/Poll.class.php:639 classes/Poll.class.php:647
 #: classes/Poll.class.php:986 classes/Poll.class.php:1169
+#: classes/Poll.class.php:639 classes/Poll.class.php:647
+#: classes/Poll.class.php:986 classes/Poll.class.php:1169
 msgid "Delete"
-msgstr ""
+msgstr "Smazat"
 
 #: classes/Poll.class.php:642 classes/Poll.class.php:648
+#: classes/Poll.class.php:642 classes/Poll.class.php:648
 msgid "Are you sure you want to delete this item?"
-msgstr ""
+msgstr "Opravdu chcete tuto položku smazat?"
 
-#: classes/Poll.class.php:679
-#, fuzzy
+#: classes/Poll.class.php:679 classes/Poll.class.php:679
 msgid "Poll ID"
-msgstr "Umfragen 2"
+msgstr "ID ankety"
 
-#: classes/Poll.class.php:682
+#: classes/Poll.class.php:682 classes/Poll.class.php:682
 msgid "Do not use spaces"
-msgstr ""
+msgstr "Nepoužívat mezery"
 
 #: classes/Poll.class.php:683 classes/Poll.class.php:938
-#: classes/Poll.class.php:1474
+#: classes/Poll.class.php:1474 classes/Poll.class.php:683
+#: classes/Poll.class.php:938 classes/Poll.class.php:1474
 msgid "Topic"
-msgstr ""
+msgstr "Téma"
 
-#: classes/Poll.class.php:685
+#: classes/Poll.class.php:685 classes/Poll.class.php:685
 msgid "Mode"
-msgstr ""
+msgstr "Režim"
 
-#: classes/Poll.class.php:689
+#: classes/Poll.class.php:689 classes/Poll.class.php:689
 msgid "Appears on Pollblock"
-msgstr ""
+msgstr "Objeví se na Pollblock"
 
 #: classes/Poll.class.php:690 classes/Poll.class.php:973
-#: classes/Poll.class.php:1113
+#: classes/Poll.class.php:1113 classes/Poll.class.php:690
+#: classes/Poll.class.php:973 classes/Poll.class.php:1113
 msgid "Open for Voting"
-msgstr ""
+msgstr "Otevřít pro hlasování"
 
-#: classes/Poll.class.php:691
+#: classes/Poll.class.php:691 classes/Poll.class.php:691
 msgid "Hide results while poll is open"
-msgstr ""
+msgstr "Skrýt výsledky při otevřeném hlasování"
 
 #: classes/Poll.class.php:692
 msgid "While the poll is open, only the owner &amp; root can see the results"
 msgstr ""
 
-#: classes/Poll.class.php:694
+#: classes/Poll.class.php:694 classes/Poll.class.php:694
 msgid "The topic will be only displayed if there are more than 1 questions."
 msgstr ""
 
-#: classes/Poll.class.php:711
+#: classes/Poll.class.php:711 classes/Poll.class.php:711
 msgid "Access Rights"
 msgstr ""
 
-#: classes/Poll.class.php:712
+#: classes/Poll.class.php:712 classes/Poll.class.php:712
 msgid "Owner"
 msgstr ""
 
-#: classes/Poll.class.php:721
+#: classes/Poll.class.php:721 classes/Poll.class.php:721
 msgid "Answers / Votes / Remark"
 msgstr ""
 
-#: classes/Poll.class.php:722
+#: classes/Poll.class.php:722 classes/Poll.class.php:722
 msgid "Save"
 msgstr ""
 
-#: classes/Poll.class.php:723
+#: classes/Poll.class.php:723 classes/Poll.class.php:723
 msgid "Cancel"
 msgstr ""
 
 #: classes/Poll.class.php:741 classes/Poll.class.php:756
+#: classes/Poll.class.php:1236 classes/Poll.class.php:741
+#: classes/Poll.class.php:756 classes/Poll.class.php:1236
 msgid "Question"
 msgstr ""
 
+#: classes/Poll.class.php:757 classes/Views/Results.class.php:220
 #: classes/Poll.class.php:757 classes/Views/Results.class.php:220
 msgid "To remove this question from the poll, remove its question text"
 msgstr ""
 
 #: classes/Poll.class.php:931 classes/Poll.class.php:1289
+#: classes/Poll.class.php:931 classes/Poll.class.php:1289
 msgid "Edit"
 msgstr ""
 
-#: classes/Poll.class.php:943
-msgid "Voteers"
+#: classes/Poll.class.php:943 classes/Poll.class.php:943
+msgid "Voters"
 msgstr ""
 
+#: classes/Poll.class.php:955 classes/Poll.class.php:1485
 #: classes/Poll.class.php:955 classes/Poll.class.php:1485
 msgid "Poll Created"
 msgstr ""
 
-#: classes/Poll.class.php:980
+#: classes/Poll.class.php:980 classes/Poll.class.php:980
 msgid "Reset"
 msgstr ""
 
-#: classes/Poll.class.php:1000
+#: classes/Poll.class.php:1000 classes/Poll.class.php:1000
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above"
 msgstr ""
 
-#: classes/Poll.class.php:1131
+#: classes/Poll.class.php:1131 classes/Poll.class.php:1131
 msgid "Yes"
 msgstr ""
 
-#: classes/Poll.class.php:1133
+#: classes/Poll.class.php:1133 classes/Poll.class.php:1133
 msgid "No"
 msgstr ""
 
-#: classes/Poll.class.php:1171
+#: classes/Poll.class.php:1171 classes/Poll.class.php:1171
 msgid "Are you sure you want to delete this Poll?"
 msgstr ""
 
-#: classes/Poll.class.php:1172
+#: classes/Poll.class.php:1172 classes/Poll.class.php:1172
 msgid ""
 "Are you absolutely sure you want to delete this Poll? All questions, answers "
 "and comments that are associated with this Poll will also be permanently "
 "deleted from the database"
 msgstr ""
 
-#: classes/Poll.class.php:1236
-msgid "Questoin"
-msgstr ""
-
-#: classes/Poll.class.php:1306
+#: classes/Poll.class.php:1306 classes/Poll.class.php:1306
 #, php-format
 msgid "This poll has %d more question"
 msgid_plural "This poll has $d more questions"
@@ -388,14 +432,16 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: classes/Poll.class.php:1339 classes/Views/Results.class.php:280
+#: classes/Poll.class.php:1339 classes/Views/Results.class.php:280
 msgid "comments"
 msgstr ""
 
 #: classes/Views/Results.class.php:210 admin/index.php:113
+#: classes/Views/Results.class.php:210 admin/index.php:113
 msgid "Please enter a Poll ID"
 msgstr ""
 
-#: admin/index.php:109
+#: admin/index.php:109 admin/index.php:109
 msgid "Error Missing Field(s)"
 msgstr ""
 
@@ -407,20 +453,19 @@ msgstr ""
 msgid "Coment"
 msgstr ""
 
+#: classes/Poll.class.php:692 classes/Poll.class.php:692
+msgid "While the poll is open, only the owner and Root can see the results"
+msgstr ""
+
 #: functions.inc:728
-msgid ""
-"HTML: renders a voting block for a Poll on this site.  usage: [poll_vote:"
-"<i>poll_id</i>]"
+msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr ""
 
-#: functions.inc:731
-msgid ""
-"HTML: renders the results of a Poll on this site.  usage: [poll_result:"
-"<i>poll_id</i>]"
+#: functions.inc:732
+msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr ""
 
-#: functions.inc:734
+#: functions.inc:736
 msgid ""
-"Link: to a Poll on this site.  link_text defaults to the Poll topic.  usage: "
-"[poll:<i>poll_id</i> {link_text}]"
+"Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
