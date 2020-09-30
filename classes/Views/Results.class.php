@@ -341,43 +341,6 @@ class Results
 
 
     /**
-     * Delete a poll.
-     *
-     * @param   string  $pid    ID of poll to delete
-     * @param   boolean $force  True to disregard access, e.g. user is deleted
-     * @return  string          HTML redirect
-     */
-    public static function deletePoll($pid, $force=false)
-    {
-        global $_CONF, $_TABLES, $_USER;
-
-        $Poll = self::getInstance($pid);
-        if (
-            !$Poll->isNew() &&
-            ($force || Poll::hasRights('edit'))
-        ) {
-            $pid = DB_escapeString($pid);
-            DB_delete($_TABLES['polltopics'], 'pid', $pid);
-            DB_delete($_TABLES['pollanswers'], 'pid', $pid);
-            DB_delete($_TABLES['pollquestions'], 'pid', $pid);
-            DB_delete($_TABLES['pollvoters'], 'pid', $pid);
-            DB_delete($_TABLES['comments'], array('sid', 'type'), array($pid,  Config::PI_NAME));
-            PLG_itemDeleted($pid, Config::PI_NAME);
-            if (!$force) {
-                // Don't redirect if this is done as part of user account deletion
-                COM_refresh(Config::get('admin_url') . '/index.php?msg=20');
-            }
-        } else {
-            if (!$force) {
-                COM_accessLog ("User {$_USER['username']} tried to illegally delete poll $pid.");
-                // apparently not an administrator, return ot the public-facing page
-                COM_refresh(Config::get('url') . '/index.php');
-            }
-        }
-    }
-
-
-    /**
      * Create the list of voting records for this poll.
      *
      * @return  string      HTML for voting list
