@@ -146,8 +146,7 @@ class Results
      */
     public function Render()
     {
-        global $_CONF, $_TABLES, $_USER, $_IMAGE_TYPE,
-           $LANG01, $_COM_VERBOSE, $LANG25;
+        global $_CONF, $_USER;
 
         $retval = '';
         $filter = new \sanitizer();
@@ -208,8 +207,9 @@ class Results
 
         if (Poll::hasRights('edit')) {
             $editlink = COM_createLink(
-                $LANG25[27],
-                Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid);
+                MO::_('Please enter a Poll ID'),
+                Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid
+            );
             $poll->set_var(array(
                 'edit_link' => $editlink,
                 'edit_url' => Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid,
@@ -217,7 +217,7 @@ class Results
                     '<i class="uk-icon-edit tooltip"></i>',
                     Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid,
                     array(
-                        'title' => $LANG25[27],
+                        'title' => MO::_('To remove this question from the poll, remove its question text'),
                     )
                 ),
             ) );
@@ -277,7 +277,7 @@ class Results
             USES_lib_comments();
             $num_comments = CMT_getCount(Config::PI_NAME, $this->pid);
             $poll->set_var('num_comments',COM_numberFormat($num_comments));
-            $poll->set_var('lang_comments', $LANG01[3]);
+            $poll->set_var('lang_comments', MO::_('comments'));
             $comment_link = CMT_getCommentLinkWithCount(
                 Config::PI_NAME,
                 $this->pid,
@@ -352,7 +352,7 @@ class Results
      */
     public function listVotes()
     {
-        global $_CONF, $_TABLES, $_IMAGE_TYPE, $LANG_ADMIN, $LANG25, $LANG_ACCESS;
+        global $_CONF;
 
         $retval = '';
         $header_arr = array(
@@ -379,12 +379,12 @@ class Results
         );
         $text_arr = array(
             'has_extras'   => true,
-            'instructions' => $LANG25[19],
+            'instructions' => MO::_('To modify or delete a poll, click on the edit icon of the poll. To create a new poll, click on "Create New" above.'),
             'form_url'     => Config::get('admin_url') . '/index.php?lv=x&amp;pid='.urlencode($this->pid),
         );
 
-        $sql = "SELECT * FROM {$_TABLES['pollvoters']} AS voters
-            LEFT JOIN {$_TABLES['users']} AS users ON voters.uid=users.uid
+        $sql = "SELECT * FROM " . DB::table('voters') . " AS voters
+            LEFT JOIN " . DB::table('users') . " AS users ON voters.uid=users.uid
             WHERE voters.pid='" . DB_escapeString($this->pid) . "'";
 
         $query_arr = array(

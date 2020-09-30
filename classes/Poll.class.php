@@ -602,11 +602,11 @@ class Poll
      */
     public function editPoll($type = 'edit')
     {
-        global $_CONF, $_GROUPS, $_USER, $LANG25, $LANG_ACCESS,
-           $LANG_ADMIN, $MESSAGE;
+        global $_CONF, $_GROUPS, $_USER;
 
         $retval = COM_startBlock(
-            $LANG25[5], '',
+            MO::_('Edit Poll'),
+            '',
             COM_getBlockTemplate ('_admin_block', 'header')
         );
 
@@ -621,23 +621,31 @@ class Poll
             // Get permissions for poll
             if (!self::hasRights('edit')) {
                 // User doesn't have write access...bail
-                $retval .= COM_startBlock ($LANG25[21], '',
-                               COM_getBlockTemplate ('_msg_block', 'header'));
-                $retval .= $LANG25[22];
-                $retval .= COM_endBlock (COM_getBlockTemplate ('_msg_block', 'footer'));
+                $retval .= COM_startBlock (
+                    MO::_('Access Denied'),
+                    '',
+                    COM_getBlockTemplate('_msg_block', 'header')
+                );
+                $retval .= MO::_('You are trying to access a poll to which do not have access.');
+                $retval .= MO::_('This attempt has been logged.');
+                $retval .= '<a href="' . Config::get('admin_url') . '/index.php' . '">' .
+                    MO::_('Please %s go back to the poll administration screen.') .
+                    '</a>';
+                $retval .= COM_endBlock(COM_getBlockTemplate ('_msg_block', 'footer'));
                 COM_accessLog("User {$_USER['username']} tried to illegally submit or edit poll $pid.");
                 return $retval;
             }
             if (!empty($this->owner_id)) {
-                $delbutton = '<input type="submit" value="' . $LANG_ADMIN['delete']
+                $delbutton = '<input type="submit" value="' . MO::_('Delete')
                     . '" name="delete"%s>';
-                $jsconfirm = ' onclick="return confirm(\'' . $MESSAGE[76] . '\');"';
+                $jsconfirm = ' onclick="return confirm(\'' .
+                    MO::_('Are you sure you want to delete this item?') . '\');"';
                 $T->set_var(array(
                     'delete_option' => sprintf($delbutton, $jsconfirm),
                     'delete_option_no_confirmation' => sprintf ($delbutton, ''),
                     'delete_button' => true,
-                    'lang_delete'   => $LANG_ADMIN['delete'],
-                    'lang_delete_confirm' => $MESSAGE[76]
+                    'lang_delete'   => MO::_('Delete'),
+                    'lang_delete_confirm' => MO::_('Are you sure you want to delete this item?'),
                 ) );
             }
             $Questions = Question::getByPoll($this->pid);
@@ -668,22 +676,23 @@ class Poll
         $ownername = COM_getDisplayName($this->owner_id);
         $T->set_var(array(
             'action_url' => Config::get('admin_url') . '/index.php',
-            'lang_pollid' => $LANG25[6],
+            'lang_pollid' => MO::_('Poll ID'),
             'poll_id' => $this->pid,
             'old_pid' => $this->old_pid,
-            'lang_donotusespaces' => $LANG25[7],
-            'lang_topic' => $LANG25[9],
+            'lang_donotusespaces' => MO::_('Do not use spaces'),
+            'lang_topic' => MO::_('Topic'),
             'poll_topic' => htmlspecialchars ($this->topic),
-            'lang_mode' => $LANG25[1],
+            'lang_mode' => MO::_('Mode'),
             'description' => $this->dscp,
             'lang_description' => MO::_('Description'),
             'comment_options' => COM_optionList(DB::table('commentcodes'),'code,name',$this->commentcode),
-            'lang_appearsonhomepage' => $LANG25[8],
-            'lang_openforvoting' => $LANG25[33],
-            'lang_hideresults' => $LANG25[37],
-            //'lang_login_required' => $LANG25[43],
-            'poll_hideresults_explain' => $LANG25[38],
-            'poll_topic_info' => $LANG25[39],
+            'lang_appearsonhomepage' => MO::_('Appears on Pollblock'),
+            'lang_openforvoting' => MO::_('Open for Voting'),
+            'lang_hideresults' => MO::_('Hide results while poll is open'),
+            'poll_hideresults_explain' => MO::_('While the poll is open, only the owner &amp; root can see the results'),
+
+            'poll_topic_info' => MO::_('The topic will be only displayed if there are more than 1 questions.'),
+
             'poll_display' => $this->inblock ? 'checked="checked"' : '',
             'poll_open' => $this->is_open ? 'checked="checked"' : '',
             //'login_req_chk' => $this->login_required ? 'checked="checked"' : '',
@@ -699,9 +708,8 @@ class Poll
             'min_time' => Dates::MIN_TIME,
             'max_time' => Dates::MAX_TIME,
             // user access info
-            'lang_accessrights' => $LANG_ACCESS['accessrights'],
-            'lang_owner' => $LANG_ACCESS['owner'],
-            'lang_openforvoting' => $LANG25[33],
+            'lang_accessrights' => MO::_('Access Rights'),
+            'lang_owner' => MO::_('Owner'),
             'owner_username' => DB_getItem(DB::table('users'), 'username', "uid = {$this->owner_id}"),
             'owner_name' => $ownername,
             'owner' => $ownername,
@@ -710,9 +718,9 @@ class Poll
             'lang_results_group' => MO::_('Results Group'),
             'group_dropdown' => SEC_getGroupDropdown($this->voting_gid, 3),
             'res_grp_dropdown' => SEC_getGroupDropdown($this->results_gid, 3, 'results_gid'),
-            'lang_answersvotes' => $LANG25[10],
-            'lang_save' => $LANG_ADMIN['save'],
-            'lang_cancel' => $LANG_ADMIN['cancel'],
+            'lang_answersvotes' => MO::_('Answers / Votes / Remark'),
+            'lang_save' => MO::_('Save'),
+            'lang_cancel' => MO::_('Cancel'),
             'lang_datepicker' => MO::_('Date Picker'),
             'lang_timepicker' => MO::_('Time Picker'),
             'lang_general' => MO::_('General'),
@@ -730,7 +738,7 @@ class Poll
                 $T->set_var('style', '');
             }
 
-            $T->set_var('question_tab', $LANG25[31] . " $display_id");
+            $T->set_var('question_tab', MO::_('Question') . " $display_id");
             $T->set_var('question_id', $j);
             if (isset($Questions[$j])) {
                 $T->set_var(array(
@@ -744,9 +752,10 @@ class Poll
                 $T->unset_var('hasdata');
                 $T->unset_var('question_text');
             }
-            $T->set_var('lang_question', $LANG25[31] . " $display_id");
-            $T->set_var('lang_saveaddnew', $LANG25[32]);
-
+            $T->set_var(array(
+                'lang_question' => MO::_('Question') . " $display_id",
+                'lang_saveaddnew' => MO::_('To remove this question from the poll, remove its question text'),
+            ) );
             $T->parse('qt','questiontab',true);
 
             for ($i = 0; $i < Config::get('maxanswers'); $i++) {
@@ -913,26 +922,25 @@ class Poll
      */
     public static function adminList()
     {
-        global $_CONF, $_IMAGE_TYPE, $LANG_ADMIN, $LANG25, $LANG_ACCESS;
-
+        global $_CONF;
         $retval = '';
 
         // writing the actual list
         $header_arr = array(      # display 'text' and use table field 'field'
             array(
-                'text' => $LANG_ADMIN['edit'],
+                'text' => MO::_('Edit'),
                 'field' => 'edit',
                 'sort' => false,
                 'align' => 'center',
                 'width' => '25px',
             ),
             array(
-                'text' => $LANG25[9],
+                'text' => MO::_('Topic'),
                 'field' => 'topic',
                 'sort' => true,
             ),
             array(
-                'text' => $LANG25[20],
+                'text' => MO::_('Voteers'),
                 'field' => 'vote_count',
                 'sort' => true,
                 'align' => 'center',
@@ -944,7 +952,7 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG25[3],
+                'text' => MO::_('Poll Created'),
                 'field' => 'unixdate',
                 'sort' => true,
                 'align' => 'center',
@@ -962,20 +970,20 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG25[33],
+                'text' => MO::_('Open for Voting'),
                 'field' => 'is_open',
                 'sort' => true,
                 'align' => 'center',
                 'width' => '35px',
             ),
             array(
-                'text' => $LANG_ADMIN['reset'],
+                'text' => MO::_('Reset'),
                 'field' => 'reset',
                 'sort' => false,
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG_ADMIN['delete'],
+                'text' => MO::_('Delete'),
                 'field' => 'delete',
                 'sort' => false,
                 'align' => 'center',
@@ -989,7 +997,7 @@ class Poll
 
         $text_arr = array(
             'has_extras'   => true,
-            'instructions' => $LANG25[19],
+            'instructions' => MO::_('To modify or delete a poll, click on the edit icon of the poll. To create a new poll, click on "Create New" above'),
             'form_url'     => Config::get('admin_url') . '/index.php',
         );
 
@@ -1031,7 +1039,7 @@ class Poll
      */
     public static function getListField($fieldname, $fieldvalue, $A, $icon_arr, $extras)
     {
-        global $_CONF, $LANG25, $LANG_ACCESS, $LANG_ADMIN, $_USER;
+        global $_CONF, $_USER;
 
         $retval = '';
 
@@ -1102,7 +1110,7 @@ class Poll
             ) {
                 $retval = MO::_('Poll is Closed');
             } else {
-                $retval = $LANG25[33];
+                $retval = MO::_('Open for Voting');
             }
             break;
         case 'is_open':
@@ -1120,9 +1128,9 @@ class Poll
             break;
         case 'display':
             if ($A['display'] == 1) {
-                $retval = $LANG25[25];
+                $retval = MO::_('Yes');
             } else {
-                $retval = $LANG25[26];
+                $retval = MO::_('No');
             }
             break;
         case 'voters':
@@ -1158,8 +1166,10 @@ class Poll
             );
             break;
         case 'delete':
-            $attr['title'] = $LANG_ADMIN['delete'];
-            $attr['onclick'] = "return doubleconfirm('" . $LANG25[41] . "','" . $LANG25[42] . "');";
+            $attr['title'] = MO::_('Delete');
+            $attr['onclick'] = "return doubleconfirm('" .
+                MO::_('Are you sure you want to delete this Poll?') .
+                "','" . MO::_('Are you absolutely sure you want to delete this Poll? All questions, answers and comments that are associated with this Poll will also be permanently deleted from the database') . "');";
             $retval = COM_createLink(
                 '<i class="uk-icon-remove uk-text-danger"></i>',
                 Config::get('admin_url') . '/index.php'
@@ -1182,7 +1192,7 @@ class Poll
      */
     public function Render()
     {
-        global $_CONF, $LANG01, $_USER, $LANG25, $_IMAGE_TYPE;
+        global $_CONF, $_USER;
 
         $filterS = new \sanitizer();
         $filterS->setPostmode('text');
@@ -1221,9 +1231,9 @@ class Poll
                 'comments' => 'pollcomments.thtml',
             ) );
             if ($nquestions > 1) {
-                $poll->set_var('lang_poll_topic', $LANG25[34]);
+                $poll->set_var('lang_poll_topic', MO::_('Poll Topic'));
                 $poll->set_var('poll_topic', $filterS->filterData($this->topic));
-                $poll->set_var('lang_question', $LANG25[31].':');
+                $poll->set_var('lang_question', MO::_('Questoin') . ':');
             }
             $poll->set_var(array(
                 'poll_id' => $this->pid,
@@ -1276,7 +1286,7 @@ class Poll
 
             if (self::hasRights('edit')) {
                 $editlink = COM_createLink(
-                    $LANG25[27],
+                    MO::_('Edit'),
                     Config::get('admin_url') . '/index.php?edit=x&amp;pid=' . $this->pid
                 );
                 $poll->set_var('edit_link', $editlink);
@@ -1291,7 +1301,14 @@ class Poll
                 $notification = "";
                 if (!$this->disp_showall) {
                     $nquestions--;
-                    $notification = $LANG25[35] . " $nquestions " . $LANG25[36];
+                    $notification = sprintf(
+                        MO::_n(
+                            'This poll has %d more question',
+                            'This poll has $d more questions',
+                            $nquestions
+                        ),
+                        $nquestions
+                    );
                     $nquestions = 1;
                 } else {
                     $poll->set_var('lang_question_number', " ". ($j+1).":");
@@ -1319,7 +1336,7 @@ class Poll
 
                 $num_comments = CMT_getCount(Config::PI_NAME, $this->pid);
                 $poll->set_var('num_comments',COM_numberFormat($num_comments));
-                $poll->set_var('lang_comments', $LANG01[3]);
+                $poll->set_var('lang_comments', MO::_('comments'));
 
                 $comment_link = CMT_getCommentLinkWithCount(
                     Config::PI_NAME,
@@ -1446,7 +1463,7 @@ class Poll
      */
     public static function listPolls()
     {
-        global $_CONF, $_USER, $LANG25, $LANG_LOGIN;
+        global $_CONF, $_USER;
 
         $retval = '';
 
@@ -1454,18 +1471,18 @@ class Poll
 
         $header_arr = array(
             array(
-                'text' => $LANG25[9],
+                'text' => MO::_('Topic'),
                 'field' => 'topic',
                 'sort' => true,
             ),
             array(
-                'text' => $LANG25[20],
+                'text' => MO::_('Votes'),
                 'field' => 'vote_count',
                 'sort' => true,
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG25[3],
+                'text' => MO::_('Poll Created'),
                 'field' => 'unixdate',
                 'sort' => true,
                 'align' => 'center',
@@ -1583,21 +1600,22 @@ class Poll
      */
     public function listVotes()
     {
-        global $_CONF, $_IMAGE_TYPE, $LANG_ADMIN, $LANG25, $LANG_ACCESS;
+        global $_CONF;
 
         $retval = '';
         $menu_arr = array (
             array(
                 'url' => Config::get('admin_url') . '/index.php',
-                'text' => $LANG_ADMIN['list_all'],
+                'text' => MO::_('List All'),
             ),
             array(
                 'url' => Config::get('admin_url') . '/index.php?edit=x',
-                'text' => $LANG_ADMIN['create_new'],
+                'text' => MO::_('Create New'),
             ),
             array(
                 'url' => $_CONF['site_admin_url'],
-                'text' => $LANG_ADMIN['admin_home']),
+                'text' => MO::_('Admin Home'),
+            ),
         );
 
         $retval .= COM_startBlock(
@@ -1607,7 +1625,7 @@ class Poll
 
         $retval .= ADMIN_createMenu(
             $menu_arr,
-            $LANG25[19],
+            MO::_('To modify or delete a poll, click on the edit icon of the poll. To create a new poll, click on "Create New" above.'),
             plugin_geticon_polls2()
         );
 
@@ -1635,7 +1653,7 @@ class Poll
         );
         $text_arr = array(
             'has_extras'   => true,
-            'instructions' => $LANG25[19],
+            'instructions' => MO::_('To modify or delete a poll, click on the edit icon of the poll. To create a new poll, click on "Create New" above.'),
             'form_url'     => Config::get('admin_url') . '/index.php?lv=x&amp;pid='.urlencode($this->pid),
         );
 

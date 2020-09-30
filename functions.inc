@@ -165,7 +165,7 @@ function plugin_getcommenturlid_polls2()
  */
 function plugin_savecomment_polls2($title, $comment, $id, $pid, $postmode)
 {
-    global $_CONF, $_TABLES, $LANG03, $_USER;
+    global $_CONF, $_TABLES, $_USER;
 
     $retval = '';
 
@@ -180,8 +180,15 @@ function plugin_savecomment_polls2($title, $comment, $id, $pid, $postmode)
 
     $ret = CMT_saveComment ($title, $comment, $id, $pid, Config::PI_NAME, $postmode);
     if ($ret > 0) {
-        $retval .= CMT_commentForm ($title, $comment, $id, $pid, Config::PI_NAME,
-                                   $LANG03[14], $postmode);
+        $retval .= CMT_commentForm(
+            $title,
+            $comment,
+            $id,
+            $pid,
+            Config::PI_NAME,
+            MO::_('Preview'),
+            $postmode
+        );
     } else { // success
         $retval = COM_refresh(Config::get('url') . "/index.php?pid=$id");
     }
@@ -292,7 +299,7 @@ function plugin_searchtypes_polls2()
 function plugin_dopluginsearch_polls2(
     $query, $dateStart, $dateEnd, $topic, $type, $author, $keyType, $page, $perpage
 ) {
-    global $_CONF, $_DB_dbms, $LANG09, $_USER;
+    global $_CONF, $_DB_dbms, $_USER;
 
     // Make sure the query is SQL safe
     $query = trim(DB_escapeString($query));
@@ -346,7 +353,7 @@ function plugin_dopluginsearch_comment_polls2(
     $query, $datestart, $dateend, $topic, $type, $author, $keyType, $page, $perpage
 )
 {
-    global $_USER, $_CONF, $LANG09, $_TABLES;
+    global $_USER, $_CONF, $_TABLES;
 
     $query = trim(DB_escapeString(htmlspecialchars($query)));
     $pi_name = Config::get('pi_name');
@@ -362,7 +369,7 @@ function plugin_dopluginsearch_comment_polls2(
         $sql .= " AND (c.uid = '$author') ";
     }
 
-    $search_c = new SearchCriteria('comments', 'Polls > '.$LANG09[66]);
+    $search_c = new SearchCriteria('comments', 'Polls > ' . MO::_('Coment'));
     $columns = array('comment','c.title');
     $sql .= $search_c->getDateRangeSQL('AND', 'UNIX_TIMESTAMP(c.date)', $datestart, $dateend);
     list($sql,$ftsql) = $search_c->buildSearchSQL($keyType, $query, $columns, $sql);
@@ -613,7 +620,7 @@ function plugin_geticon_polls2()
 */
 function plugin_displaycomment_polls2($id, $cid, $title, $order, $format, $page, $view)
 {
-    global $_TABLES, $LANG_ACCESS;
+    global $_TABLES;
 
     $retval = '';
 
@@ -704,7 +711,7 @@ function plugin_upgrade_polls2()
 */
 function plugin_autotags_polls2($op, $content = '', $autotag = '')
 {
-    global $_CONF, $_TABLES, $LANG_PO_AUTOTAG;
+    global $_CONF, $_TABLES;
 
     $skip = 0;
     $pi_name = Config::get('pi_name');
@@ -718,13 +725,13 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
     } elseif ( $op == 'desc' ) {
         switch($content) {
         case Config::KEY . '_vote':
-            return $LANG_PO_AUTOTAG['desc_poll_vote'];
+            return MO::_('HTML: renders a voting block for a Poll on this site.  usage: [poll_vote:<i>poll_id</i>]');
             break;
         case Config::KEY . '_result' :
-            return $LANG_PO_AUTOTAG['desc_poll_result'];
+            return MO::_('HTML: renders the results of a Poll on this site.  usage: [poll_result:<i>poll_id</i>]');
             break;
         case Config::KEY:
-            return $LANG_PO_AUTOTAG['desc_poll'];
+            return MO::_('Link: to a Poll on this site.  link_text defaults to the Poll topic.  usage: [poll:<i>poll_id</i> {link_text}]');
             break;
         default :
             return '';

@@ -45,6 +45,7 @@ use Polls\Config;
 use Polls\Menu;
 use Polls\Poll;
 use Polls\Views\Results;
+use Polls\MO;
 
 $display = '';
 
@@ -81,11 +82,11 @@ if (isset($_POST['msg'])) {
 }
 
 $page = '';
-$title = $LANG25[18];
+$title = MO::_('Polls Administration');
 
 switch ($action) {
     case 'lv' :
-        $title = $LANG25[5];
+        $title = MO::_('Edit Poll');
         $page .= Poll::getInstance($pid)->listVotes();
         break;
 
@@ -103,13 +104,13 @@ switch ($action) {
                 }
                 COM_refresh(Config::get('admin_url') . '/index.php');
             } else {
-                $title = $LANG25[5];
+                $title = MO::_('Edit Poll');
                 $page .= COM_startBlock(
-                    $LANG21[32],
+                    MO::_('Error Missing Field(s)'),
                     '',
                     COM_getBlockTemplate('_msg_block', 'header')
                 );
-                $page .= $LANG25[17];
+                $page .= MO::_('Please enter a Poll ID');
                 $page .= COM_endBlock(COM_getBlockTemplate('_msg_block', 'footer'));
                 $page .= POLLS_edit ();
             }
@@ -148,7 +149,7 @@ switch ($action) {
 
     case 'listpolls':
     default:
-        $title = $LANG25[18];
+        $title = MO::_('Polls Administration');
         $page .= ($msg > 0) ? COM_showMessage ($msg, Config::PI_NAME) : '';
         $page = Menu::Admin('listpolls');
         $page .= Poll::adminList();

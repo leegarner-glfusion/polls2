@@ -28,23 +28,23 @@ class Menu
      */
     public static function Admin($view='')
     {
-        global $_CONF, $LANG25, $LANG_ADMIN;
+        global $_CONF;
         USES_lib_admin();
 
         $retval = '';
         $menu_arr = array (
             array(
                 'url' => Config::get('admin_url') . '/index.php',
-                'text' => $LANG_ADMIN['list_all'],
+                'text' => MO::_('List All'),
                 'active'=> $view == 'listall' ? true : false,
             ),
             array(
                 'url' => Config::get('admin_url') . '/index.php?edit=x',
-                'text' => $LANG_ADMIN['create_new'],
+                'text' => MO::_('Create New'),
             ),
             array(
                 'url' => $_CONF['site_admin_url'],
-                'text' => $LANG_ADMIN['admin_home']
+                'text' => MO::_('Admin Home'),
             ),
         );
 
@@ -59,16 +59,15 @@ class Menu
         $retval .= $T->finish($T->get_var('output'));
 
         $retval .= COM_startBlock(
-            $LANG25[18] . ' ver. ' . Config::get('pi_version'),
+            MO::_('Polls Administration') . ' ver. ' . Config::get('pi_version'),
             '',
             COM_getBlockTemplate('_admin_block', 'header')
         );
         $retval .= ADMIN_createMenu(
             $menu_arr,
-            $LANG25[19],
+            MO::_('To modify or delete a poll, click on the edit icon of the poll. To create a new poll, click on "Create New" above.'),
             plugin_geticon_polls2()
         );
-
         return $retval;
     }
 
