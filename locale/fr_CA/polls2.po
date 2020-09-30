@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-30 13:57-0700\n"
+"POT-Creation-Date: 2020-09-30 14:16-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,17 +121,17 @@ msgid "Polls in System"
 msgstr ""
 
 #: classes/Poll.class.php:1612 classes/Poll.class.php:1616
-#: classes/Views/Results.class.php:397
+#: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
 msgid "User Name"
 msgstr ""
 
 #: classes/Poll.class.php:1617 classes/Poll.class.php:1621
-#: classes/Views/Results.class.php:402
+#: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
 msgid "IP Address"
 msgstr ""
 
 #: classes/Poll.class.php:1622 classes/Poll.class.php:1626
-#: classes/Views/Results.class.php:407
+#: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
 msgid "Date Voted"
 msgstr ""
 
@@ -188,4 +188,8 @@ msgstr ""
 
 #: classes/Views/Results.class.php:205
 msgid "Early results, poll is open"
+msgstr ""
+
+#: polls2.php:32
+msgid "Polls v2"
 msgstr ""

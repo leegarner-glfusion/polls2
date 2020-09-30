@@ -123,8 +123,8 @@ function plugin_getmenuitems_polls2()
     ) {
         return false;
     }
-    $a = MO::_('Polls2') .
-        ' <i class="uk-icon uk-icon-check-square-o}"></i>';
+    $a = Config::get('pi_display_name') .
+        ' <i class="uk-icon uk-icon-check-square-o"></i>';
     $menuitems[$a] = Config::get('url') . '/index.php';
     return $menuitems;
 }

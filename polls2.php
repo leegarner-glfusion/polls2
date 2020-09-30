@@ -24,11 +24,12 @@ if (!defined ('GVERSION')) {
 }
 use Polls\Config;
 use Polls\DB;
+use Polls\MO;
 
 global $_DB_table_prefix;
 
 Config::set('pi_name', Config::PI_NAME);    // for consistency
-Config::set('pi_display_name', 'Polls v2');
+Config::set('pi_display_name', MO::_('Polls v2'));
 Config::set('pi_version', '2.3.1');
 Config::set('gl_version', '1.7.8');
 Config::set('pi_url', 'https://www.glfusion.org');
