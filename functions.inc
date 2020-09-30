@@ -725,13 +725,16 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
     } elseif ( $op == 'desc' ) {
         switch($content) {
         case Config::KEY . '_vote':
-            return MO::_('HTML: renders a voting block for a Poll on this site.  usage: [poll_vote:<i>poll_id</i>]');
+            return MO::_('HTML: renders a voting block for a Poll on this site. usage') .
+                ': [poll_vote:<i>poll_id</i>]';
             break;
         case Config::KEY . '_result' :
-            return MO::_('HTML: renders the results of a Poll on this site.  usage: [poll_result:<i>poll_id</i>]');
+            return MO::_('HTML: renders the results of a Poll on this site. usage') .
+                ': [poll_result:<i>poll_id</i>]';
             break;
         case Config::KEY:
-            return MO::_('Link: to a Poll on this site.  link_text defaults to the Poll topic.  usage: [poll:<i>poll_id</i> {link_text}]');
+            return MO::_('Link: to a Poll on this site.  link_text defaults to the Poll topic. usage') .
+                ': [poll:<i>poll_id</i> {link_text}]';
             break;
         default :
             return '';

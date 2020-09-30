@@ -689,7 +689,7 @@ class Poll
             'lang_appearsonhomepage' => MO::_('Appears on Pollblock'),
             'lang_openforvoting' => MO::_('Open for Voting'),
             'lang_hideresults' => MO::_('Hide results while poll is open'),
-            'poll_hideresults_explain' => MO::_('While the poll is open, only the owner &amp; root can see the results'),
+            'poll_hideresults_explain' => MO::_('While the poll is open, only the owner and Root can see the results'),
 
             'poll_topic_info' => MO::_('The topic will be only displayed if there are more than 1 questions.'),
 
@@ -940,7 +940,7 @@ class Poll
                 'sort' => true,
             ),
             array(
-                'text' => MO::_('Voteers'),
+                'text' => MO::_('Voters'),
                 'field' => 'vote_count',
                 'sort' => true,
                 'align' => 'center',
@@ -1233,7 +1233,7 @@ class Poll
             if ($nquestions > 1) {
                 $poll->set_var('lang_poll_topic', MO::_('Poll Topic'));
                 $poll->set_var('poll_topic', $filterS->filterData($this->topic));
-                $poll->set_var('lang_question', MO::_('Questoin') . ':');
+                $poll->set_var('lang_question', MO::_('Question') . ':');
             }
             $poll->set_var(array(
                 'poll_id' => $this->pid,
