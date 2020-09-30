@@ -40,7 +40,7 @@ if (!in_array('polls2', $_PLUGINS)) {
     COM_404();
     die();
 }
-use \glFusion\Cache\Cache;
+use Polls\MO;
 use Polls\Poll;
 use Polls\Voter;
 use Polls\Answer;
@@ -71,19 +71,17 @@ if ( $pid == '' || $aid == 0 ) {
     ) {
         $retval = POLLS_saveVote_AJAX($pid,$aid);
     } else {
-        $eMsg = $LANG_POLLS['answer_all'] . ' "' . $Poll->getTopic() . '"';
+        $eMsg = MO::_('Please answer all remaining questions') . ' "' . $Poll->getTopic() . '"';
         $retval['statusMessage'] = $eMsg;
     }
 }
-$c = Cache::getInstance()->deleteItemsByTag('story');
-
 $return["json"] = json_encode($retval);
 echo json_encode($return);
 
 
 function POLLS_saveVote_AJAX($pid, $aid)
 {
-    global $_USER, $LANG_POLLS;
+    global $_USER;
 
     $retval = array('html' => '','statusMessage' => '');
     $Poll = Poll::getInstance($pid);
@@ -95,7 +93,7 @@ function POLLS_saveVote_AJAX($pid, $aid)
         $retval['html'] = (new Results($pid))->Render();
     } else {
         if ((new Poll($pid))->saveVote($aid)) {
-            $eMsg = $LANG_POLLS['savedvotemsg'] . ' "' . $Poll->getTopic() . '"';
+            $eMsg = MO::_('Your vote was saved for the poll') . ' "' . $Poll->getTopic() . '"';
         } else {
             $eMsg = "There was an error recording your vote";
         }

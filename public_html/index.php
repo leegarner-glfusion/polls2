@@ -35,6 +35,7 @@
 // +--------------------------------------------------------------------------+
 
 require_once '../lib-common.php';
+use Polls\MO;
 use Polls\Poll;
 use Polls\Menu;
 use Polls\Config;
@@ -54,7 +55,7 @@ if (!in_array(Config::get('pi_name'), $_PLUGINS)) {
 
 $display = '';
 $page = '';
-$title = $LANG_POLLS['pollstitle'];
+$title = MO::_('Polls in System');
 
 $filter = sanitizer::getInstance();
 $filter->setPostmode('text');
@@ -127,7 +128,7 @@ case 'votebutton':
     // Get the answer array and check that the number is right, and the user hasn't voted
     $aid = (isset($_POST['aid']) && is_array($_POST['aid'])) ? $_POST['aid'] : array();
     if ($Poll->alreadyVoted()) {
-        COM_setMsg($LANG_POLL['alreadyvoted'], 'error', true);
+        COM_setMsg(MO::_('You have already voted'), 'error', true);
         COM_refresh(Config::get('url') . '/index.php');
     } else {
         if (count($aid) == $Poll->numQuestions()) {
@@ -137,7 +138,7 @@ case 'votebutton':
                 COM_refresh(Config::get('url') . '/index.php');
             }
         } else {
-            $page .= COM_showMessageText($LANG_POLLS['answer_all'], '', true, 'error');
+            $page .= COM_showMessageText(MO::_('Please answer all remaining questions'), '', true, 'error');
             $page .= $Poll->withSelections($aid)->Render();
         }
     }
@@ -160,8 +161,8 @@ default:
             $page .= COM_showMessage($msg, Config::get('pi_name'));
         }
         if (isset($_POST['aid'])) {
-            $eMsg = $LANG_POLLS['answer_all'] . ' "' . $filter->filterData($Poll->getTopic()) . '"';
-            $page .= COM_showMessageText($eMsg,$LANG_POLLS['not_saved'],true,'error');
+            $eMsg =  MO::_('Please answer all remaining questions'). ' "' . $filter->filterData($Poll->getTopic()) . '"';
+            $page .= COM_showMessageText($eMsg, MO::_('Result not saved'), true, 'error');
         }
         if (!$Poll->isOpen() && $Poll->canViewResults()) {
             $page .= (new Results($Poll->getID()))
@@ -171,11 +172,14 @@ default:
         } elseif ($Poll->canVote()) {
             $page .= $Poll->Render();
         } else {
-            COM_setMsg($LANG_POLLS['deny_msg'], 'error', true);
+            COM_setMsg(
+                MO::_('Access to this poll is denied. Either the poll has been moved/removed or you do not have sufficient permissions.'),
+                'error', true
+            );
             COM_refresh(Config::get('url') . '/index.php');
         }
     } else {
-        $title = $LANG_POLLS['pollstitle'];
+        $title = MO::_('Polls in System');
         $page .= Poll::listPolls();
     }
     break;

@@ -65,6 +65,7 @@ spl_autoload_register(function ($class)
         require $file;
     }
 });
+use Polls\MO;
 use Polls\DB;
 use Polls\Config;
 use Polls\Poll;
@@ -107,12 +108,11 @@ if (file_exists($langfile)) {
 * NOTE: this MUST return the url/value pairs in the following format
 * $<arrayname>[<label>] = <url>
 *
-* @todo: Change menu text from plugin name to $LANG_POLLS var
 * @return   mixed   menu entry, or boolean false if disabled / hidden
 */
 function plugin_getmenuitems_polls2()
 {
-    global $_CONF, $LANG_POLLS;
+    global $_CONF;
 
     $menuitems = array();
     if (
@@ -123,10 +123,8 @@ function plugin_getmenuitems_polls2()
     ) {
         return false;
     }
-    $a = preg_replace(
-        '/\{(.*)\}/i',
-        '<i class="uk-icon uk-icon-${1}"></i>',
-        $LANG_POLLS['mnu_title']);
+    $a = MO::_('Polls2') .
+        ' <i class="uk-icon uk-icon-check-square-o}"></i>';
     $menuitems[$a] = Config::get('url') . '/index.php';
     return $menuitems;
 }
@@ -272,8 +270,6 @@ function plugin_getwhatsnewcomment_polls2()
 
 function plugin_searchtypes_polls2()
 {
-    global $LANG_POLLS;
-
     return array(Config::get('pi_name') => ucfirst(Config::get('pi_name')));
 }
 
@@ -296,7 +292,7 @@ function plugin_searchtypes_polls2()
 function plugin_dopluginsearch_polls2(
     $query, $dateStart, $dateEnd, $topic, $type, $author, $keyType, $page, $perpage
 ) {
-    global $_CONF, $_DB_dbms, $LANG09, $LANG_POLLS, $_USER;
+    global $_CONF, $_DB_dbms, $LANG09, $_USER;
 
     // Make sure the query is SQL safe
     $query = trim(DB_escapeString($query));
@@ -385,7 +381,7 @@ function plugin_dopluginsearch_comment_polls2(
 */
 function plugin_showstats_polls2($showsitestats)
 {
-    global $_CONF, $LANG_POLLS;
+    global $_CONF;
 
     require_once ($_CONF['path_system'] . 'lib-admin.php');
 
@@ -401,12 +397,12 @@ function plugin_showstats_polls2($showsitestats)
     if ($nrows > 0) {
         $header_arr = array(
             array(
-                'text'         => $LANG_POLLS['stats_topics'],
+                'text'         => MO::_('Poll Topic'),
                 'field'        => 'pid',
                 'header_class' => 'stats-header-title',
             ),
             array(
-                'text'         => $LANG_POLLS['stats_votes'],
+                'text'         => MO::_('Votes'),
                 'field'        => 'voters',
                 'header_class' => 'stats-header-count',
                 'field_class'  => 'stats-list-count',
@@ -415,7 +411,7 @@ function plugin_showstats_polls2($showsitestats)
         $data_arr = array();
         $text_arr = array(
             'has_menu' => false,
-            'title'    => $LANG_POLLS['stats_top10'],
+            'title'    => MO::_('Top Ten Polls'),
         );
 
         $filter = new sanitizer();
@@ -431,8 +427,8 @@ function plugin_showstats_polls2($showsitestats)
         }
         $retval .= ADMIN_simpleList ('', $header_arr, $text_arr, $data_arr);
     } else {
-        $retval .= COM_startBlock ($LANG_POLLS['stats_top10'],'',COM_getBlockTemplate('_admin_block', 'header'));
-        $retval .= $LANG_POLLS['stats_none'];
+        $retval .= COM_startBlock(MO::_('Top Ten Polls'),'',COM_getBlockTemplate('_admin_block', 'header'));
+        $retval .= MO::_('It appears that there are no polls on this site or no one has ever voted.');
         $retval .= COM_endBlock (COM_getBlockTemplate('_admin_block', 'footer'));
     }
 
@@ -448,29 +444,23 @@ function plugin_showstats_polls2($showsitestats)
 */
 function plugin_statssummary_polls2()
 {
-    global $LANG_POLLS;
-
     list($total_polls, $total_answers) = POLLS2_countPollsAndVotes ();
 
     $item_count = COM_numberFormat ($total_polls)
                 . ' (' . COM_numberFormat ($total_answers) . ')';
 
-    return array ($LANG_POLLS['stats_summary'], $item_count);
+    return array(MO::_('Polls (Answers) in the system'), $item_count);
 }
 
 
 /**
 * This will put an option for polls in the command and control block.
-*
-* @todo: Change menu text from plugin name to $LANG_POLLS var
 */
 function plugin_cclabel_polls2()
 {
-    global $LANG_POLLS;
-
     if (plugin_ismoderator_polls2()) {
         return array(
-            ucfirst(Config::get('pi_name')),
+            MO::_(ucfirst(Config::get('pi_name'))),
             Config::get('admin_url') . '/index.php',
             plugin_geticon_polls2()
         );
@@ -481,16 +471,12 @@ function plugin_cclabel_polls2()
 
 /**
 * Returns the administrative option for this plugin.
-*
-* @todo: Change menu text from plugin name to $LANG_POLLS var
 */
 function plugin_getadminoption_polls2()
 {
-    global $_CONF, $LANG_POLLS;
-
     if (plugin_ismoderator_polls2()) {
         return array(
-            ucfirst(Config::get('pi_name')),
+            MO::_(ucfirst(Config::get('pi_name'))),
             Config::get('admin_url') . '/index.php',
             Poll::countPolls()
         );
@@ -661,17 +647,14 @@ function plugin_displaycomment_polls2($id, $cid, $title, $order, $format, $page,
 * template variables, e.g. 'polls_xxx' and 'lang_polls_xxx'.
 * 'button_polls' is an exception, as such a variable existed for header.thtml
 *
-* @todo: Change menu text from plugin name to $LANG_POLLS var
 * @param    string  $templatename   name of template, e.g. 'header'
 * @param    ref     $template       reference of actual template
 * @return   void
 */
 function plugin_templatesetvars_polls2($templatename, &$template)
 {
-    global $LANG_POLLS;
-
     if ($templatename == 'header') {
-        $template->set_var ('button_polls', ucfirst(Config::get('pi_name')));
+        $template->set_var('button_polls', MO::_(ucfirst(Config::get('pi_name'))));
     }
 }
 
@@ -868,7 +851,7 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
 */
 function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
 {
-    global $_CONF, $_TABLES, $LANG_POLLS;
+    global $_CONF, $_TABLES;
 
     $properties = explode(',', $what);
     $fields = array();

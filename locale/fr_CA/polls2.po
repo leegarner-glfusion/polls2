@@ -1,0 +1,191 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-30 13:57-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: classes/Poll.class.php:1095 classes/Poll.class.php:1394
+#: public_html/index.php:131 classes/Poll.class.php:1098
+#: classes/Poll.class.php:1398 classes/Views/Results.class.php:178
+msgid "You have already voted"
+msgstr ""
+
+#: functions.inc:404 functions.inc:400
+msgid "Poll Topic"
+msgstr ""
+
+#: functions.inc:409 classes/Poll.class.php:1249 classes/Poll.class.php:1253
+#: classes/Views/Results.class.php:201 functions.inc:405
+msgid "Votes"
+msgstr ""
+
+#: functions.inc:418 functions.inc:434 functions.inc:414 functions.inc:430
+msgid "Top Ten Polls"
+msgstr ""
+
+#: functions.inc:435 functions.inc:431
+msgid ""
+"It appears that there are no polls on this site or no one has ever voted."
+msgstr ""
+
+#: functions.inc:456 functions.inc:452
+msgid "Polls (Answers) in the system"
+msgstr ""
+
+#: functions.inc:126
+msgid "Polls2"
+msgstr ""
+
+#: classes/Poll.class.php:679
+msgid "Description"
+msgstr ""
+
+#: classes/Poll.class.php:691 classes/Poll.class.php:950
+#: classes/Poll.class.php:953
+msgid "Poll Opens"
+msgstr ""
+
+#: classes/Poll.class.php:692 classes/Poll.class.php:956
+#: classes/Poll.class.php:959
+msgid "Poll Closes"
+msgstr ""
+
+#: classes/Poll.class.php:709
+msgid "Voting Group"
+msgstr ""
+
+#: classes/Poll.class.php:710
+msgid "Results Group"
+msgstr ""
+
+#: classes/Poll.class.php:716
+msgid "Date Picker"
+msgstr ""
+
+#: classes/Poll.class.php:717
+msgid "Time Picker"
+msgstr ""
+
+#: classes/Poll.class.php:806 classes/Poll.class.php:809
+msgid "Error: A poll name is required"
+msgstr ""
+
+#: classes/Poll.class.php:938 classes/Poll.class.php:1089
+#: classes/Poll.class.php:1267 classes/Poll.class.php:941
+#: classes/Poll.class.php:1092 classes/Poll.class.php:1271
+msgid "Results"
+msgstr ""
+
+#: classes/Poll.class.php:1084 classes/Poll.class.php:1237
+#: classes/Poll.class.php:1087 classes/Poll.class.php:1241
+msgid "Vote"
+msgstr ""
+
+#: classes/Poll.class.php:1100 classes/Poll.class.php:1103
+msgid "Poll is Closed"
+msgstr ""
+
+#: classes/Poll.class.php:1152 classes/Poll.class.php:1155
+msgid "Are you sure you want to delete all of the results for this poll?"
+msgstr ""
+
+#: classes/Poll.class.php:1245 classes/Poll.class.php:1249
+msgid "Start Poll"
+msgstr ""
+
+#: classes/Poll.class.php:1311 classes/Poll.class.php:1315
+#: classes/Views/Results.class.php:295
+msgid "Other polls"
+msgstr ""
+
+#: classes/Poll.class.php:1470 classes/Poll.class.php:1474
+msgid "message"
+msgstr ""
+
+#: classes/Poll.class.php:1483 public_html/index.php:58
+#: public_html/index.php:182 classes/Poll.class.php:1487
+msgid "Polls in System"
+msgstr ""
+
+#: classes/Poll.class.php:1612 classes/Poll.class.php:1616
+#: classes/Views/Results.class.php:397
+msgid "User Name"
+msgstr ""
+
+#: classes/Poll.class.php:1617 classes/Poll.class.php:1621
+#: classes/Views/Results.class.php:402
+msgid "IP Address"
+msgstr ""
+
+#: classes/Poll.class.php:1622 classes/Poll.class.php:1626
+#: classes/Views/Results.class.php:407
+msgid "Date Voted"
+msgstr ""
+
+#: public_html/index.php:141 public_html/index.php:164
+#: public_html/ajax_handler.php:74
+msgid "Please answer all remaining questions"
+msgstr ""
+
+#: public_html/index.php:165
+msgid "Result not saved"
+msgstr ""
+
+#: public_html/index.php:176
+msgid ""
+"Access to this poll is denied. Either the poll has been moved/removed or you "
+"do not have sufficient permissions."
+msgstr ""
+
+#: admin/ajax.php:26
+msgid "Access Denied"
+msgstr ""
+
+#: admin/ajax.php:68
+msgid "Item(s) have been updated"
+msgstr ""
+
+#: admin/ajax.php:68
+msgid "Item(s) are unchanged"
+msgstr ""
+
+#: classes/Poll.class.php:718
+msgid "General"
+msgstr ""
+
+#: classes/Poll.class.php:719
+msgid "Poll Questions"
+msgstr ""
+
+#: classes/Poll.class.php:720
+msgid "Permissions"
+msgstr ""
+
+#: classes/Poll.class.php:1236 classes/Views/Results.class.php:206
+msgid "Back to List"
+msgstr ""
+
+#: classes/Poll.class.php:1422 public_html/ajax_handler.php:96
+msgid "Your vote was saved for the poll"
+msgstr ""
+
+#: classes/Views/Results.class.php:171 classes/Views/Results.class.php:180
+msgid "Poll results will be available only after the Poll has closed."
+msgstr ""
+
+#: classes/Views/Results.class.php:205
+msgid "Early results, poll is open"
+msgstr ""

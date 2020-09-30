@@ -16,6 +16,7 @@ use Polls\Poll;
 use Polls\Answer;
 use Polls\Config;
 use Polls\Models\Modes;
+use Polls\MO;
 
 
 /**
@@ -146,7 +147,7 @@ class Results
     public function Render()
     {
         global $_CONF, $_TABLES, $_USER, $_IMAGE_TYPE,
-           $LANG01, $LANG_POLLS, $_COM_VERBOSE, $LANG25;
+           $LANG01, $_COM_VERBOSE, $LANG25;
 
         $retval = '';
         $filter = new \sanitizer();
@@ -166,15 +167,17 @@ class Results
             // The poll owner or admin is checking early results.
         } else {
             if ($this->displaytype == Modes::AUTOTAG) {
-                $retval = '<div class="poll-autotag-message">' . $LANG_POLLS['pollhidden']. "</div>";
+                $retval = '<div class="poll-autotag-message">' .
+                    MO::_('Poll results will be available only after the Poll has closed.') .
+                    '</div>';
             } else if ($this->displaytype == 1 ) {
                 $retval = '';
             } else {
                 $msg = '';
                 if ($this->Poll->alreadyVoted()) {
-                    $msg .= $LANG_POLLS['alreadyvoted'] . '<br />';
+                    $msg .= MO::_('You have already voted') . '<br />';
                 }
-                $msg .= $LANG_POLLS['pollhidden'];
+                $msg .= MO::_('Poll results will be available only after the Poll has closed.');
                 $retval = COM_showMessageText($msg,'', true,'error');
                 $retval .= Poll::listPolls();
             }
@@ -195,10 +198,12 @@ class Results
             'poll_topic'    => $filter->filterData($this->Poll->getTopic()),
             'poll_id'   => $this->pid,
             'num_votes' => COM_numberFormat($this->Poll->numVotes()),
-            'lang_votes' => $LANG_POLLS['votes'],
+            'lang_votes' => MO::_('Votes'),
             'admin_url' => Config::get('admin_url') . '/index.php',
             'polls_url' => $this->isAdmin ? '' : Config::get('url') . '/index.php',
             'isOpen' => $this->Poll->isOpen(),
+            'lang_results_open' => MO::_('Early results, poll is open'),
+            'lang_back_to_list' => MO::_('Back to List'),
         ) );
 
         if (Poll::hasRights('edit')) {
@@ -287,7 +292,7 @@ class Results
             $poll->set_var('poll_comments', '');
         }
 
-        $poll->set_var('lang_polltopics', $LANG_POLLS['polltopics'] );
+        $poll->set_var('lang_polltopics', MO::_('Other polls'));
         if ($this->displaytype !== Modes::PRINT) {
             $retval .= '<a class="uk-button uk-button-success" target="_blank" href="' .
                 Config::get('admin_url') . '/index.php?presults=x&pid=' .
@@ -384,22 +389,22 @@ class Results
      */
     public function listVotes()
     {
-        global $_CONF, $_TABLES, $_IMAGE_TYPE, $LANG_ADMIN, $LANG_POLLS, $LANG25, $LANG_ACCESS;
+        global $_CONF, $_TABLES, $_IMAGE_TYPE, $LANG_ADMIN, $LANG25, $LANG_ACCESS;
 
         $retval = '';
         $header_arr = array(
             array(
-                'text' => $LANG_POLLS['username'],
+                'text' => MO::_('User Name'),
                 'field' => 'username',
                 'sort' => true,
             ),
             array(
-                'text' => $LANG_POLLS['ipaddress'],
+                'text' => MO::_('IP Address'),
                 'field' => 'ipaddress',
                 'sort' => true,
             ),
             array(
-                'text' => $LANG_POLLS['date_voted'],
+                'text' => MO::_('Date Voted'),
                 'field' => 'date_voted',
                 'sort' => true,
             ),

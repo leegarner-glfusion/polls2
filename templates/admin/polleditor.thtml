@@ -4,9 +4,9 @@
   <input type="hidden" value="{old_pid}" name="old_pid">
 
   <ul class="uk-tab" data-uk-tab="{connect:'#pe-form'}">
-    <li><a href="#">{$LANG_POLLS[general]}</a></li>
-    <li><a href="#">{$LANG_POLLS[poll_questions]}</a></li>
-    <li><a href="#">{$LANG_POLLS[permissions]}</a></li>
+    <li><a href="#">{lang_general}</a></li>
+    <li><a href="#">{lang_poll_questions}</a></li>
+    <li><a href="#">{lang_permissions}</a></li>
   </ul>
 
   <div class="uk-panel uk-panel-box uk-margin">

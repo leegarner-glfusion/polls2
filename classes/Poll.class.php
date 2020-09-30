@@ -603,7 +603,7 @@ class Poll
     public function editPoll($type = 'edit')
     {
         global $_CONF, $_GROUPS, $_USER, $LANG25, $LANG_ACCESS,
-           $LANG_ADMIN, $MESSAGE, $LANG_POLLS;
+           $LANG_ADMIN, $MESSAGE;
 
         $retval = COM_startBlock(
             $LANG25[5], '',
@@ -676,7 +676,7 @@ class Poll
             'poll_topic' => htmlspecialchars ($this->topic),
             'lang_mode' => $LANG25[1],
             'description' => $this->dscp,
-            'lang_description' => $LANG_POLLS['description'],
+            'lang_description' => MO::_('Description'),
             'comment_options' => COM_optionList(DB::table('commentcodes'),'code,name',$this->commentcode),
             'lang_appearsonhomepage' => $LANG25[8],
             'lang_openforvoting' => $LANG25[33],
@@ -688,8 +688,8 @@ class Poll
             'poll_open' => $this->is_open ? 'checked="checked"' : '',
             //'login_req_chk' => $this->login_required ? 'checked="checked"' : '',
             'poll_hideresults' => $this->hideresults ? 'checked="checked"' : '',
-            'lang_opens' => $LANG_POLLS['opens'],
-            'lang_closes' => $LANG_POLLS['closes'],
+            'lang_opens' => MO::_('Poll Opens'),
+            'lang_closes' => MO::_('Poll Closes'),
             'opens_date' => $open_date,
             'opens_time' => $open_time,
             'closes_date' => $close_date,
@@ -706,15 +706,18 @@ class Poll
             'owner_name' => $ownername,
             'owner' => $ownername,
             'owner_id' => $this->owner_id,
-            'lang_voting_group' => $LANG_POLLS['voting_group'],
-            'lang_results_group' => $LANG_POLLS['results_group'],
+            'lang_voting_group' => MO::_('Voting Group'),
+            'lang_results_group' => MO::_('Results Group'),
             'group_dropdown' => SEC_getGroupDropdown($this->voting_gid, 3),
             'res_grp_dropdown' => SEC_getGroupDropdown($this->results_gid, 3, 'results_gid'),
             'lang_answersvotes' => $LANG25[10],
             'lang_save' => $LANG_ADMIN['save'],
             'lang_cancel' => $LANG_ADMIN['cancel'],
-            'lang_datepicker' => $LANG_POLLS['datepicker'],
-            'lang_timepicker' => $LANG_POLLS['timepicker'],
+            'lang_datepicker' => MO::_('Date Picker'),
+            'lang_timepicker' => MO::_('Time Picker'),
+            'lang_general' => MO::_('General'),
+            'lang_poll_questinos' => MO::_('Poll Questions'),
+            'lang_permissions' => MO::_('Permissions'),
         ) );
 
         $T->set_block('editor','questiontab','qt');
@@ -789,7 +792,7 @@ class Poll
      */
     function Save($A = '')
     {
-        global $LANG_POLLS, $_CONF;
+        global $_CONF;
 
         if (is_array($A)) {
             if (isset($A['old_pid'])) {
@@ -803,7 +806,7 @@ class Poll
 
         $frm_name = $this->topic;
         if (empty($frm_name)) {
-            return $LANG_POLLS['err_name_required'];
+            return MO::_('Error: A poll name is required');
         }
 
         // If saving a new record or changing the ID of an existing one,
@@ -910,7 +913,7 @@ class Poll
      */
     public static function adminList()
     {
-        global $_CONF, $_IMAGE_TYPE, $LANG_ADMIN, $LANG25, $LANG_ACCESS, $LANG_POLLS;
+        global $_CONF, $_IMAGE_TYPE, $LANG_ADMIN, $LANG25, $LANG_ACCESS;
 
         $retval = '';
 
@@ -935,7 +938,7 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG_POLLS['results'],
+                'text' => MO::_('Results'),
                 'field' => 'results',
                 'sort' => false,
                 'align' => 'center',
@@ -947,13 +950,13 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG_POLLS['opens'],
+                'text' => MO::_('Poll Opens'),
                 'field' => 'opens',
                 'sort' => true,
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG_POLLS['closes'],
+                'text' => MO::_('Poll Closes'),
                 'field' => 'closes',
                 'sort' => true,
                 'align' => 'center',
@@ -1028,7 +1031,7 @@ class Poll
      */
     public static function getListField($fieldname, $fieldvalue, $A, $icon_arr, $extras)
     {
-        global $_CONF, $LANG25, $LANG_ACCESS, $LANG_ADMIN, $LANG_POLLS, $_USER;
+        global $_CONF, $LANG25, $LANG_ACCESS, $LANG_ADMIN, $_USER;
 
         $retval = '';
 
@@ -1081,23 +1084,23 @@ class Poll
                 SEC_inGroup($A['group_id'])
             ) {
                 $retval = COM_createLink(
-                    $LANG_POLLS['vote'],
+                    MO::_('Vote'),
                     Config::get('url') . "/index.php?pid={$A['pid']}"
                 );
             } elseif (SEC_inGroup($A['results_gid'])) {
                 $retval = COM_createLink(
-                    $LANG_POLLS['results'],
+                    MO::_('Results'), 
                     Config::get('url') . "/index.php?results=x&pid={$A['pid']}"
                 );
             }
         case 'poll_status':
             if (Voter::hasVoted($A['pid'], $A['group_id'])) {
-                $retval = $LANG_POLLS['s_alreadyvoted'];
+                $retval = MO::_('You have already voted');
             } elseif (
                 $A['closes'] < $extras['_now'] &&
                 $A['opens'] < $extras['_now']
             ) {
-                $retval = $LANG_POLLS['poll_closed'];
+                $retval = MO::_('Poll is Closed');
             } else {
                 $retval = $LANG25[33];
             }
@@ -1148,7 +1151,9 @@ class Poll
                 '<i class="uk-icon-refresh uk-text-danger"></i>',
                 Config::get('admin_url') . "/index.php?resetpoll&pid={$A['pid']}",
                 array(
-                    'onclick' => "return confirm('{$LANG_POLLS['confirm_poll_reset']}?');",
+                    'onclick' => "return confirm('" .
+                    MO::_('Are you sure you want to delete all of the results for this poll?') .
+                    "');",
                 )
             );
             break;
@@ -1177,7 +1182,7 @@ class Poll
      */
     public function Render()
     {
-        global $_CONF, $LANG_POLLS, $LANG01, $_USER, $LANG25, $_IMAGE_TYPE;
+        global $_CONF, $LANG01, $_USER, $LANG25, $_IMAGE_TYPE;
 
         $filterS = new \sanitizer();
         $filterS->setPostmode('text');
@@ -1228,11 +1233,12 @@ class Poll
                 'ajax_url' => Config::get('url') . '/ajax_handler.php',
                 'polls_url' => Config::get('url') . '/index.php',
                 'poll_description' => $this->disp_type != Modes::BLOCK ? $this->dscp : '',
+                'lang_back_to_list' => MO::_('Back to List'),
             ) );
                                                 
             if ($nquestions == 1 || $this->disp_showall) {
                 // Only one question (block) or showing all (main form)
-                $poll->set_var('lang_vote', $LANG_POLLS['vote']);
+                $poll->set_var('lang_vote', MO::_('Vote'));
                 $poll->set_var('showall',true);
                 if ($this->disp_type == Modes::AUTOTAG) {
                     $poll->set_var('autotag',true);
@@ -1240,11 +1246,11 @@ class Poll
                     $poll->unset_var('autotag');
                 }
             } else {
-                $poll->set_var('lang_vote', $LANG_POLLS['start_poll']);
+                $poll->set_var('lang_vote', MO::_('Start Poll'));
                 $poll->unset_var('showall');
                 $poll->unset_var('autotag');
             }
-            $poll->set_var('lang_votes', $LANG_POLLS['votes']);
+            $poll->set_var('lang_votes', MO::_('Votes'));
 
             $results = '';
             if (
@@ -1261,7 +1267,8 @@ class Poll
                     )
                 )
             ) {
-                $results = COM_createLink($LANG_POLLS['results'],
+                $results = COM_createLink(
+                    MO::_('Results'),
                     Config::get('url') . '/index.php?pid=' . $this->pid
                     . '&amp;aid=-1');
             }
@@ -1305,7 +1312,7 @@ class Poll
                 $poll->parse('poll_questions', 'pquestions', true);
                 $poll->clear_var('poll_answers');
             }
-            $poll->set_var('lang_polltopics', $LANG_POLLS['polltopics']);
+            $poll->set_var('lang_polltopics', MO::_('Other polls'));
             $poll->set_var('poll_notification', $notification);
             if ($this->commentcode >= 0 ) {
                 USES_lib_comment();
@@ -1382,13 +1389,13 @@ class Poll
      */
     public function saveVote($aid)
     {
-        global $_USER, $LANG_POLLS;
+        global $_USER;
 
         $retval = '';
 
         if ($this->alreadyVoted()) {
             if (!COM_isAjax()) {
-                COM_setMsg($LANG_POLLS['alreadyvoted']);
+                COM_setMsg(MO::_('You have already voted'));
             }
             return false;
         }
@@ -1412,7 +1419,7 @@ class Poll
 
         // Set a return message, if not called via ajax
         if (!COM_isAjax()) {
-            $eMsg = $LANG_POLLS['savedvotemsg'] . ' "' . $this->getTopic() . '"';
+            $eMsg = MO::_('Your vote was saved for the poll') . ' "' . $this->getTopic() . '"';
             COM_setMsg($eMsg);
         }
         return true;
@@ -1439,8 +1446,7 @@ class Poll
      */
     public static function listPolls()
     {
-        global $_CONF, $_USER,
-           $LANG25, $LANG_LOGIN, $LANG_POLLS;
+        global $_CONF, $_USER, $LANG25, $LANG_LOGIN;
 
         $retval = '';
 
@@ -1465,7 +1471,7 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => $LANG_POLLS['message'],
+                'text' => MO::_('message'),
                 'field' => 'poll_status',
                 'sort' => true,
                 'align' => 'center',
@@ -1478,7 +1484,7 @@ class Poll
         );
         $text_arr = array(
             'has_menu' =>  false,
-            'title' => $LANG_POLLS['pollstitle'],
+            'title' => MO::_('Polls in System'),
             'instructions' => "",
             'icon' => '', 'form_url' => '',
         );
@@ -1577,7 +1583,7 @@ class Poll
      */
     public function listVotes()
     {
-        global $_CONF, $_IMAGE_TYPE, $LANG_ADMIN, $LANG_POLLS, $LANG25, $LANG_ACCESS;
+        global $_CONF, $_IMAGE_TYPE, $LANG_ADMIN, $LANG25, $LANG_ACCESS;
 
         $retval = '';
         $menu_arr = array (
@@ -1607,17 +1613,17 @@ class Poll
 
         $header_arr = array(
             array(
-                'text' => $LANG_POLLS['username'],
+                'text' => MO::_('User Name'),
                 'field' => 'username',
                 'sort' => true,
             ),
             array(
-                'text' => $LANG_POLLS['ipaddress'],
+                'text' => MO::_('IP Address'),
                 'field' => 'ipaddress',
                 'sort' => true,
             ),
             array(
-                'text' => $LANG_POLLS['date_voted'],
+                'text' => MO::_('Date Voted'),
                 'field' => 'unixdate',
                 'sort' => true,
             ),
