@@ -124,7 +124,7 @@ function plugin_getmenuitems_polls2()
         return false;
     }
     $a = Config::get('pi_display_name') .
-        ' <i class="uk-icon uk-icon-check-square-o"></i>';
+        ' <i class="uk-icon uk-icon-check-square"></i>';
     $menuitems[$a] = Config::get('url') . '/index.php';
     return $menuitems;
 }
