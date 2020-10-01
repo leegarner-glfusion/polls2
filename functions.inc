@@ -79,25 +79,9 @@ require_once __DIR__ . '/' . Config::PI_NAME . '.php';
 Config::set('url', $_CONF['site_url'] . '/' . Config::PI_NAME);
 Config::set('admin_url', $_CONF['site_admin_url'] . '/plugins/' . Config::PI_NAME);
 
-/*
-* load the language file(s), including custom strings if any
-*/
-$langfile = __DIR__ . '/language/' . $_CONF['language'] . '.php';
-$custfile = __DIR__ . '/language/custom/' . $_CONF['language'] . '.php';
+// Load the language file for configuration.
+include_once __DIR__ . '/language/lang_config.php';
 
-if (file_exists($langfile)) {
-    include_once $langfile;
-    if (file_exists($custfile)) {
-        include_once $custfile;
-    }
-} else {
-    $langfile = __DIR__ . '/language/english_utf-8.php';
-    $custfile = __DIR__ . '/language/custom/english_utf-8.php';
-    include_once $langfile;
-    if (file_exists($custfile)) {
-        include_once $custfile;
-    }
-}
 
 // +---------------------------------------------------------------------------+
 // | glFusion Plugin API Implementations                                       |
