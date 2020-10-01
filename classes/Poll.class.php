@@ -724,7 +724,7 @@ class Poll
             'lang_datepicker' => MO::_('Date Picker'),
             'lang_timepicker' => MO::_('Time Picker'),
             'lang_general' => MO::_('General'),
-            'lang_poll_questinos' => MO::_('Poll Questions'),
+            'lang_poll_questions' => MO::_('Poll Questions'),
             'lang_permissions' => MO::_('Permissions'),
         ) );
 
@@ -1064,7 +1064,7 @@ class Poll
                 $retval = $dt->format($_CONF['daytime'], true);
             }
             break;
-        case 'topic' :
+        case 'topic':
             if (
                 $A['closes'] > $extras['_now'] &&
                 $A['is_open'] &&
@@ -1101,6 +1101,7 @@ class Poll
                     Config::get('url') . "/index.php?results=x&pid={$A['pid']}"
                 );
             }
+            break;
         case 'poll_status':
             if (Voter::hasVoted($A['pid'], $A['group_id'])) {
                 $retval = MO::_('You have already voted');
