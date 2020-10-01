@@ -31,8 +31,8 @@ class MO
     /** Supported language name=>locale mapping.
      * @var array */
     private static $lang2locale = array(
-        'dutch' => 'nl',
-        'finnish' => 'fi',
+        'dutch' => 'nl_NL',
+        'finnish' => 'fi_FI',
         'german' => 'de_DE',
         'polish' => 'pl_PL',
         'czech' => 'cs_CZ',
