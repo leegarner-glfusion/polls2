@@ -57,40 +57,42 @@ class MO
         // namespace.
         self::$domain = Config::PI_NAME;
 
-        // Set the requested language, falling back to the default if not
-        // specified.
-        if (empty($lang)) {
-            $lang = $_CONF['language'];
-        }
+        if (!empty($lang) && $lang != $_CONF['language']) {
+            // Validate and use the appropriate locale code.
+            // Defaults to 'en_US' if a supportated locale wasn't requested.
+            $parts = explode('_', $lang);
+            if (isset(self::$lang2locale[$lang])) {
+                $locale = self::$lang2locale[$lang];
+            } elseif (
+                count($parts) > 2 &&
+                isset(self::$lang2local[$parts[0] . '_' . $parts[1]])
+            ) {
+                // 2-part language, e.g. "french_canada"
+                // Ignore any other parts like 'utf-8'
+                $locale = self::$lang2locale[$parts[0] . '_' . $parts[1]];
+            } elseif (isset(self::$lang2locale[$parts[0]])) {
+                // single-part language, e.g. "english"
+                $locale = self::$lang2locale[$parts[0]];
+            } elseif (isset($LANG_LOCALE) && !empty($LANG_LOCALE)) {
+                // Not found, try the global variable
+                $locale = $LANG_LOCALE;
+            } else {
+                // global not set, fall back to US english
+                $locale = 'en_US';
+            }
 
-        // Validate and use the appropriate locale code.
-        // Defaults to 'en_US' if a supportated locale wasn't requested.
-        $parts = explode('_', $lang);
-        if (
-            count($parts) > 2 &&
-            isset(self::$lang2local[$parts[0] . '_' . $parts[1]])
-        ) {
-            // 2-part language, e.g. "french_canada"
-            // Ignore any other parts like 'utf-8'
-            $locale = self::$lang2locale[$parts[0] . '_' . $parts[1]];
-        } elseif (isset(self::$lang2locale[$parts[0]])) {
-            // single-part language, e.g. "english"
-            $locale = self::$lang2locale[$parts[0]];
-        } elseif (isset($LANG_LOCALE) && !empty($LANG_LOCALE)) {
-            // Not found, try the global variable
-            $locale = $LANG_LOCALE;
+            // Save the existing messages language
+            self::$old_locale = setlocale(LC_MESSAGES, "0");
+
+            $results = setlocale(
+                LC_MESSAGES,
+                $locale.'.utf8', $locale, $lang
+            );
         } else {
-            // global not set, fall back to US english
-            $locale = 'en_US';
+            $results = true;
         }
-
-        self::$old_locale = setlocale(LC_MESSAGES, "0");
-        $results = setlocale(
-            LC_MESSAGES,
-            $locale.'.utf8', $locale, $lang
-        );
         if ($results) {
-            $dom =bind_textdomain_codeset(self::$domain, 'UTF-8');
+            $dom = bind_textdomain_codeset(self::$domain, 'UTF-8');
             $dom = bindtextdomain(self::$domain, __DIR__ . "/../locale");
         }
     }
