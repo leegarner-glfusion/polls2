@@ -353,7 +353,7 @@ function plugin_dopluginsearch_comment_polls2(
         $sql .= " AND (c.uid = '$author') ";
     }
 
-    $search_c = new SearchCriteria('comments', 'Polls > ' . MO::_('Coment'));
+    $search_c = new SearchCriteria('comments', 'Polls > ' . MO::_('Comment'));
     $columns = array('comment','c.title');
     $sql .= $search_c->getDateRangeSQL('AND', 'UNIX_TIMESTAMP(c.date)', $datestart, $dateend);
     list($sql,$ftsql) = $search_c->buildSearchSQL($keyType, $query, $columns, $sql);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-30 16:11-0700\n"
+"POT-Creation-Date: 2020-10-01 08:37-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,28 +27,28 @@ msgid "You have already voted"
 msgstr "Sie haben bereits abgestimmt"
 
 #: functions.inc:404 functions.inc:400 classes/Poll.class.php:1234
-#: functions.inc:407
+#: functions.inc:407 functions.inc:391
 msgid "Poll Topic"
 msgstr "Weitere Umfragen"
 
 #: functions.inc:409 classes/Poll.class.php:1249 classes/Poll.class.php:1253
 #: classes/Views/Results.class.php:201 functions.inc:405
 #: classes/Poll.class.php:1263 classes/Poll.class.php:1479
-#: classes/Views/Results.class.php:200 functions.inc:412
+#: classes/Views/Results.class.php:200 functions.inc:412 functions.inc:396
 msgid "Votes"
 msgstr "Stimmen"
 
 #: functions.inc:418 functions.inc:434 functions.inc:414 functions.inc:430
-#: functions.inc:421 functions.inc:437
+#: functions.inc:421 functions.inc:437 functions.inc:405
 msgid "Top Ten Polls"
 msgstr "Top 10 der Umfragen"
 
-#: functions.inc:435 functions.inc:431 functions.inc:438
+#: functions.inc:435 functions.inc:431 functions.inc:438 functions.inc:422
 msgid ""
 "It appears that there are no polls on this site or no one has ever voted."
 msgstr "Es wurden noch keine Umfragen erstellt."
 
-#: functions.inc:456 functions.inc:452 functions.inc:459
+#: functions.inc:456 functions.inc:452 functions.inc:459 functions.inc:443
 msgid "Polls (Answers) in the system"
 msgstr "Anzahl Umfragen (Stimmen)"
 
@@ -308,8 +308,7 @@ msgid "Hide results while poll is open"
 msgstr "Ergebnisse ausblenden, während die Umfrage geöffnet ist?"
 
 #: classes/Poll.class.php:692
-#, fuzzy
-msgid "While the poll is open, only the owner &amp; root can see the results"
+msgid "While the poll is open, only the owner and Root can see the results"
 msgstr ""
 "Während die Umfrage geöffnet ist, können nur der Eigentümer und Root die "
 "Ergebnisse sehen"
@@ -396,9 +395,9 @@ msgstr ""
 "werden ebenfalls dauerhaft aus der Datenbank gelöscht."
 
 #: classes/Poll.class.php:1306
-#, php-format
+#, fuzzy, php-format
 msgid "This poll has %d more question"
-msgid_plural "This poll has $d more questions"
+msgid_plural "This poll has %d more questions"
 msgstr[0] "Diese Umfrage hat %d weitere Frage."
 msgstr[1] "Diese Umfrage hat %d weitere Fragen."
 
@@ -414,38 +413,36 @@ msgstr "Bitte geben Sie eine Umfrage-ID ein"
 msgid "Error Missing Field(s)"
 msgstr "Fehler: Fehlende Felder."
 
-#: functions.inc:189
+#: functions.inc:189 functions.inc:173
 msgid "Preview"
 msgstr "Vorschau"
 
-#: functions.inc:372
+#: functions.inc:372 functions.inc:356
 msgid "Coment"
 msgstr "Kommentar"
 
-#: classes/Poll.class.php:692
-msgid "While the poll is open, only the owner and Root can see the results"
-msgstr ""
-"Während die Umfrage geöffnet ist, können nur der Eigentümer und Root die "
-"Ergebnisse sehen"
-
-#: functions.inc:728
+#: functions.inc:728 functions.inc:712
 #, fuzzy
 msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr ""
 "HTML: Rendert einen Abstimmungsblock für eine Umfrage auf dieser Site. "
 "Verwendung: "
 
-#: functions.inc:732
+#: functions.inc:732 functions.inc:716
 #, fuzzy
 msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr ""
 "HTML: Rendert einen Abstimmungsblock für eine Umfrage auf dieser Site. "
 "Verwendung: "
 
-#: functions.inc:736
+#: functions.inc:736 functions.inc:720
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
 "Link: zu einer Umfrage auf dieser Seite. link_text verwendet standardmäßig "
 "das Thema Umfrage. Verwendungszweck"
 
+#: functions.inc:356
+#, fuzzy
+msgid "Comment"
+msgstr "Kommentar"

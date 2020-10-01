@@ -24,35 +24,33 @@ msgstr ""
 #: classes/Poll.class.php:1106 classes/Poll.class.php:1415
 #: classes/Views/Results.class.php:177
 msgid "You have already voted"
-msgstr "Vous avez déjà voté"
+msgstr ""
 
 #: functions.inc:404 functions.inc:400 classes/Poll.class.php:1234
 #: functions.inc:407 functions.inc:391
 msgid "Poll Topic"
-msgstr "Sujet de sondage"
+msgstr ""
 
 #: functions.inc:409 classes/Poll.class.php:1249 classes/Poll.class.php:1253
 #: classes/Views/Results.class.php:201 functions.inc:405
 #: classes/Poll.class.php:1263 classes/Poll.class.php:1479
 #: classes/Views/Results.class.php:200 functions.inc:412 functions.inc:396
 msgid "Votes"
-msgstr "Votes"
+msgstr ""
 
 #: functions.inc:418 functions.inc:434 functions.inc:414 functions.inc:430
 #: functions.inc:421 functions.inc:437 functions.inc:405
 msgid "Top Ten Polls"
-msgstr "Dix principaux sondages"
+msgstr ""
 
 #: functions.inc:435 functions.inc:431 functions.inc:438 functions.inc:422
 msgid ""
 "It appears that there are no polls on this site or no one has ever voted."
 msgstr ""
-"Il semble qu'il n'y ait pas de sondages sur ce site ou que personne n'ait "
-"jamais voté."
 
 #: functions.inc:456 functions.inc:452 functions.inc:459 functions.inc:443
 msgid "Polls (Answers) in the system"
-msgstr "Sondages (réponses) dans le système"
+msgstr ""
 
 #: functions.inc:126
 msgid "Polls2"
@@ -60,31 +58,31 @@ msgstr ""
 
 #: classes/Poll.class.php:679 classes/Poll.class.php:687
 msgid "Description"
-msgstr "Description"
+msgstr ""
 
 #: classes/Poll.class.php:691 classes/Poll.class.php:950
 #: classes/Poll.class.php:953 classes/Poll.class.php:700
 #: classes/Poll.class.php:961
 msgid "Poll Opens"
-msgstr "Ouverture du sondage"
+msgstr ""
 
 #: classes/Poll.class.php:692 classes/Poll.class.php:956
 #: classes/Poll.class.php:959 classes/Poll.class.php:701
 #: classes/Poll.class.php:967
 msgid "Poll Closes"
-msgstr "Poll Closes"
+msgstr ""
 
 #: classes/Poll.class.php:709 classes/Poll.class.php:717
 msgid "Voting Group"
-msgstr "Groupe de vote"
+msgstr ""
 
 #: classes/Poll.class.php:710 classes/Poll.class.php:718
 msgid "Results Group"
-msgstr "Groupe de résultats"
+msgstr ""
 
 #: classes/Poll.class.php:716 classes/Poll.class.php:724
 msgid "Date Picker"
-msgstr "Sélecteur de date"
+msgstr ""
 
 #: classes/Poll.class.php:717 classes/Poll.class.php:725
 msgid "Time Picker"
@@ -93,7 +91,7 @@ msgstr ""
 #: classes/Poll.class.php:806 classes/Poll.class.php:809
 #: classes/Poll.class.php:818
 msgid "Error: A poll name is required"
-msgstr "Erreur: un nom d'interrogation est requis"
+msgstr ""
 
 #: classes/Poll.class.php:938 classes/Poll.class.php:1089
 #: classes/Poll.class.php:1267 classes/Poll.class.php:941
@@ -101,7 +99,7 @@ msgstr "Erreur: un nom d'interrogation est requis"
 #: classes/Poll.class.php:949 classes/Poll.class.php:1100
 #: classes/Poll.class.php:1281
 msgid "Results"
-msgstr "Résultats"
+msgstr ""
 
 #: classes/Poll.class.php:1084 classes/Poll.class.php:1237
 #: classes/Poll.class.php:1087 classes/Poll.class.php:1241
@@ -112,22 +110,22 @@ msgstr ""
 #: classes/Poll.class.php:1100 classes/Poll.class.php:1103
 #: classes/Poll.class.php:1111
 msgid "Poll is Closed"
-msgstr "Le sondage est fermé"
+msgstr ""
 
 #: classes/Poll.class.php:1152 classes/Poll.class.php:1155
 #: classes/Poll.class.php:1163
 msgid "Are you sure you want to delete all of the results for this poll?"
-msgstr "Êtes-vous sûr de vouloir supprimer tous les résultats de ce sondage?"
+msgstr ""
 
 #: classes/Poll.class.php:1245 classes/Poll.class.php:1249
 #: classes/Poll.class.php:1259
 msgid "Start Poll"
-msgstr "Démarrer le sondage"
+msgstr ""
 
 #: classes/Poll.class.php:1311 classes/Poll.class.php:1315
 #: classes/Views/Results.class.php:295 classes/Poll.class.php:1332
 msgid "Other polls"
-msgstr "Autres sondages"
+msgstr ""
 
 #: classes/Poll.class.php:1470 classes/Poll.class.php:1474
 #: classes/Poll.class.php:1491
@@ -138,34 +136,34 @@ msgstr ""
 #: public_html/index.php:182 classes/Poll.class.php:1487
 #: classes/Poll.class.php:1504
 msgid "Polls in System"
-msgstr "Sondages dans le système"
+msgstr ""
 
 #: classes/Poll.class.php:1612 classes/Poll.class.php:1616
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
 #: classes/Poll.class.php:1634
 msgid "User Name"
-msgstr "Nom d'utilisateur"
+msgstr ""
 
 #: classes/Poll.class.php:1617 classes/Poll.class.php:1621
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
 #: classes/Poll.class.php:1639
 msgid "IP Address"
-msgstr "Adresse IP"
+msgstr ""
 
 #: classes/Poll.class.php:1622 classes/Poll.class.php:1626
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
 #: classes/Poll.class.php:1644
 msgid "Date Voted"
-msgstr "Date du vote"
+msgstr ""
 
 #: public_html/index.php:141 public_html/index.php:164
 #: public_html/ajax_handler.php:74
 msgid "Please answer all remaining questions"
-msgstr "Veuillez répondre à toutes les questions restantes"
+msgstr ""
 
 #: public_html/index.php:165
 msgid "Result not saved"
-msgstr "Résultat non enregistré"
+msgstr ""
 
 #: public_html/index.php:176
 msgid ""
@@ -175,48 +173,46 @@ msgstr ""
 
 #: admin/ajax.php:26 classes/Poll.class.php:625
 msgid "Access Denied"
-msgstr "Accès refusé"
+msgstr ""
 
 #: admin/ajax.php:68
 msgid "Item(s) have been updated"
-msgstr "Les éléments ont été mis à jour"
+msgstr ""
 
 #: admin/ajax.php:68
 msgid "Item(s) are unchanged"
-msgstr "Les éléments sont inchangés"
+msgstr ""
 
 #: classes/Poll.class.php:718 classes/Poll.class.php:726
 msgid "General"
-msgstr "Général"
+msgstr ""
 
 #: classes/Poll.class.php:719 classes/Poll.class.php:727
 msgid "Poll Questions"
-msgstr "Questions de sondage"
+msgstr ""
 
 #: classes/Poll.class.php:720 classes/Poll.class.php:728
 msgid "Permissions"
-msgstr "Permissions"
+msgstr ""
 
 #: classes/Poll.class.php:1236 classes/Views/Results.class.php:206
 #: classes/Poll.class.php:1246 classes/Views/Results.class.php:205
 msgid "Back to List"
-msgstr "Retour à la liste"
+msgstr ""
 
 #: classes/Poll.class.php:1422 public_html/ajax_handler.php:96
 #: classes/Poll.class.php:1439
 msgid "Your vote was saved for the poll"
-msgstr "Votre vote a été enregistré pour le sondage"
+msgstr ""
 
 #: classes/Views/Results.class.php:171 classes/Views/Results.class.php:180
 #: classes/Views/Results.class.php:170 classes/Views/Results.class.php:179
 msgid "Poll results will be available only after the Poll has closed."
 msgstr ""
-"Les résultats du sondage ne seront disponibles qu'après la fermeture du "
-"sondage."
 
 #: classes/Views/Results.class.php:205 classes/Views/Results.class.php:204
 msgid "Early results, poll is open"
-msgstr "Premiers résultats, le sondage est ouvert"
+msgstr ""
 
 #: polls2.php:32
 msgid "Polls v2"
@@ -224,19 +220,19 @@ msgstr ""
 
 #: classes/Menu.class.php:38 classes/Poll.class.php:1609
 msgid "List All"
-msgstr "Tout répertorier"
+msgstr ""
 
 #: classes/Menu.class.php:43 classes/Poll.class.php:1613
 msgid "Create New"
-msgstr "Créer un nouveau"
+msgstr ""
 
 #: classes/Menu.class.php:47 classes/Poll.class.php:1617
 msgid "Admin Home"
-msgstr "Accueil Admin"
+msgstr ""
 
 #: classes/Menu.class.php:62 admin/index.php:85 admin/index.php:152
 msgid "Polls Administration"
-msgstr "Administration des sondages"
+msgstr ""
 
 #: classes/Menu.class.php:68 classes/Poll.class.php:1628
 #: classes/Poll.class.php:1656 classes/Views/Results.class.php:382
@@ -247,42 +243,42 @@ msgstr ""
 
 #: classes/Poll.class.php:608 admin/index.php:89 admin/index.php:107
 msgid "Edit Poll"
-msgstr "Modifier le sondage"
+msgstr ""
 
 #: classes/Poll.class.php:629
 msgid "You are trying to access a poll to which do not have access."
-msgstr "Vous essayez d'accéder à un sondage auquel vous n'avez pas accès."
+msgstr ""
 
 #: classes/Poll.class.php:630
 msgid "This attempt has been logged."
-msgstr "Cette tentative a été enregistrée."
+msgstr ""
 
 #: classes/Poll.class.php:632
 #, php-format
 msgid "Please %s go back to the poll administration screen."
-msgstr "Veuillez% s revenir à l'écran d'administration du sondage."
+msgstr ""
 
 #: classes/Poll.class.php:639 classes/Poll.class.php:647
 #: classes/Poll.class.php:986 classes/Poll.class.php:1169
 msgid "Delete"
-msgstr "Supprimer"
+msgstr ""
 
 #: classes/Poll.class.php:642 classes/Poll.class.php:648
 msgid "Are you sure you want to delete this item?"
-msgstr "Êtes-vous sûr de vouloir supprimer cet élément?"
+msgstr ""
 
 #: classes/Poll.class.php:679
 msgid "Poll ID"
-msgstr "ID d'interrogation"
+msgstr ""
 
 #: classes/Poll.class.php:682
 msgid "Do not use spaces"
-msgstr "Ne pas utiliser d'espaces"
+msgstr ""
 
 #: classes/Poll.class.php:683 classes/Poll.class.php:938
 #: classes/Poll.class.php:1474
 msgid "Topic"
-msgstr "Sujet"
+msgstr ""
 
 #: classes/Poll.class.php:685
 msgid "Mode"
@@ -290,93 +286,87 @@ msgstr ""
 
 #: classes/Poll.class.php:689
 msgid "Appears on Pollblock"
-msgstr "Apparaît sur Pollblock"
+msgstr ""
 
 #: classes/Poll.class.php:690 classes/Poll.class.php:973
 #: classes/Poll.class.php:1113
 msgid "Open for Voting"
-msgstr "Ouvert au vote"
+msgstr ""
 
 #: classes/Poll.class.php:691
 msgid "Hide results while poll is open"
-msgstr "Masquer les résultats pendant que le sondage est ouvert"
+msgstr ""
 
 #: classes/Poll.class.php:692
 msgid "While the poll is open, only the owner and Root can see the results"
 msgstr ""
-"Pendant que le sondage est ouvert, seuls le propriétaire et le root peuvent "
-"voir les résultats"
 
 #: classes/Poll.class.php:694
 msgid "The topic will be only displayed if there are more than 1 questions."
-msgstr "Le sujet ne sera affiché que s'il y a plus de 1 questions."
+msgstr ""
 
 #: classes/Poll.class.php:711
 msgid "Access Rights"
-msgstr "Des droits d'accès"
+msgstr ""
 
 #: classes/Poll.class.php:712
 msgid "Owner"
-msgstr "Propriétaire"
+msgstr ""
 
 #: classes/Poll.class.php:721
 msgid "Answers / Votes / Remark"
-msgstr "Réponses / Votes / Remarque"
+msgstr ""
 
 #: classes/Poll.class.php:722
 msgid "Save"
-msgstr "sauvegarder"
+msgstr ""
 
 #: classes/Poll.class.php:723
 msgid "Cancel"
-msgstr "Annuler"
+msgstr ""
 
 #: classes/Poll.class.php:741 classes/Poll.class.php:756
 #: classes/Poll.class.php:1236
 msgid "Question"
-msgstr "Question"
+msgstr ""
 
 #: classes/Poll.class.php:757 classes/Views/Results.class.php:220
 msgid "To remove this question from the poll, remove its question text"
 msgstr ""
-"Pour supprimer cette question du sondage, supprimez son texte de question."
 
 #: classes/Poll.class.php:931 classes/Poll.class.php:1289
 msgid "Edit"
-msgstr "Éditer"
+msgstr ""
 
 #: classes/Poll.class.php:943
 msgid "Voters"
-msgstr "Les électeurs"
+msgstr ""
 
 #: classes/Poll.class.php:955 classes/Poll.class.php:1485
 msgid "Poll Created"
-msgstr "Date de création"
+msgstr ""
 
 #: classes/Poll.class.php:980
 msgid "Reset"
-msgstr "Réinitialiser"
+msgstr ""
 
 #: classes/Poll.class.php:1000
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above"
 msgstr ""
-"Pour modifier ou supprimer un sondage, cliquez sur l'icône d'édition du "
-"sondage. Pour créer un nouveau sondage, cliquez sur \"Créer un nouveau\" ci-"
-"dessus"
 
 #: classes/Poll.class.php:1131
 msgid "Yes"
-msgstr "Oui"
+msgstr ""
 
 #: classes/Poll.class.php:1133
 msgid "No"
-msgstr "Non"
+msgstr ""
 
 #: classes/Poll.class.php:1171
 msgid "Are you sure you want to delete this Poll?"
-msgstr "Êtes-vous sûr de vouloir supprimer ce sondage?"
+msgstr ""
 
 #: classes/Poll.class.php:1172
 msgid ""
@@ -384,53 +374,47 @@ msgid ""
 "and comments that are associated with this Poll will also be permanently "
 "deleted from the database"
 msgstr ""
-"Êtes-vous absolument sûr de vouloir supprimer ce sondage? Toutes les "
-"questions, réponses et commentaires associés à ce sondage seront également "
-"supprimés définitivement de la base de données."
 
 #: classes/Poll.class.php:1306
-#, fuzzy, php-format
+#, php-format
 msgid "This poll has %d more question"
 msgid_plural "This poll has %d more questions"
-msgstr[0] "Ce sondage a% d autres questions"
-msgstr[1] "Ce sondage contient% d autres questions"
+msgstr[0] ""
+msgstr[1] ""
 
 #: classes/Poll.class.php:1339 classes/Views/Results.class.php:280
 msgid "comments"
-msgstr "commentaires"
+msgstr ""
 
 #: classes/Views/Results.class.php:210 admin/index.php:113
 msgid "Please enter a Poll ID"
-msgstr "Veuillez saisir un ID de sondage"
+msgstr ""
 
 #: admin/index.php:109
 msgid "Error Missing Field(s)"
-msgstr "Erreur: champs manquants"
+msgstr ""
 
 #: functions.inc:189 functions.inc:173
 msgid "Preview"
-msgstr "Aperçu"
+msgstr ""
 
 #: functions.inc:372 functions.inc:356
 msgid "Coment"
-msgstr "Commentaire"
+msgstr ""
 
 #: functions.inc:728 functions.inc:712
 msgid "HTML: renders a voting block for a Poll on this site. usage"
-msgstr "HTML: rend un blocage de vote pour un sondage sur ce site. usage"
+msgstr ""
 
 #: functions.inc:732 functions.inc:716
 msgid "HTML: renders the results of a Poll on this site. usage"
-msgstr "HTML: rend les résultats d'un sondage sur ce site. usage"
+msgstr ""
 
 #: functions.inc:736 functions.inc:720
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
-"Lien: vers un sondage sur ce site. link_text utilise par défaut le sujet du "
-"sondage. usage"
 
 #: functions.inc:356
-#, fuzzy
 msgid "Comment"
-msgstr "Commentaire"
+msgstr ""

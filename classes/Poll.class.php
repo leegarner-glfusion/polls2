@@ -1304,7 +1304,7 @@ class Poll
                     $notification = sprintf(
                         MO::_n(
                             'This poll has %d more question',
-                            'This poll has $d more questions',
+                            'This poll has %d more questions',
                             $nquestions
                         ),
                         $nquestions
