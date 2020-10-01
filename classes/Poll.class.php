@@ -753,7 +753,8 @@ class Poll
                 $T->unset_var('question_text');
             }
             $T->set_var(array(
-                'lang_question' => MO::_('Question') . " $display_id",
+                'lang_question' => MO::_('Question'),
+                'question_num' => $display_id,
                 'lang_saveaddnew' => MO::_('To remove this question from the poll, remove its question text'),
             ) );
             $T->parse('qt','questiontab',true);
@@ -1234,7 +1235,7 @@ class Poll
             if ($nquestions > 1) {
                 $poll->set_var('lang_poll_topic', MO::_('Poll Topic'));
                 $poll->set_var('poll_topic', $filterS->filterData($this->topic));
-                $poll->set_var('lang_question', MO::_('Question') . ':');
+                $poll->set_var('lang_question', MO::_('Question'));
             }
             $poll->set_var(array(
                 'poll_id' => $this->pid,
@@ -1297,9 +1298,9 @@ class Poll
 
             for ($j = 0; $j < $nquestions; $j++) {
                 $Q = $Questions[$j];
-                $poll->set_var('poll_question', " ".$filterS->filterData($Q->getQuestion()));
+                $poll->set_var('poll_question', $filterS->filterData($Q->getQuestion()));
                 $poll->set_var('question_id', $j);
-                $notification = "";
+                $notification = '';
                 if (!$this->disp_showall) {
                     $nquestions--;
                     $notification = sprintf(
@@ -1312,7 +1313,7 @@ class Poll
                     );
                     $nquestions = 1;
                 } else {
-                    $poll->set_var('lang_question_number', " ". ($j+1).":");
+                    $poll->set_var('question_number', " ". ($j+1));
                 }
                 $answers = $Q->getAnswers();
                 $nanswers = count($answers);
@@ -1489,7 +1490,7 @@ class Poll
                 'align' => 'center',
             ),
             array(
-                'text' => MO::_('message'),
+                'text' => MO::_('Message'),
                 'field' => 'poll_status',
                 'sort' => true,
                 'align' => 'center',
