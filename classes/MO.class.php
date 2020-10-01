@@ -85,7 +85,10 @@ class MO
         }
 
         self::$old_locale = setlocale(LC_MESSAGES, "0");
-        $results = setlocale(LC_MESSAGES, $locale);
+        $results = setlocale(
+            LC_MESSAGES,
+            $locale.'.utf8', $locale, $lang
+        );
         if ($results) {
             $dom =bind_textdomain_codeset(self::$domain, 'UTF-8');
             $dom = bindtextdomain(self::$domain, __DIR__ . "/../locale");
