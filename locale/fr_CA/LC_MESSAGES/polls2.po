@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-02 11:59-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-10-02 13:28-0700\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1394
 #: public_html/index.php:131 classes/Poll.class.php:1098
@@ -63,7 +63,7 @@ msgstr "Sondages (réponses) dans le système"
 
 #: functions.inc:126
 msgid "Polls2"
-msgstr ""
+msgstr "Polls2"
 
 #: classes/Poll.class.php:679 classes/Poll.class.php:687
 msgid "Description"
@@ -95,7 +95,7 @@ msgstr "Sélecteur de date"
 
 #: classes/Poll.class.php:717 classes/Poll.class.php:725
 msgid "Time Picker"
-msgstr ""
+msgstr "Sélecteur de temps"
 
 #: classes/Poll.class.php:806 classes/Poll.class.php:809
 #: classes/Poll.class.php:818 classes/Poll.class.php:819
@@ -120,7 +120,7 @@ msgstr "Résultats"
 #: classes/Poll.class.php:1096 classes/Poll.class.php:1252
 #: classes/Poll.class.php:1254 t.php:40 classes/Poll.class.php:1253
 msgid "Vote"
-msgstr ""
+msgstr "Voter"
 
 #: classes/Poll.class.php:1100 classes/Poll.class.php:1103
 #: classes/Poll.class.php:1111 classes/Poll.class.php:1112
@@ -151,7 +151,7 @@ msgstr "Autres sondages"
 #: classes/Poll.class.php:1491 classes/Poll.class.php:1492
 #: classes/Poll.class.php:1494
 msgid "message"
-msgstr ""
+msgstr "message"
 
 #: classes/Poll.class.php:1483 public_html/index.php:58
 #: public_html/index.php:182 classes/Poll.class.php:1487
@@ -195,6 +195,8 @@ msgid ""
 "Access to this poll is denied. Either the poll has been moved/removed or you "
 "do not have sufficient permissions."
 msgstr ""
+"L'accès à ce sondage est refusé. Soit le sondage a été déplacé / supprimé, "
+"soit vous ne disposez pas des autorisations suffisantes."
 
 #: admin/ajax.php:26 classes/Poll.class.php:625
 msgid "Access Denied"
@@ -246,7 +248,7 @@ msgstr "Premiers résultats, le sondage est ouvert"
 
 #: polls2.php:32
 msgid "Polls v2"
-msgstr ""
+msgstr "Sondages v2"
 
 #: classes/Menu.class.php:38 classes/Poll.class.php:1609
 #: classes/Poll.class.php:1610 classes/Poll.class.php:1612
@@ -279,6 +281,9 @@ msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
 msgstr ""
+"Pour modifier ou supprimer un sondage, cliquez sur l'icône d'édition du "
+"sondage. Pour créer un nouveau sondage, cliquez sur «Créer un nouveau» ci-"
+"dessus."
 
 #: classes/Poll.class.php:608 admin/index.php:89 admin/index.php:107
 msgid "Edit Poll"
@@ -325,7 +330,7 @@ msgstr "Sujet"
 
 #: classes/Poll.class.php:685
 msgid "Mode"
-msgstr ""
+msgstr "Mode"
 
 #: classes/Poll.class.php:689
 msgid "Appears on Pollblock"
@@ -441,7 +446,7 @@ msgstr ""
 
 #: classes/Poll.class.php:1306 classes/Poll.class.php:1307
 #: classes/Poll.class.php:1309 classes/Poll.class.php:1308
-#, fuzzy, php-format
+#, php-format
 msgid "This poll has %d more question"
 msgid_plural "This poll has %d more questions"
 msgstr[0] "Ce sondage a% d autres questions"
@@ -481,7 +486,6 @@ msgstr ""
 "sondage. usage"
 
 #: functions.inc:356
-#, fuzzy
 msgid "Comment"
 msgstr "Commentaire"
 

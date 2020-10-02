@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-02 11:59-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-10-02 13:26-0700\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1394
 #: public_html/index.php:131 classes/Poll.class.php:1098
@@ -472,18 +472,15 @@ msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr "HTML: renderoi tämän sivuston kyselyn tulokset. käyttö"
 
 #: functions.inc:736 functions.inc:720
-#, fuzzy
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
 "Linkki: tämän sivuston kyselyyn. Link_text oletuksena kyselyn aihe. Käyttö"
 
 #: functions.inc:356
-#, fuzzy
 msgid "Comment"
 msgstr "kommentteja"
 
 #: classes/Poll.class.php:1492 classes/Poll.class.php:1493
-#, fuzzy
 msgid "Message"
 msgstr "viesti"
