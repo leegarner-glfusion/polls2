@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-01 08:39-0700\n"
+"POT-Creation-Date: 2020-10-02 11:59-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,12 +22,16 @@ msgstr ""
 #: public_html/index.php:131 classes/Poll.class.php:1098
 #: classes/Poll.class.php:1398 classes/Views/Results.class.php:178
 #: classes/Poll.class.php:1106 classes/Poll.class.php:1415
-#: classes/Views/Results.class.php:177
+#: classes/Views/Results.class.php:177 classes/Poll.class.php:1107
+#: classes/Poll.class.php:1416 classes/Poll.class.php:1109
+#: classes/Poll.class.php:1418 classes/Poll.class.php:1108
+#: classes/Poll.class.php:1417
 msgid "You have already voted"
 msgstr "Olet jo äänestänyt."
 
 #: functions.inc:404 functions.inc:400 classes/Poll.class.php:1234
-#: functions.inc:407 functions.inc:391
+#: functions.inc:407 functions.inc:391 classes/Poll.class.php:1235
+#: classes/Poll.class.php:1237 classes/Poll.class.php:1236
 msgid "Poll Topic"
 msgstr "Pollin aihe"
 
@@ -35,6 +39,9 @@ msgstr "Pollin aihe"
 #: classes/Views/Results.class.php:201 functions.inc:405
 #: classes/Poll.class.php:1263 classes/Poll.class.php:1479
 #: classes/Views/Results.class.php:200 functions.inc:412 functions.inc:396
+#: classes/Poll.class.php:1264 classes/Poll.class.php:1480
+#: classes/Poll.class.php:1266 classes/Poll.class.php:1482
+#: classes/Poll.class.php:1265 classes/Poll.class.php:1481
 msgid "Votes"
 msgstr "ääntä"
 
@@ -64,13 +71,13 @@ msgstr "Kuvaus"
 
 #: classes/Poll.class.php:691 classes/Poll.class.php:950
 #: classes/Poll.class.php:953 classes/Poll.class.php:700
-#: classes/Poll.class.php:961
+#: classes/Poll.class.php:961 classes/Poll.class.php:962
 msgid "Poll Opens"
 msgstr "Kysely avautuu"
 
 #: classes/Poll.class.php:692 classes/Poll.class.php:956
 #: classes/Poll.class.php:959 classes/Poll.class.php:701
-#: classes/Poll.class.php:967
+#: classes/Poll.class.php:967 classes/Poll.class.php:968
 msgid "Poll Closes"
 msgstr "Kysely suljetaan"
 
@@ -91,7 +98,7 @@ msgid "Time Picker"
 msgstr "Ajanvalitsin"
 
 #: classes/Poll.class.php:806 classes/Poll.class.php:809
-#: classes/Poll.class.php:818
+#: classes/Poll.class.php:818 classes/Poll.class.php:819
 msgid "Error: A poll name is required"
 msgstr "Virhe: Kyselyn nimi vaaditaan."
 
@@ -99,62 +106,78 @@ msgstr "Virhe: Kyselyn nimi vaaditaan."
 #: classes/Poll.class.php:1267 classes/Poll.class.php:941
 #: classes/Poll.class.php:1092 classes/Poll.class.php:1271
 #: classes/Poll.class.php:949 classes/Poll.class.php:1100
-#: classes/Poll.class.php:1281
+#: classes/Poll.class.php:1281 classes/Poll.class.php:1101
+#: classes/Poll.class.php:1282 classes/Poll.class.php:1284
+#: classes/Poll.class.php:950 classes/Poll.class.php:1283
 msgid "Results"
 msgstr "Tulokset"
 
+#. L10N: This is a block comment one line directly above the gettext function call. It will be extracted by xgettext.
+#. L10N: This is a block comment one line directly above the gettext function call
 #: classes/Poll.class.php:1084 classes/Poll.class.php:1237
 #: classes/Poll.class.php:1087 classes/Poll.class.php:1241
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1251
+#: classes/Poll.class.php:1096 classes/Poll.class.php:1252
+#: classes/Poll.class.php:1254 t.php:40 classes/Poll.class.php:1253
 msgid "Vote"
 msgstr "äänestä"
 
 #: classes/Poll.class.php:1100 classes/Poll.class.php:1103
-#: classes/Poll.class.php:1111
+#: classes/Poll.class.php:1111 classes/Poll.class.php:1112
+#: classes/Poll.class.php:1114 classes/Poll.class.php:1113
 msgid "Poll is Closed"
 msgstr "Äänestys on suljettu."
 
 #: classes/Poll.class.php:1152 classes/Poll.class.php:1155
-#: classes/Poll.class.php:1163
+#: classes/Poll.class.php:1163 classes/Poll.class.php:1164
+#: classes/Poll.class.php:1166 classes/Poll.class.php:1165
 msgid "Are you sure you want to delete all of the results for this poll?"
 msgstr "Haluatko varmasti poistaa kaikki tämän kyselyn tulokset?"
 
 #: classes/Poll.class.php:1245 classes/Poll.class.php:1249
-#: classes/Poll.class.php:1259
+#: classes/Poll.class.php:1259 classes/Poll.class.php:1260
+#: classes/Poll.class.php:1262 classes/Poll.class.php:1261
 msgid "Start Poll"
 msgstr "Aloita polli"
 
 #: classes/Poll.class.php:1311 classes/Poll.class.php:1315
 #: classes/Views/Results.class.php:295 classes/Poll.class.php:1332
+#: classes/Poll.class.php:1333 classes/Poll.class.php:1335
+#: classes/Poll.class.php:1334
 msgid "Other polls"
 msgstr "Muut pollit"
 
 #: classes/Poll.class.php:1470 classes/Poll.class.php:1474
-#: classes/Poll.class.php:1491
+#: classes/Poll.class.php:1491 classes/Poll.class.php:1492
+#: classes/Poll.class.php:1494
 msgid "message"
 msgstr "viesti"
 
 #: classes/Poll.class.php:1483 public_html/index.php:58
 #: public_html/index.php:182 classes/Poll.class.php:1487
-#: classes/Poll.class.php:1504
+#: classes/Poll.class.php:1504 classes/Poll.class.php:1505
+#: classes/Poll.class.php:1507 classes/Poll.class.php:1506
 msgid "Polls in System"
 msgstr "Polleja systeemissä"
 
 #: classes/Poll.class.php:1612 classes/Poll.class.php:1616
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
-#: classes/Poll.class.php:1634
+#: classes/Poll.class.php:1634 classes/Poll.class.php:1635
+#: classes/Poll.class.php:1637 classes/Poll.class.php:1636
 msgid "User Name"
 msgstr "Käyttäjänimi"
 
 #: classes/Poll.class.php:1617 classes/Poll.class.php:1621
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
-#: classes/Poll.class.php:1639
+#: classes/Poll.class.php:1639 classes/Poll.class.php:1640
+#: classes/Poll.class.php:1642 classes/Poll.class.php:1641
 msgid "IP Address"
 msgstr "IP-osoite"
 
 #: classes/Poll.class.php:1622 classes/Poll.class.php:1626
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
-#: classes/Poll.class.php:1644
+#: classes/Poll.class.php:1644 classes/Poll.class.php:1645
+#: classes/Poll.class.php:1647 classes/Poll.class.php:1646
 msgid "Date Voted"
 msgstr "Äänestyspäivä"
 
@@ -201,11 +224,14 @@ msgstr "Oikeudet"
 
 #: classes/Poll.class.php:1236 classes/Views/Results.class.php:206
 #: classes/Poll.class.php:1246 classes/Views/Results.class.php:205
+#: classes/Poll.class.php:1247 classes/Poll.class.php:1249
+#: classes/Poll.class.php:1248
 msgid "Back to List"
 msgstr "Palaa luetteloon"
 
 #: classes/Poll.class.php:1422 public_html/ajax_handler.php:96
-#: classes/Poll.class.php:1439
+#: classes/Poll.class.php:1439 classes/Poll.class.php:1440
+#: classes/Poll.class.php:1442 classes/Poll.class.php:1441
 msgid "Your vote was saved for the poll"
 msgstr "Antamasi ääni tallennettu"
 
@@ -223,14 +249,20 @@ msgid "Polls v2"
 msgstr "Kyselyt v2"
 
 #: classes/Menu.class.php:38 classes/Poll.class.php:1609
+#: classes/Poll.class.php:1610 classes/Poll.class.php:1612
+#: classes/Poll.class.php:1611
 msgid "List All"
 msgstr "Listaa kaikki"
 
 #: classes/Menu.class.php:43 classes/Poll.class.php:1613
+#: classes/Poll.class.php:1614 classes/Poll.class.php:1616
+#: classes/Poll.class.php:1615
 msgid "Create New"
 msgstr "Luo uusi"
 
 #: classes/Menu.class.php:47 classes/Poll.class.php:1617
+#: classes/Poll.class.php:1618 classes/Poll.class.php:1620
+#: classes/Poll.class.php:1619
 msgid "Admin Home"
 msgstr "Järjestelmänvalvojan koti"
 
@@ -240,6 +272,9 @@ msgstr "Kyselyjen hallinta"
 
 #: classes/Menu.class.php:68 classes/Poll.class.php:1628
 #: classes/Poll.class.php:1656 classes/Views/Results.class.php:382
+#: classes/Poll.class.php:1629 classes/Poll.class.php:1657
+#: classes/Poll.class.php:1631 classes/Poll.class.php:1659
+#: classes/Poll.class.php:1630 classes/Poll.class.php:1658
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
@@ -266,6 +301,8 @@ msgstr "Palaa %s palata kyselyn hallintanäyttöön."
 
 #: classes/Poll.class.php:639 classes/Poll.class.php:647
 #: classes/Poll.class.php:986 classes/Poll.class.php:1169
+#: classes/Poll.class.php:1170 classes/Poll.class.php:1172
+#: classes/Poll.class.php:987 classes/Poll.class.php:1171
 msgid "Delete"
 msgstr "Poistaa"
 
@@ -282,7 +319,9 @@ msgid "Do not use spaces"
 msgstr "Älä käytä välilyöntejä."
 
 #: classes/Poll.class.php:683 classes/Poll.class.php:938
-#: classes/Poll.class.php:1474
+#: classes/Poll.class.php:1474 classes/Poll.class.php:1475
+#: classes/Poll.class.php:1477 classes/Poll.class.php:939
+#: classes/Poll.class.php:1476
 msgid "Topic"
 msgstr "Aihe"
 
@@ -295,7 +334,9 @@ msgid "Appears on Pollblock"
 msgstr "Näkyy kyselylohkossa"
 
 #: classes/Poll.class.php:690 classes/Poll.class.php:973
-#: classes/Poll.class.php:1113
+#: classes/Poll.class.php:1113 classes/Poll.class.php:1114
+#: classes/Poll.class.php:1116 classes/Poll.class.php:974
+#: classes/Poll.class.php:1115
 msgid "Open for Voting"
 msgstr "Avoinna äänestykseen"
 
@@ -332,31 +373,37 @@ msgid "Cancel"
 msgstr "Peruuttaa"
 
 #: classes/Poll.class.php:741 classes/Poll.class.php:756
-#: classes/Poll.class.php:1236
+#: classes/Poll.class.php:1236 classes/Poll.class.php:1237
+#: classes/Poll.class.php:1239 classes/Poll.class.php:1238
 msgid "Question"
 msgstr "Kysymys"
 
 #: classes/Poll.class.php:757 classes/Views/Results.class.php:220
+#: classes/Poll.class.php:758
 msgid "To remove this question from the poll, remove its question text"
 msgstr "Poista tämä kysymys kyselystä poistamalla sen kysymysteksti"
 
 #: classes/Poll.class.php:931 classes/Poll.class.php:1289
+#: classes/Poll.class.php:1290 classes/Poll.class.php:1292
+#: classes/Poll.class.php:932 classes/Poll.class.php:1291
 msgid "Edit"
 msgstr "Muokata"
 
-#: classes/Poll.class.php:943
+#: classes/Poll.class.php:943 classes/Poll.class.php:944
 msgid "Voters"
 msgstr "Äänestäjät"
 
 #: classes/Poll.class.php:955 classes/Poll.class.php:1485
+#: classes/Poll.class.php:1486 classes/Poll.class.php:1488
+#: classes/Poll.class.php:956 classes/Poll.class.php:1487
 msgid "Poll Created"
 msgstr "Päivämäärä luotu"
 
-#: classes/Poll.class.php:980
+#: classes/Poll.class.php:980 classes/Poll.class.php:981
 msgid "Reset"
 msgstr "Nollaa"
 
-#: classes/Poll.class.php:1000
+#: classes/Poll.class.php:1000 classes/Poll.class.php:1001
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above"
@@ -364,19 +411,23 @@ msgstr ""
 "Voit muokata tai poistaa kyselyn napsauttamalla kyselyn muokkauskuvaketta. "
 "Luo kysely.uusi kysely, napsauta \"Luo uusi\" yllä."
 
-#: classes/Poll.class.php:1131
+#: classes/Poll.class.php:1131 classes/Poll.class.php:1132
+#: classes/Poll.class.php:1134 classes/Poll.class.php:1133
 msgid "Yes"
 msgstr "Joo"
 
-#: classes/Poll.class.php:1133
+#: classes/Poll.class.php:1133 classes/Poll.class.php:1134
+#: classes/Poll.class.php:1136 classes/Poll.class.php:1135
 msgid "No"
 msgstr "Ei"
 
-#: classes/Poll.class.php:1171
+#: classes/Poll.class.php:1171 classes/Poll.class.php:1172
+#: classes/Poll.class.php:1174 classes/Poll.class.php:1173
 msgid "Are you sure you want to delete this Poll?"
 msgstr "Haluatko varmasti poistaa tämän kyselyn?"
 
-#: classes/Poll.class.php:1172
+#: classes/Poll.class.php:1172 classes/Poll.class.php:1173
+#: classes/Poll.class.php:1175 classes/Poll.class.php:1174
 msgid ""
 "Are you absolutely sure you want to delete this Poll? All questions, answers "
 "and comments that are associated with this Poll will also be permanently "
@@ -386,7 +437,8 @@ msgstr ""
 "vastauksetja tähän kyselyyn liittyvät kommentit ovat myös pysyvästipoistettu "
 "tietokannasta"
 
-#: classes/Poll.class.php:1306
+#: classes/Poll.class.php:1306 classes/Poll.class.php:1307
+#: classes/Poll.class.php:1309 classes/Poll.class.php:1308
 #, php-format
 msgid "This poll has %d more question"
 msgid_plural "This poll has %d more questions"
@@ -394,6 +446,8 @@ msgstr[0] "Tässä kyselyssä on %d kysymystä lisää"
 msgstr[1] "Tässä kyselyssä on vielä %d kysymystä"
 
 #: classes/Poll.class.php:1339 classes/Views/Results.class.php:280
+#: classes/Poll.class.php:1340 classes/Poll.class.php:1342
+#: classes/Poll.class.php:1341
 msgid "comments"
 msgstr "kommentteja"
 
@@ -408,11 +462,6 @@ msgstr "Virhe puuttuu kenttiä"
 #: functions.inc:189 functions.inc:173
 msgid "Preview"
 msgstr "Esikatselu"
-
-#: functions.inc:372 functions.inc:356
-#, fuzzy
-msgid "Coment"
-msgstr "kommentteja"
 
 #: functions.inc:728 functions.inc:712
 msgid "HTML: renders a voting block for a Poll on this site. usage"
@@ -433,3 +482,8 @@ msgstr ""
 #, fuzzy
 msgid "Comment"
 msgstr "kommentteja"
+
+#: classes/Poll.class.php:1492 classes/Poll.class.php:1493
+#, fuzzy
+msgid "Message"
+msgstr "viesti"
