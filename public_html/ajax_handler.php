@@ -59,19 +59,19 @@ if (isset ($_POST['pid'])) {
 }
 
 if ( $pid == '' || $aid == 0 ) {
-    $retval['statusMessage'] = 'Error Processing Poll Vote';
+    $retval['statusMessage'] = MO::_('There was an error recording your vote.');
     $retval['html'] = Poll::getInstance($pid)->Render();
 } else {
     $Poll = Poll::getInstance($pid);
     if (!$Poll->canVote()) {
-        $retval['statusMessage'] = 'This poll is not open for voting';
+        $retval['statusMessage'] = MO::_('This poll is not open for voting.');
     } elseif (
         isset($_POST['aid']) &&
         count($_POST['aid']) == $Poll->numQuestions()
     ) {
         $retval = POLLS_saveVote_AJAX($pid,$aid);
     } else {
-        $eMsg = MO::_('Please answer all remaining questions') . ' "' . $Poll->getTopic() . '"';
+        $eMsg = MO::_('Please answer all remaining questions.') . ' "' . $Poll->getTopic() . '"';
         $retval['statusMessage'] = $eMsg;
     }
 }
@@ -86,16 +86,16 @@ function POLLS_saveVote_AJAX($pid, $aid)
     $retval = array('html' => '','statusMessage' => '');
     $Poll = Poll::getInstance($pid);
     if (!$Poll->canVote()) {
-        $retval['statusMessage'] = 'This poll is not available for voting';
+        $retval['statusMessage'] = MO::_('This poll is not open for voting.');
         $retval['html'] = $Poll::listPolls();
     } elseif ($Poll->alreadyVoted()) {
-        $retval['statusMessage'] = 'You have already voted on this poll';
+        $retval['statusMessage'] = MO::_('You have already voted on this poll.');
         $retval['html'] = (new Results($pid))->Render();
     } else {
         if ((new Poll($pid))->saveVote($aid)) {
-            $eMsg = MO::_('Your vote was saved for the poll') . ' "' . $Poll->getTopic() . '"';
+            $eMsg = MO::_('Your vote was saved for the poll.') . ' "' . $Poll->getTopic() . '"';
         } else {
-            $eMsg = "There was an error recording your vote";
+            $eMsg = MO::_('There was an error recording your vote.');
         }
         $retval['statusMessage'] = $eMsg;
         $retval['html'] = (new Results($pid))->Render();

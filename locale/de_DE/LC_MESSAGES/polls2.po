@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-02 11:59-0700\n"
+"POT-Creation-Date: 2020-10-03 09:49-0700\n"
 "PO-Revision-Date: 2020-10-02 13:26-0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.0.6\n"
 
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1394
@@ -141,7 +141,7 @@ msgstr "Umfrage starten"
 #: classes/Poll.class.php:1311 classes/Poll.class.php:1315
 #: classes/Views/Results.class.php:295 classes/Poll.class.php:1332
 #: classes/Poll.class.php:1333 classes/Poll.class.php:1335
-#: classes/Poll.class.php:1334
+#: classes/Poll.class.php:1334 classes/Views/Results.class.php:296
 msgid "Other polls"
 msgstr "Weitere Umfragen"
 
@@ -155,6 +155,7 @@ msgstr "Botschaft"
 #: public_html/index.php:182 classes/Poll.class.php:1487
 #: classes/Poll.class.php:1504 classes/Poll.class.php:1505
 #: classes/Poll.class.php:1507 classes/Poll.class.php:1506
+#: public_html/index.php:191
 msgid "Polls in System"
 msgstr "Umfragen im System"
 
@@ -162,6 +163,7 @@ msgstr "Umfragen im System"
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
 #: classes/Poll.class.php:1634 classes/Poll.class.php:1635
 #: classes/Poll.class.php:1637 classes/Poll.class.php:1636
+#: classes/Views/Results.class.php:361
 msgid "User Name"
 msgstr "Benutzername"
 
@@ -169,6 +171,7 @@ msgstr "Benutzername"
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
 #: classes/Poll.class.php:1639 classes/Poll.class.php:1640
 #: classes/Poll.class.php:1642 classes/Poll.class.php:1641
+#: classes/Views/Results.class.php:366
 msgid "IP Address"
 msgstr "IP-Adresse"
 
@@ -176,6 +179,7 @@ msgstr "IP-Adresse"
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
 #: classes/Poll.class.php:1644 classes/Poll.class.php:1645
 #: classes/Poll.class.php:1647 classes/Poll.class.php:1646
+#: classes/Views/Results.class.php:371
 msgid "Date Voted"
 msgstr "Abgestimmt am"
 
@@ -187,15 +191,6 @@ msgstr "Bitte alle übrigen Fragen beantworten"
 #: public_html/index.php:165
 msgid "Result not saved"
 msgstr "Ergebnis nicht gespeichert"
-
-#: public_html/index.php:176
-msgid ""
-"Access to this poll is denied. Either the poll has been moved/removed or you "
-"do not have sufficient permissions."
-msgstr ""
-"Der Zugang zu dieser Umfrage wird verweigert. Entweder wurde die Umfrage "
-"verschoben, entfernt, oder Du verfügst nicht über ausreichende "
-"Berechtigungen."
 
 #: admin/ajax.php:26 classes/Poll.class.php:625
 msgid "Access Denied"
@@ -236,6 +231,7 @@ msgstr "Deine Stimme wurde gespeichert für die Umfrage"
 
 #: classes/Views/Results.class.php:171 classes/Views/Results.class.php:180
 #: classes/Views/Results.class.php:170 classes/Views/Results.class.php:179
+#: public_html/index.php:177
 msgid "Poll results will be available only after the Poll has closed."
 msgstr ""
 "Die Umfrage-Ergebnisse stehen erst nach dem schließen der Umfrage zur "
@@ -276,6 +272,7 @@ msgstr "Liste der Umfragen"
 #: classes/Poll.class.php:1629 classes/Poll.class.php:1657
 #: classes/Poll.class.php:1631 classes/Poll.class.php:1659
 #: classes/Poll.class.php:1630 classes/Poll.class.php:1658
+#: classes/Views/Results.class.php:383
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
@@ -384,7 +381,7 @@ msgid "Question"
 msgstr "Frage"
 
 #: classes/Poll.class.php:757 classes/Views/Results.class.php:220
-#: classes/Poll.class.php:758
+#: classes/Poll.class.php:758 classes/Views/Results.class.php:221
 msgid "To remove this question from the poll, remove its question text"
 msgstr ""
 "Entfernen Sie den Fragentext, um diese Frage aus der Umfrage zu entfernen."
@@ -454,11 +451,12 @@ msgstr[1] "Diese Umfrage hat %d weitere Fragen."
 
 #: classes/Poll.class.php:1339 classes/Views/Results.class.php:280
 #: classes/Poll.class.php:1340 classes/Poll.class.php:1342
-#: classes/Poll.class.php:1341
+#: classes/Poll.class.php:1341 classes/Views/Results.class.php:281
 msgid "comments"
 msgstr "Bemerkungen"
 
 #: classes/Views/Results.class.php:210 admin/index.php:113
+#: classes/Views/Results.class.php:211
 msgid "Please enter a Poll ID"
 msgstr "Bitte geben Sie eine Umfrage-ID ein"
 
@@ -493,6 +491,55 @@ msgstr ""
 msgid "Comment"
 msgstr "Kommentar"
 
-#: classes/Poll.class.php:1492 classes/Poll.class.php:1493
+#: classes/Poll.class.php:1493
+msgid "Status"
+msgstr "Status"
+
+#: classes/Poll.class.php:1493
+#, fuzzy
 msgid "Message"
 msgstr "Botschaft"
+
+#: public_html/index.php:141 public_html/index.php:164
+#: public_html/ajax_handler.php:74
+#, fuzzy
+msgid "Please answer all remaining questions."
+msgstr "Bitte alle übrigen Fragen beantworten"
+
+#: public_html/index.php:165
+#, fuzzy
+msgid "Result not saved."
+msgstr "Ergebnis nicht gespeichert"
+
+#: public_html/index.php:184
+msgid "Access to this poll is denied."
+msgstr "Der Zugriff auf diese Umfrage wird verweigert."
+
+#: public_html/index.php:185
+#, fuzzy
+msgid ""
+"Either the poll has been moved/removed or you do not have sufficient "
+"permissions."
+msgstr ""
+"Entweder wurde die Umfrage "
+"verschoben, entfernt, oder Du verfügst nicht über ausreichende "
+"Berechtigungen."
+
+#: public_html/ajax_handler.php:89 public_html/ajax_handler.php:67
+#, fuzzy
+msgid "This poll is not open for voting."
+msgstr "Diese Umfrage ist nicht zur Abstimmung offen."
+
+#: public_html/ajax_handler.php:92
+#, fuzzy
+msgid "You have already voted on this poll."
+msgstr "Sie haben bereits abgestimmt"
+
+#: public_html/ajax_handler.php:96
+#, fuzzy
+msgid "Your vote was saved for the poll."
+msgstr "Deine Stimme wurde gespeichert für die Umfrage"
+
+#: public_html/ajax_handler.php:98 public_html/ajax_handler.php:62
+msgid "There was an error recording your vote."
+msgstr "Bei der Aufzeichnung Ihrer Stimme ist ein Fehler aufgetreten."

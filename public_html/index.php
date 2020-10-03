@@ -138,7 +138,7 @@ case 'votebutton':
                 COM_refresh(Config::get('url') . '/index.php');
             }
         } else {
-            $page .= COM_showMessageText(MO::_('Please answer all remaining questions'), '', true, 'error');
+            $page .= COM_showMessageText(MO::_('Please answer all remaining questions.'), '', true, 'error');
             $page .= $Poll->withSelections($aid)->Render();
         }
     }
@@ -161,19 +161,28 @@ default:
             $page .= COM_showMessage($msg, Config::get('pi_name'));
         }
         if (isset($_POST['aid'])) {
-            $eMsg =  MO::_('Please answer all remaining questions'). ' "' . $filter->filterData($Poll->getTopic()) . '"';
-            $page .= COM_showMessageText($eMsg, MO::_('Result not saved'), true, 'error');
+            $eMsg =  MO::_('Please answer all remaining questions.'). ' "' . $filter->filterData($Poll->getTopic()) . '"';
+            $page .= COM_showMessageText($eMsg, MO::_('Result not saved.'), true, 'error');
         }
-        if (!$Poll->isOpen() && $Poll->canViewResults()) {
-            $page .= (new Results($Poll->getID()))
-                ->withCommentMode($mode)
-                ->withCommentOrder($order)
-                ->Render();
-        } elseif ($Poll->canVote()) {
+        if ($Poll->canVote()) {
             $page .= $Poll->Render();
+        } elseif ($Poll->canViewResults()) {
+            if (!$Poll->isOpen() || !$Poll->hideResults()) {
+                $page .= (new Results($Poll->getID()))
+                    ->withCommentMode($mode)
+                    ->withCommentOrder($order)
+                    ->Render();
+            } else {
+                COM_setMsg(
+                    MO::_('Poll results will be available only after the Poll has closed.'),
+                    'error',
+                    true
+                );
+            }
         } else {
             COM_setMsg(
-                MO::_('Access to this poll is denied. Either the poll has been moved/removed or you do not have sufficient permissions.'),
+                MO::_('Access to this poll is denied.') .
+                MO::_('Either the poll has been moved/removed or you do not have sufficient permissions.'),
                 'error', true
             );
             COM_refresh(Config::get('url') . '/index.php');

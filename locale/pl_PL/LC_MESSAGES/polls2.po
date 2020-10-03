@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-02 11:59-0700\n"
+"POT-Creation-Date: 2020-10-03 09:49-0700\n"
 "PO-Revision-Date: 2020-10-02 13:31-0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.0.6\n"
 
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1394
@@ -143,7 +143,7 @@ msgstr "Rozpocznij ankietę"
 #: classes/Poll.class.php:1311 classes/Poll.class.php:1315
 #: classes/Views/Results.class.php:295 classes/Poll.class.php:1332
 #: classes/Poll.class.php:1333 classes/Poll.class.php:1335
-#: classes/Poll.class.php:1334
+#: classes/Poll.class.php:1334 classes/Views/Results.class.php:296
 msgid "Other polls"
 msgstr "Inne ankiety"
 
@@ -157,6 +157,7 @@ msgstr "wiadomość"
 #: public_html/index.php:182 classes/Poll.class.php:1487
 #: classes/Poll.class.php:1504 classes/Poll.class.php:1505
 #: classes/Poll.class.php:1507 classes/Poll.class.php:1506
+#: public_html/index.php:191
 msgid "Polls in System"
 msgstr "Ankiety w systemie"
 
@@ -164,6 +165,7 @@ msgstr "Ankiety w systemie"
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
 #: classes/Poll.class.php:1634 classes/Poll.class.php:1635
 #: classes/Poll.class.php:1637 classes/Poll.class.php:1636
+#: classes/Views/Results.class.php:361
 msgid "User Name"
 msgstr "Nazwa użytkownika"
 
@@ -171,6 +173,7 @@ msgstr "Nazwa użytkownika"
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
 #: classes/Poll.class.php:1639 classes/Poll.class.php:1640
 #: classes/Poll.class.php:1642 classes/Poll.class.php:1641
+#: classes/Views/Results.class.php:366
 msgid "IP Address"
 msgstr "Adres IP"
 
@@ -178,6 +181,7 @@ msgstr "Adres IP"
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
 #: classes/Poll.class.php:1644 classes/Poll.class.php:1645
 #: classes/Poll.class.php:1647 classes/Poll.class.php:1646
+#: classes/Views/Results.class.php:371
 msgid "Date Voted"
 msgstr "Data głosowania"
 
@@ -189,14 +193,6 @@ msgstr "Proszę odpowiedzieć na wszystkie pozostałe pytania"
 #: public_html/index.php:165
 msgid "Result not saved"
 msgstr "Wynik nie został zapisany"
-
-#: public_html/index.php:176
-msgid ""
-"Access to this poll is denied. Either the poll has been moved/removed or you "
-"do not have sufficient permissions."
-msgstr ""
-"Odmowa dostępu do tej ankiety. Albo ankieta została przeniesiona / usunięta, "
-"albo nie masz wystarczających uprawnień."
 
 #: admin/ajax.php:26 classes/Poll.class.php:625
 msgid "Access Denied"
@@ -237,6 +233,7 @@ msgstr "Twój głos został zapisany w ankiecie"
 
 #: classes/Views/Results.class.php:171 classes/Views/Results.class.php:180
 #: classes/Views/Results.class.php:170 classes/Views/Results.class.php:179
+#: public_html/index.php:177
 msgid "Poll results will be available only after the Poll has closed."
 msgstr "Wyniki ankiety będą dostępne dopiero po zamknięciu ankiety."
 
@@ -275,6 +272,7 @@ msgstr "Administracja ankietami"
 #: classes/Poll.class.php:1629 classes/Poll.class.php:1657
 #: classes/Poll.class.php:1631 classes/Poll.class.php:1659
 #: classes/Poll.class.php:1630 classes/Poll.class.php:1658
+#: classes/Views/Results.class.php:383
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
@@ -381,7 +379,7 @@ msgid "Question"
 msgstr "Pytanie"
 
 #: classes/Poll.class.php:757 classes/Views/Results.class.php:220
-#: classes/Poll.class.php:758
+#: classes/Poll.class.php:758 classes/Views/Results.class.php:221
 msgid "To remove this question from the poll, remove its question text"
 msgstr "Aby usunąć to pytanie z ankiety, usuń jego tekst"
 
@@ -450,11 +448,12 @@ msgstr[2] "Ta ankieta zawiera jeszcze %d pytań"
 
 #: classes/Poll.class.php:1339 classes/Views/Results.class.php:280
 #: classes/Poll.class.php:1340 classes/Poll.class.php:1342
-#: classes/Poll.class.php:1341
+#: classes/Poll.class.php:1341 classes/Views/Results.class.php:281
 msgid "comments"
 msgstr "komentarze"
 
 #: classes/Views/Results.class.php:210 admin/index.php:113
+#: classes/Views/Results.class.php:211
 msgid "Please enter a Poll ID"
 msgstr "Podaj identyfikator ankiety"
 
@@ -485,6 +484,54 @@ msgstr ""
 msgid "Comment"
 msgstr "Komentarz"
 
-#: classes/Poll.class.php:1492 classes/Poll.class.php:1493
+#: classes/Poll.class.php:1493
+msgid "Status"
+msgstr "Status"
+
+#: classes/Poll.class.php:1493
+#, fuzzy
 msgid "Message"
-msgstr "Wiadomość"
+msgstr "wiadomość"
+
+#: public_html/index.php:141 public_html/index.php:164
+#: public_html/ajax_handler.php:74
+#, fuzzy
+msgid "Please answer all remaining questions."
+msgstr "Proszę odpowiedzieć na wszystkie pozostałe pytania."
+
+#: public_html/index.php:165
+#, fuzzy
+msgid "Result not saved."
+msgstr "Wynik nie został zapisany."
+
+#: public_html/index.php:184
+msgid "Access to this poll is denied."
+msgstr "Odmowa dostępu do tej ankiety."
+
+#: public_html/index.php:185
+#, fuzzy
+msgid ""
+"Either the poll has been moved/removed or you do not have sufficient "
+"permissions."
+msgstr ""
+"Albo ankieta została przeniesiona / usunięta, "
+"albo nie masz wystarczających uprawnień."
+
+#: public_html/ajax_handler.php:89 public_html/ajax_handler.php:67
+#, fuzzy
+msgid "This poll is not open for voting."
+msgstr "Ta ankieta nie jest otwarta do głosowania."
+
+#: public_html/ajax_handler.php:92
+#, fuzzy
+msgid "You have already voted on this poll."
+msgstr "Już głosowałeś."
+
+#: public_html/ajax_handler.php:96
+#, fuzzy
+msgid "Your vote was saved for the poll."
+msgstr "Twój głos został zapisany w ankiecie"
+
+#: public_html/ajax_handler.php:98 public_html/ajax_handler.php:62
+msgid "There was an error recording your vote."
+msgstr "Wystąpił błąd podczas rejestrowania Twojego głosu."
