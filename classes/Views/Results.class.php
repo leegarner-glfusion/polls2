@@ -203,6 +203,7 @@ class Results
             'isOpen' => $this->Poll->isOpen(),
             'lang_results_open' => MO::_('Early results, poll is open'),
             'lang_back_to_list' => MO::_('Back to List'),
+            'is_admin' => $this->isAdmin,
         ) );
 
         if (Poll::hasRights('edit')) {

@@ -16,6 +16,6 @@
 {!endif}
 {poll_questions}
 <div class="uk-panel uk-text-small uk-text-truncate uk-margin-bottom">
-	{notification} <a href="{admin_url}">{lang_polltopics}</a> | {num_votes} {lang_votes} {poll_comments}
+    {notification} <a href="{pi_url}/index.php">{lang_polltopics}</a> | {num_votes} {lang_votes} {poll_comments}
 </div>
 {# end {templatelocation} #}

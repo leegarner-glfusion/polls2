@@ -1281,7 +1281,7 @@ class Poll
             ) {
                 $results = COM_createLink(
                     MO::_('Results'),
-                    Config::get('url') . '/index.php?pid=' . $this->pid
+                    Config::get('url') . '/index.php?results=x&pid=' . $this->pid
                     . '&amp;aid=-1');
             }
             $poll->set_var('poll_results', $results);
