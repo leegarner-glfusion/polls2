@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 09:49-0700\n"
+"POT-Creation-Date: 2020-10-03 09:59-0700\n"
 "PO-Revision-Date: 2020-10-02 13:25-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -184,6 +184,12 @@ msgstr "IP adresa"
 #: classes/Views/Results.class.php:371
 msgid "Date Voted"
 msgstr "Datum hlasování"
+
+#: public_html/index.php:141 public_html/index.php:164
+#: public_html/ajax_handler.php:74
+#, fuzzy
+msgid "Please answer all remaining questions"
+msgstr "Odpovězte prosím na všechny zbývající otázky."
 
 #: public_html/index.php:165
 msgid "Result not saved"
@@ -507,8 +513,7 @@ msgid ""
 "Either the poll has been moved/removed or you do not have sufficient "
 "permissions."
 msgstr ""
-"Buď byla anketa přesunuta / "
-"odstraněna, nebo nemáte dostatečná oprávnění."
+"Buď byla anketa přesunuta / odstraněna, nebo nemáte dostatečná oprávnění."
 
 #: public_html/ajax_handler.php:89 public_html/ajax_handler.php:67
 #, fuzzy
