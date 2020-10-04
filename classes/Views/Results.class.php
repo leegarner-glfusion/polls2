@@ -296,7 +296,10 @@ class Results
         $retval .= $poll->finish($poll->parse('output', 'result' ));
 
         if (
-            $this->showComments && $this->Poll->getCommentcode() >= 0 && $this->displaytype != Modes::AUTOTAG) {
+            $this->showComments &&
+            $this->Poll->getCommentcode() >= 0 &&
+            $this->displaytype != Modes::AUTOTAG
+        ) {
             $delete_option = Poll::hasRights('edit') ? true : false;
             USES_lib_comment();
 
