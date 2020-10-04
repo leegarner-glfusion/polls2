@@ -293,8 +293,8 @@ class Results
             $poll->set_var('poll_comments', '');
         }
 
-        $poll->set_var('lang_polltopics', MO::_('Other polls'));
-        if ($this->displaytype !== Modes::PRINT) {
+        $poll->set_var('lang_polltopics', $LANG_POLLS['polltopics'] );
+        if ($this->isAdmin && $this->displaytype !== Modes::PRINT) {
             $retval .= '<a class="uk-button uk-button-success" target="_blank" href="' .
                 Config::get('admin_url') . '/index.php?presults=x&pid=' .
                 urlencode($this->pid) . '">Print</a>' . LB;
