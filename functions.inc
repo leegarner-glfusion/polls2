@@ -968,16 +968,9 @@ function plugin_getiteminfo_polls2($id, $what, $uid = 0, $options = array())
                 $props['title'] = $filter->filterData($A['topic']);
                 break;
             case 'url':
+                $props['url'] = Config::get('url') . '/index.php';
                 if (empty($A['pid'])) {
-                    $props['url'] = Config::get('url') . '/index.php?pid='.$pid.'&amp;aid=-1';
-                } else {
-                    // Users who have already voted but cannot see the results cannot view link
-                    if (
-                        Poll::hasRights('edit') ||
-                        (!$A['hideresults'] && Voter::hasVoted($A['pid'], $A['group_id']))
-                    ) {
-                        $props['url'] = Config::get('url') . '/index.php?pid=' . $A['pid'];
-                    }
+                    $props['url'] .= '?pid=' . $A['pid'];
                 }
                 break;
             case 'label':
