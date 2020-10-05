@@ -127,8 +127,6 @@ function polls_upgrade()
             DB_query("ALTER TABLE $tbl_topics DROP voters", 1);
             DB_query("ALTER TABLE $tbl_topics DROP questions", 1);
             DB_query("ALTER TABLE $tbl_topics DROP statuscode", 1);
-            DB_query("ALTER TABLE $tbl_topics DROP KEY `pollquestions_statuscode`", 1);
-
             DB_query("ALTER TABLE $tbl_topics ADD KEY `idx_enabled` (`is_open`)", 1);
             DB_query(
                 "DELETE FROM `{$_TABLES['groups']}` WHERE grp_id='" .
