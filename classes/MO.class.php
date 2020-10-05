@@ -31,14 +31,14 @@ class MO
     /** Supported language name=>locale mapping.
      * @var array */
     private static $lang2locale = array(
-        'dutch' => 'nl_NL',
-        'finnish' => 'fi_FI',
-        'german' => 'de_DE',
-        'polish' => 'pl_PL',
-        'czech' => 'cs_CZ',
-        'english' => 'en_US',
-        'french_canada' => 'fr_CA',
-        'spanish_colombia' => 'es_CO',
+        'dutch_utf-8' => 'nl_NL',
+        'finnish_utf-8' => 'fi_FI',
+        'german_utf-8' => 'de_DE',
+        'polish_utf-8' => 'pl_PL',
+        'czech_utf-8' => 'cs_CZ',
+        'english_utf-8' => 'en_US',
+        'french_canada_utf-8' => 'fr_CA',
+        'spanish_colombia_utf-8' => 'es_CO',
     );
 
 
@@ -63,16 +63,6 @@ class MO
             $parts = explode('_', $lang);
             if (isset(self::$lang2locale[$lang])) {
                 $locale = self::$lang2locale[$lang];
-            } elseif (
-                count($parts) > 2 &&
-                isset(self::$lang2local[$parts[0] . '_' . $parts[1]])
-            ) {
-                // 2-part language, e.g. "french_canada"
-                // Ignore any other parts like 'utf-8'
-                $locale = self::$lang2locale[$parts[0] . '_' . $parts[1]];
-            } elseif (isset(self::$lang2locale[$parts[0]])) {
-                // single-part language, e.g. "english"
-                $locale = self::$lang2locale[$parts[0]];
             } elseif (isset($LANG_LOCALE) && !empty($LANG_LOCALE)) {
                 // Not found, try the global variable
                 $locale = $LANG_LOCALE;
