@@ -21,7 +21,6 @@ $LANG_configsections[Config::PI_NAME] = array(
 );
 
 $LANG_confignames[Config::PI_NAME] = array(
-    'pollsloginrequired' => MO::_('Polls Login Required'),
     'hidepollsmenu' => MO::_('Hide Polls Menu Entry'),
     'maxquestions' => MO::_('Max. Questions per Poll'),
     'maxanswers' => MO::_('Max. Options per Question'),
