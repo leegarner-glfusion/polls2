@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Polish translation for the Polls plugin.
+# Copyright (C) 2020
+# This file is distributed under the same license as the Polls package.
+# Lee Garner <lee@leegarner.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 09:49-0700\n"
-"PO-Revision-Date: 2020-10-02 13:31-0700\n"
+"POT-Creation-Date: 2020-10-05 10:13-0700\n"
+"PO-Revision-Date: 2020-10-05 09:56-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -63,7 +63,7 @@ msgstr "Ankiety (odpowiedzi) w systemie"
 
 #: functions.inc:126
 msgid "Polls2"
-msgstr "Polls2"
+msgstr "Ankiety2"
 
 #: classes/Poll.class.php:679 classes/Poll.class.php:687
 msgid "Description"
@@ -165,7 +165,7 @@ msgstr "Ankiety w systemie"
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
 #: classes/Poll.class.php:1634 classes/Poll.class.php:1635
 #: classes/Poll.class.php:1637 classes/Poll.class.php:1636
-#: classes/Views/Results.class.php:361
+#: classes/Views/Results.class.php:361 classes/Views/Results.class.php:364
 msgid "User Name"
 msgstr "Nazwa użytkownika"
 
@@ -173,7 +173,7 @@ msgstr "Nazwa użytkownika"
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
 #: classes/Poll.class.php:1639 classes/Poll.class.php:1640
 #: classes/Poll.class.php:1642 classes/Poll.class.php:1641
-#: classes/Views/Results.class.php:366
+#: classes/Views/Results.class.php:366 classes/Views/Results.class.php:369
 msgid "IP Address"
 msgstr "Adres IP"
 
@@ -181,7 +181,7 @@ msgstr "Adres IP"
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
 #: classes/Poll.class.php:1644 classes/Poll.class.php:1645
 #: classes/Poll.class.php:1647 classes/Poll.class.php:1646
-#: classes/Views/Results.class.php:371
+#: classes/Views/Results.class.php:371 classes/Views/Results.class.php:374
 msgid "Date Voted"
 msgstr "Data głosowania"
 
@@ -272,7 +272,7 @@ msgstr "Administracja ankietami"
 #: classes/Poll.class.php:1629 classes/Poll.class.php:1657
 #: classes/Poll.class.php:1631 classes/Poll.class.php:1659
 #: classes/Poll.class.php:1630 classes/Poll.class.php:1658
-#: classes/Views/Results.class.php:383
+#: classes/Views/Results.class.php:383 classes/Views/Results.class.php:386
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
@@ -465,15 +465,15 @@ msgstr "Błąd brakujących pól"
 msgid "Preview"
 msgstr "Podgląd"
 
-#: functions.inc:728 functions.inc:712
+#: functions.inc:728 functions.inc:712 functions.inc:715
 msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr "HTML: renderuje blok głosowania dla ankiety na tej stronie. użycie"
 
-#: functions.inc:732 functions.inc:716
+#: functions.inc:732 functions.inc:716 functions.inc:719
 msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr "HTML: renderuje wyniki ankiety na tej stronie. użycie"
 
-#: functions.inc:736 functions.inc:720
+#: functions.inc:736 functions.inc:720 functions.inc:723
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
@@ -514,8 +514,8 @@ msgid ""
 "Either the poll has been moved/removed or you do not have sufficient "
 "permissions."
 msgstr ""
-"Albo ankieta została przeniesiona / usunięta, "
-"albo nie masz wystarczających uprawnień."
+"Albo ankieta została przeniesiona / usunięta, albo nie masz wystarczających "
+"uprawnień."
 
 #: public_html/ajax_handler.php:89 public_html/ajax_handler.php:67
 #, fuzzy
@@ -523,7 +523,6 @@ msgid "This poll is not open for voting."
 msgstr "Ta ankieta nie jest otwarta do głosowania."
 
 #: public_html/ajax_handler.php:92
-#, fuzzy
 msgid "You have already voted on this poll."
 msgstr "Już głosowałeś."
 
@@ -535,3 +534,145 @@ msgstr "Twój głos został zapisany w ankiecie"
 #: public_html/ajax_handler.php:98 public_html/ajax_handler.php:62
 msgid "There was an error recording your vote."
 msgstr "Wystąpił błąd podczas rejestrowania Twojego głosu."
+
+#: classes/Views/Results.class.php:296
+msgid "Poll Topics"
+msgstr "Temat ankiety"
+
+#: language/lang_config.php:20
+msgid "Polls Configuration"
+msgstr "Administracja ankietami"
+
+#: language/lang_config.php:24
+msgid "Polls Login Required"
+msgstr ""
+
+#: language/lang_config.php:25 language/lang_config.php:24
+msgid "Hide Polls Menu Entry"
+msgstr "Ukryj wpis w menu ankiet"
+
+#: language/lang_config.php:26 language/lang_config.php:25
+msgid "Max. Questions per Poll"
+msgstr "Maks. Pytania w ankiecie"
+
+#: language/lang_config.php:27 language/lang_config.php:26
+msgid "Max. Options per Question"
+msgstr "Maks. Opcje na pytanie"
+
+#: language/lang_config.php:28 language/lang_config.php:27
+msgid "Sort Results"
+msgstr "Sortuj wyniki"
+
+#: language/lang_config.php:29 language/lang_config.php:28
+msgid "Voter Cookie Valid Duration"
+msgstr "Voter Cookie Valid Duration"
+
+#: language/lang_config.php:30 language/lang_config.php:29
+msgid "Voter IP Address Valid Duration"
+msgstr "Adres IP wyborcy Ważny czas trwania"
+
+#: language/lang_config.php:31 language/lang_config.php:30
+msgid "Delete Polls with Owner"
+msgstr "Usuń ankiety z właścicielem"
+
+#: language/lang_config.php:32 language/lang_config.php:31
+msgid "After Saving Poll"
+msgstr "Po zapisaniu ankiety"
+
+#: language/lang_config.php:33 language/lang_config.php:32
+msgid "Poll Default Permissions"
+msgstr "Domyślne uprawnienia ankiety"
+
+#: language/lang_config.php:34 language/lang_config.php:33
+msgid "Display glFusion Blocks"
+msgstr "Wyświetl bloki glFusion"
+
+#: language/lang_config.php:35 language/lang_config.php:34
+msgid "Default group allowed to vote"
+msgstr "Grupa domyślna może głosować"
+
+#: language/lang_config.php:36 language/lang_config.php:35
+msgid "Default group allowed to view results"
+msgstr "Domyślna grupa może wyświetlać wyniki"
+
+#: language/lang_config.php:40 language/lang_config.php:39
+msgid "Main Settings"
+msgstr "Ustawienia główne"
+
+#: language/lang_config.php:44 language/lang_config.php:43
+msgid "General Polls Settings"
+msgstr "Ogólne ustawienia ankiet"
+
+#: language/lang_config.php:45 language/lang_config.php:44
+msgid "Default Permissions"
+msgstr "Uprawnienia domyślne"
+
+#: language/lang_config.php:50 language/lang_config.php:54
+#: language/lang_config.php:49 language/lang_config.php:53
+msgid "True"
+msgstr "Prawdziwe"
+
+#: language/lang_config.php:51 language/lang_config.php:55
+#: language/lang_config.php:50 language/lang_config.php:54
+msgid "False"
+msgstr "Fałszywy"
+
+#: language/lang_config.php:58 language/lang_config.php:57
+msgid "As Submitted"
+msgstr "Jak przesłano"
+
+#: language/lang_config.php:59 language/lang_config.php:58
+msgid "By Votes"
+msgstr "Według głosów"
+
+#: language/lang_config.php:62 language/lang_config.php:61
+msgid "Forward to Poll"
+msgstr "Przekaż do ankiety"
+
+#: language/lang_config.php:63 language/lang_config.php:62
+msgid "Display Admin List"
+msgstr "Wyświetl listę administratorów"
+
+#: language/lang_config.php:64 language/lang_config.php:63
+msgid "Display Public List"
+msgstr "Wyświetl listę publiczną"
+
+#: language/lang_config.php:65 language/lang_config.php:64
+msgid "Display Home"
+msgstr "Wyświetl stronę główną"
+
+#: language/lang_config.php:66 language/lang_config.php:65
+msgid "Display Admin"
+msgstr "Display Admin"
+
+#: language/lang_config.php:69 language/lang_config.php:68
+msgid "No access"
+msgstr "Brak dostępu"
+
+#: language/lang_config.php:70 language/lang_config.php:69
+msgid "Read-Only"
+msgstr "Tylko czytać"
+
+#: language/lang_config.php:71 language/lang_config.php:70
+msgid "Read-Write"
+msgstr "Do odczytu i zapisu"
+
+#: language/lang_config.php:74 language/lang_config.php:73
+msgid "Left Blocks"
+msgstr "Lewe bloki"
+
+#: language/lang_config.php:75 language/lang_config.php:74
+msgid "Right Blocks"
+msgstr "Właściwe bloki"
+
+#: language/lang_config.php:76 language/lang_config.php:75
+msgid "Left & Right Blocks"
+msgstr "Bloki lewy i prawy"
+
+#: language/lang_config.php:77 language/lang_config.php:76
+msgid "None"
+msgstr "Żaden"
+
+#: functions.inc:453
+msgid "Enter it here"
+msgstr ""

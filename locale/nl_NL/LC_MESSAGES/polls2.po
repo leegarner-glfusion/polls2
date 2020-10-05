@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Dutch translation for the Polls plugin
+# Copyright (C) 2020
+# This file is distributed under the same license as the Polls package.
+# Lee Garner <lee@leegarner.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 09:49-0700\n"
-"PO-Revision-Date: 2020-10-02 13:29-0700\n"
+"POT-Creation-Date: 2020-10-05 10:13-0700\n"
+"PO-Revision-Date: 2020-10-05 09:48-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -165,7 +165,7 @@ msgstr "Polls in systeem"
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
 #: classes/Poll.class.php:1634 classes/Poll.class.php:1635
 #: classes/Poll.class.php:1637 classes/Poll.class.php:1636
-#: classes/Views/Results.class.php:361
+#: classes/Views/Results.class.php:361 classes/Views/Results.class.php:364
 msgid "User Name"
 msgstr "Gebruikersnaam"
 
@@ -173,7 +173,7 @@ msgstr "Gebruikersnaam"
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
 #: classes/Poll.class.php:1639 classes/Poll.class.php:1640
 #: classes/Poll.class.php:1642 classes/Poll.class.php:1641
-#: classes/Views/Results.class.php:366
+#: classes/Views/Results.class.php:366 classes/Views/Results.class.php:369
 msgid "IP Address"
 msgstr "IP-adres"
 
@@ -181,7 +181,7 @@ msgstr "IP-adres"
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
 #: classes/Poll.class.php:1644 classes/Poll.class.php:1645
 #: classes/Poll.class.php:1647 classes/Poll.class.php:1646
-#: classes/Views/Results.class.php:371
+#: classes/Views/Results.class.php:371 classes/Views/Results.class.php:374
 msgid "Date Voted"
 msgstr "Datum gestemd"
 
@@ -272,7 +272,7 @@ msgstr "Polls-beheer"
 #: classes/Poll.class.php:1629 classes/Poll.class.php:1657
 #: classes/Poll.class.php:1631 classes/Poll.class.php:1659
 #: classes/Poll.class.php:1630 classes/Poll.class.php:1658
-#: classes/Views/Results.class.php:383
+#: classes/Views/Results.class.php:383 classes/Views/Results.class.php:386
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
@@ -467,15 +467,15 @@ msgstr "Fout bij ontbrekend veld (en)"
 msgid "Preview"
 msgstr "Preview"
 
-#: functions.inc:728 functions.inc:712
+#: functions.inc:728 functions.inc:712 functions.inc:715
 msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr "HTML: geeft een stemblok weer voor een peiling op deze site. gebruik"
 
-#: functions.inc:732 functions.inc:716
+#: functions.inc:732 functions.inc:716 functions.inc:719
 msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr "HTML: geeft de resultaten van een peiling op deze site weer. gebruik"
 
-#: functions.inc:736 functions.inc:720
+#: functions.inc:736 functions.inc:720 functions.inc:723
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
@@ -516,8 +516,7 @@ msgid ""
 "Either the poll has been moved/removed or you do not have sufficient "
 "permissions."
 msgstr ""
-"De enquête is verplaatst/verwijderd "
-"of jijniet voldoende rechten hebben."
+"De enquête is verplaatst/verwijderd of jijniet voldoende rechten hebben."
 
 #: public_html/ajax_handler.php:89 public_html/ajax_handler.php:67
 #, fuzzy
@@ -537,3 +536,146 @@ msgstr "Uw stem is opgeslagen voor de poll"
 #: public_html/ajax_handler.php:98 public_html/ajax_handler.php:62
 msgid "There was an error recording your vote."
 msgstr "Er is een fout opgetreden bij het registreren van uw stem."
+
+#: classes/Views/Results.class.php:296
+#, fuzzy
+msgid "Poll Topics"
+msgstr "Poll Topic"
+
+#: language/lang_config.php:20
+msgid "Polls Configuration"
+msgstr "Polls-beheer"
+
+#: language/lang_config.php:24
+msgid "Polls Login Required"
+msgstr ""
+
+#: language/lang_config.php:25 language/lang_config.php:24
+msgid "Hide Polls Menu Entry"
+msgstr "Verberg menu-item Polls"
+
+#: language/lang_config.php:26 language/lang_config.php:25
+msgid "Max. Questions per Poll"
+msgstr "Max. Hoogte Vragen per peiling"
+
+#: language/lang_config.php:27 language/lang_config.php:26
+msgid "Max. Options per Question"
+msgstr "Max. Hoogte Opties per vraag"
+
+#: language/lang_config.php:28 language/lang_config.php:27
+msgid "Sort Results"
+msgstr "Sorteer resultaten"
+
+#: language/lang_config.php:29 language/lang_config.php:28
+msgid "Voter Cookie Valid Duration"
+msgstr "Kiezer Cookie Geldige Duur"
+
+#: language/lang_config.php:30 language/lang_config.php:29
+msgid "Voter IP Address Valid Duration"
+msgstr "Kiezer IP-adres Geldige duur"
+
+#: language/lang_config.php:31 language/lang_config.php:30
+msgid "Delete Polls with Owner"
+msgstr "Verwijder peilingen met eigenaar"
+
+#: language/lang_config.php:32 language/lang_config.php:31
+msgid "After Saving Poll"
+msgstr "Na het opslaan van peiling"
+
+#: language/lang_config.php:33 language/lang_config.php:32
+msgid "Poll Default Permissions"
+msgstr "Poll Standaardrechten"
+
+#: language/lang_config.php:34 language/lang_config.php:33
+msgid "Display glFusion Blocks"
+msgstr "GlFusion Blocks weergeven"
+
+#: language/lang_config.php:35 language/lang_config.php:34
+msgid "Default group allowed to vote"
+msgstr "Standaardgroep mag stemmen"
+
+#: language/lang_config.php:36 language/lang_config.php:35
+msgid "Default group allowed to view results"
+msgstr "Standaardgroep toegestaan om resultaten te bekijken"
+
+#: language/lang_config.php:40 language/lang_config.php:39
+msgid "Main Settings"
+msgstr "Belangrijkste instellingen"
+
+#: language/lang_config.php:44 language/lang_config.php:43
+msgid "General Polls Settings"
+msgstr "Algemene Polls-instellingen"
+
+#: language/lang_config.php:45 language/lang_config.php:44
+msgid "Default Permissions"
+msgstr "Standaardrechten"
+
+#: language/lang_config.php:50 language/lang_config.php:54
+#: language/lang_config.php:49 language/lang_config.php:53
+msgid "True"
+msgstr "Klopt"
+
+#: language/lang_config.php:51 language/lang_config.php:55
+#: language/lang_config.php:50 language/lang_config.php:54
+msgid "False"
+msgstr "Vals"
+
+#: language/lang_config.php:58 language/lang_config.php:57
+msgid "As Submitted"
+msgstr "Zoals ingediend"
+
+#: language/lang_config.php:59 language/lang_config.php:58
+msgid "By Votes"
+msgstr "Door stemmen"
+
+#: language/lang_config.php:62 language/lang_config.php:61
+msgid "Forward to Poll"
+msgstr "Doorsturen naar peiling"
+
+#: language/lang_config.php:63 language/lang_config.php:62
+msgid "Display Admin List"
+msgstr "Geef de beheerderslijst weer"
+
+#: language/lang_config.php:64 language/lang_config.php:63
+msgid "Display Public List"
+msgstr "Openbare lijst weergeven"
+
+#: language/lang_config.php:65 language/lang_config.php:64
+msgid "Display Home"
+msgstr "Home weergeven"
+
+#: language/lang_config.php:66 language/lang_config.php:65
+msgid "Display Admin"
+msgstr "Display Admin"
+
+#: language/lang_config.php:69 language/lang_config.php:68
+msgid "No access"
+msgstr "Geen toegang"
+
+#: language/lang_config.php:70 language/lang_config.php:69
+msgid "Read-Only"
+msgstr "Alleen lezen"
+
+#: language/lang_config.php:71 language/lang_config.php:70
+msgid "Read-Write"
+msgstr "Lezen schrijven"
+
+#: language/lang_config.php:74 language/lang_config.php:73
+msgid "Left Blocks"
+msgstr "Linker blokken"
+
+#: language/lang_config.php:75 language/lang_config.php:74
+msgid "Right Blocks"
+msgstr "Juiste blokken"
+
+#: language/lang_config.php:76 language/lang_config.php:75
+msgid "Left & Right Blocks"
+msgstr "Linker- en rechterblokken"
+
+#: language/lang_config.php:77 language/lang_config.php:76
+msgid "None"
+msgstr "Geen"
+
+#: functions.inc:453
+msgid "Enter it here"
+msgstr ""

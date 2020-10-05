@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Finnish translation for the Polls plugin.
+# Copyright (C) 2020
+# This file is distributed under the same license as the Polls  package.
+# Lee Garner <lee@leegarner.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 09:49-0700\n"
-"PO-Revision-Date: 2020-10-02 13:26-0700\n"
+"POT-Creation-Date: 2020-10-05 10:13-0700\n"
+"PO-Revision-Date: 2020-10-05 09:36-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fi_FI\n"
@@ -63,7 +63,7 @@ msgstr "Polleja (Vastauksia) systeemissä"
 
 #: functions.inc:126
 msgid "Polls2"
-msgstr "Pollit"
+msgstr "Pollit2"
 
 #: classes/Poll.class.php:679 classes/Poll.class.php:687
 msgid "Description"
@@ -165,7 +165,7 @@ msgstr "Polleja systeemissä"
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
 #: classes/Poll.class.php:1634 classes/Poll.class.php:1635
 #: classes/Poll.class.php:1637 classes/Poll.class.php:1636
-#: classes/Views/Results.class.php:361
+#: classes/Views/Results.class.php:361 classes/Views/Results.class.php:364
 msgid "User Name"
 msgstr "Käyttäjänimi"
 
@@ -173,7 +173,7 @@ msgstr "Käyttäjänimi"
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
 #: classes/Poll.class.php:1639 classes/Poll.class.php:1640
 #: classes/Poll.class.php:1642 classes/Poll.class.php:1641
-#: classes/Views/Results.class.php:366
+#: classes/Views/Results.class.php:366 classes/Views/Results.class.php:369
 msgid "IP Address"
 msgstr "IP-osoite"
 
@@ -181,7 +181,7 @@ msgstr "IP-osoite"
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
 #: classes/Poll.class.php:1644 classes/Poll.class.php:1645
 #: classes/Poll.class.php:1647 classes/Poll.class.php:1646
-#: classes/Views/Results.class.php:371
+#: classes/Views/Results.class.php:371 classes/Views/Results.class.php:374
 msgid "Date Voted"
 msgstr "Äänestyspäivä"
 
@@ -243,7 +243,7 @@ msgstr "Varhaiset tulokset, kysely on avoin"
 
 #: polls2.php:32
 msgid "Polls v2"
-msgstr "Kyselyt v2"
+msgstr "Pollit v2"
 
 #: classes/Menu.class.php:38 classes/Poll.class.php:1609
 #: classes/Poll.class.php:1610 classes/Poll.class.php:1612
@@ -272,7 +272,7 @@ msgstr "Kyselyjen hallinta"
 #: classes/Poll.class.php:1629 classes/Poll.class.php:1657
 #: classes/Poll.class.php:1631 classes/Poll.class.php:1659
 #: classes/Poll.class.php:1630 classes/Poll.class.php:1658
-#: classes/Views/Results.class.php:383
+#: classes/Views/Results.class.php:383 classes/Views/Results.class.php:386
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
@@ -462,15 +462,15 @@ msgstr "Virhe puuttuu kenttiä"
 msgid "Preview"
 msgstr "Esikatselu"
 
-#: functions.inc:728 functions.inc:712
+#: functions.inc:728 functions.inc:712 functions.inc:715
 msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr "HTML: tekee äänestyslohkon tämän sivuston kyselylle. käyttö"
 
-#: functions.inc:732 functions.inc:716
+#: functions.inc:732 functions.inc:716 functions.inc:719
 msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr "HTML: renderoi tämän sivuston kyselyn tulokset. käyttö"
 
-#: functions.inc:736 functions.inc:720
+#: functions.inc:736 functions.inc:720 functions.inc:723
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
@@ -485,18 +485,15 @@ msgid "Status"
 msgstr "Tila"
 
 #: classes/Poll.class.php:1493
-#, fuzzy
 msgid "Message"
 msgstr "viesti"
 
 #: public_html/index.php:141 public_html/index.php:164
 #: public_html/ajax_handler.php:74
-#, fuzzy
 msgid "Please answer all remaining questions."
 msgstr "Vastaa kaikkiin kysymyksiin"
 
 #: public_html/index.php:165
-#, fuzzy
 msgid "Result not saved."
 msgstr "Tuloksia ei tallennettu"
 
@@ -505,29 +502,168 @@ msgid "Access to this poll is denied."
 msgstr "Pääsy tähän kyselyyn evätään."
 
 #: public_html/index.php:185
-#, fuzzy
 msgid ""
 "Either the poll has been moved/removed or you do not have sufficient "
 "permissions."
 msgstr ""
-"Polli on joko poistettu tai sinulla ei ole tarvittavia "
-"oikeuksia siihen."
+"Polli on joko poistettu tai sinulla ei ole tarvittavia oikeuksia siihen."
 
 #: public_html/ajax_handler.php:89 public_html/ajax_handler.php:67
-#, fuzzy
 msgid "This poll is not open for voting."
 msgstr "Tämä kysely ei ole avoinna äänestämiseen."
 
 #: public_html/ajax_handler.php:92
-#, fuzzy
 msgid "You have already voted on this poll."
 msgstr "Olet jo äänestänyt."
 
 #: public_html/ajax_handler.php:96
-#, fuzzy
 msgid "Your vote was saved for the poll."
 msgstr "Antamasi ääni tallennettu"
 
 #: public_html/ajax_handler.php:98 public_html/ajax_handler.php:62
 msgid "There was an error recording your vote."
 msgstr "Äänesi tallentamisessa tapahtui virhe."
+
+#: classes/Views/Results.class.php:296
+#, fuzzy
+msgid "Poll Topics"
+msgstr "Pollin aihe"
+
+#: language/lang_config.php:20
+#, fuzzy
+msgid "Polls Configuration"
+msgstr "Kyselyjen hallinta"
+
+#: language/lang_config.php:24
+msgid "Polls Login Required"
+msgstr ""
+
+#: language/lang_config.php:25 language/lang_config.php:24
+msgid "Hide Polls Menu Entry"
+msgstr "Piilota kyselyt-valikkokohta"
+
+#: language/lang_config.php:26 language/lang_config.php:25
+msgid "Max. Questions per Poll"
+msgstr "Maks. Kysymyksiä kyselyä kohden"
+
+#: language/lang_config.php:27 language/lang_config.php:26
+msgid "Max. Options per Question"
+msgstr "Maks. Vaihtoehdot kysymystä kohti"
+
+#: language/lang_config.php:28 language/lang_config.php:27
+msgid "Sort Results"
+msgstr "Lajittele tulokset"
+
+#: language/lang_config.php:29 language/lang_config.php:28
+msgid "Voter Cookie Valid Duration"
+msgstr "Äänestäjäevästeen voimassaoloaika"
+
+#: language/lang_config.php:30 language/lang_config.php:29
+msgid "Voter IP Address Valid Duration"
+msgstr "Äänestäjän IP-osoite on voimassa"
+
+#: language/lang_config.php:31 language/lang_config.php:30
+msgid "Delete Polls with Owner"
+msgstr "Poista kyselyt omistajan kanssa"
+
+#: language/lang_config.php:32 language/lang_config.php:31
+msgid "After Saving Poll"
+msgstr "Tallennettuasi kyselyn"
+
+#: language/lang_config.php:33 language/lang_config.php:32
+msgid "Poll Default Permissions"
+msgstr "Kyselyn oletusoikeudet"
+
+#: language/lang_config.php:34 language/lang_config.php:33
+msgid "Display glFusion Blocks"
+msgstr "Näytä glFusion-lohkot"
+
+#: language/lang_config.php:35 language/lang_config.php:34
+msgid "Default group allowed to vote"
+msgstr "Oletusryhmä saa äänestää"
+
+#: language/lang_config.php:36 language/lang_config.php:35
+msgid "Default group allowed to view results"
+msgstr "Oletusryhmä saa tarkastella tuloksia"
+
+#: language/lang_config.php:40 language/lang_config.php:39
+msgid "Main Settings"
+msgstr "Pääasetukset"
+
+#: language/lang_config.php:44 language/lang_config.php:43
+msgid "General Polls Settings"
+msgstr "Yleiset kyselyasetukset"
+
+#: language/lang_config.php:45 language/lang_config.php:44
+msgid "Default Permissions"
+msgstr "Oikeudet"
+
+#: language/lang_config.php:50 language/lang_config.php:54
+#: language/lang_config.php:49 language/lang_config.php:53
+msgid "True"
+msgstr "Totta"
+
+#: language/lang_config.php:51 language/lang_config.php:55
+#: language/lang_config.php:50 language/lang_config.php:54
+msgid "False"
+msgstr "Väärä"
+
+#: language/lang_config.php:58 language/lang_config.php:57
+msgid "As Submitted"
+msgstr "Kuten toimitettu"
+
+#: language/lang_config.php:59 language/lang_config.php:58
+msgid "By Votes"
+msgstr "By Äänet"
+
+#: language/lang_config.php:62 language/lang_config.php:61
+msgid "Forward to Poll"
+msgstr "Välitä kyselyyn"
+
+#: language/lang_config.php:63 language/lang_config.php:62
+msgid "Display Admin List"
+msgstr "Näytä järjestelmänvalvojan luettelo"
+
+#: language/lang_config.php:64 language/lang_config.php:63
+msgid "Display Public List"
+msgstr "Näytä julkinen luettelo"
+
+#: language/lang_config.php:65 language/lang_config.php:64
+msgid "Display Home"
+msgstr "Näytä Koti"
+
+#: language/lang_config.php:66 language/lang_config.php:65
+msgid "Display Admin"
+msgstr "Display-järjestelmänvalvoja"
+
+#: language/lang_config.php:69 language/lang_config.php:68
+msgid "No access"
+msgstr "Ei pääsyä"
+
+#: language/lang_config.php:70 language/lang_config.php:69
+msgid "Read-Only"
+msgstr "Lue ainoastaan"
+
+#: language/lang_config.php:71 language/lang_config.php:70
+msgid "Read-Write"
+msgstr "Lukea kirjoittaa"
+
+#: language/lang_config.php:74 language/lang_config.php:73
+msgid "Left Blocks"
+msgstr "Vasen lohko"
+
+#: language/lang_config.php:75 language/lang_config.php:74
+msgid "Right Blocks"
+msgstr "Oikeat lohkot"
+
+#: language/lang_config.php:76 language/lang_config.php:75
+msgid "Left & Right Blocks"
+msgstr "Vasen ja oikea lohko"
+
+#: language/lang_config.php:77 language/lang_config.php:76
+msgid "None"
+msgstr "Ei mitään"
+
+#: functions.inc:453
+msgid "Enter it here"
+msgstr ""

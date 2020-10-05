@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 09:49-0700\n"
+"POT-Creation-Date: 2020-10-05 10:33-0700\n"
 "PO-Revision-Date: 2020-10-02 13:21-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -164,7 +164,7 @@ msgstr "Encuestas en el sistema"
 #: classes/Views/Results.class.php:397 classes/Views/Results.class.php:360
 #: classes/Poll.class.php:1634 classes/Poll.class.php:1635
 #: classes/Poll.class.php:1637 classes/Poll.class.php:1636
-#: classes/Views/Results.class.php:361
+#: classes/Views/Results.class.php:361 classes/Views/Results.class.php:364
 msgid "User Name"
 msgstr "Nombre de usuario"
 
@@ -172,7 +172,7 @@ msgstr "Nombre de usuario"
 #: classes/Views/Results.class.php:402 classes/Views/Results.class.php:365
 #: classes/Poll.class.php:1639 classes/Poll.class.php:1640
 #: classes/Poll.class.php:1642 classes/Poll.class.php:1641
-#: classes/Views/Results.class.php:366
+#: classes/Views/Results.class.php:366 classes/Views/Results.class.php:369
 msgid "IP Address"
 msgstr "Dirección IP"
 
@@ -180,7 +180,7 @@ msgstr "Dirección IP"
 #: classes/Views/Results.class.php:407 classes/Views/Results.class.php:370
 #: classes/Poll.class.php:1644 classes/Poll.class.php:1645
 #: classes/Poll.class.php:1647 classes/Poll.class.php:1646
-#: classes/Views/Results.class.php:371
+#: classes/Views/Results.class.php:371 classes/Views/Results.class.php:374
 msgid "Date Voted"
 msgstr "Fecha de votación"
 
@@ -273,7 +273,7 @@ msgstr "Administración de encuestas"
 #: classes/Poll.class.php:1629 classes/Poll.class.php:1657
 #: classes/Poll.class.php:1631 classes/Poll.class.php:1659
 #: classes/Poll.class.php:1630 classes/Poll.class.php:1658
-#: classes/Views/Results.class.php:383
+#: classes/Views/Results.class.php:383 classes/Views/Results.class.php:386
 msgid ""
 "To modify or delete a poll, click on the edit icon of the poll. To create a "
 "new poll, click on \"Create New\" above."
@@ -468,16 +468,16 @@ msgstr "Error: campo (s) faltante (s)"
 msgid "Preview"
 msgstr "Avance"
 
-#: functions.inc:728 functions.inc:712
+#: functions.inc:728 functions.inc:712 functions.inc:715
 msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr ""
 "HTML: muestra un bloque de votación para una encuesta en este sitio. uso"
 
-#: functions.inc:732 functions.inc:716
+#: functions.inc:732 functions.inc:716 functions.inc:719
 msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr "HTML: muestra los resultados de una encuesta en este sitio. uso"
 
-#: functions.inc:736 functions.inc:720
+#: functions.inc:736 functions.inc:720 functions.inc:723
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
@@ -517,9 +517,7 @@ msgstr "Se deniega el acceso a esta encuesta."
 msgid ""
 "Either the poll has been moved/removed or you do not have sufficient "
 "permissions."
-msgstr ""
-"O la encuesta se ha movido/eliminado o "
-"no tiene permisos suficientes."
+msgstr "O la encuesta se ha movido/eliminado o no tiene permisos suficientes."
 
 #: public_html/ajax_handler.php:89 public_html/ajax_handler.php:67
 #, fuzzy
@@ -539,3 +537,147 @@ msgstr "Tu voto se guardó para la encuesta."
 #: public_html/ajax_handler.php:98 public_html/ajax_handler.php:62
 msgid "There was an error recording your vote."
 msgstr "Hubo un error al registrar su voto."
+
+#: classes/Views/Results.class.php:296
+#, fuzzy
+msgid "Poll Topics"
+msgstr "Tema de la encuesta"
+
+#: language/lang_config.php:20
+#, fuzzy
+msgid "Polls Configuration"
+msgstr "Administración de encuestas"
+
+#: language/lang_config.php:24
+msgid "Polls Login Required"
+msgstr ""
+
+#: language/lang_config.php:25 language/lang_config.php:24
+msgid "Hide Polls Menu Entry"
+msgstr "Ocultar entrada del menú de encuestas"
+
+#: language/lang_config.php:26 language/lang_config.php:25
+msgid "Max. Questions per Poll"
+msgstr "Número máximo de preguntas por encuesta"
+
+#: language/lang_config.php:27 language/lang_config.php:26
+msgid "Max. Options per Question"
+msgstr "Máx. de opciones por pregunta"
+
+#: language/lang_config.php:28 language/lang_config.php:27
+msgid "Sort Results"
+msgstr "Ordenar resultados"
+
+#: language/lang_config.php:29 language/lang_config.php:28
+msgid "Voter Cookie Valid Duration"
+msgstr "Duración válida de la cookie del votante"
+
+#: language/lang_config.php:30 language/lang_config.php:29
+msgid "Voter IP Address Valid Duration"
+msgstr "Duración válida de la dirección IP del votante"
+
+#: language/lang_config.php:31 language/lang_config.php:30
+msgid "Delete Polls with Owner"
+msgstr "Eliminar encuestas con el propietario"
+
+#: language/lang_config.php:32 language/lang_config.php:31
+msgid "After Saving Poll"
+msgstr "Después de guardar la encuesta"
+
+#: language/lang_config.php:33 language/lang_config.php:32
+msgid "Poll Default Permissions"
+msgstr "Permisos predeterminados de la encuesta"
+
+#: language/lang_config.php:34 language/lang_config.php:33
+msgid "Display glFusion Blocks"
+msgstr "Mostrar bloques glFusion"
+
+#: language/lang_config.php:35 language/lang_config.php:34
+msgid "Default group allowed to vote"
+msgstr "Grupo predeterminado autorizado para votar"
+
+#: language/lang_config.php:36 language/lang_config.php:35
+msgid "Default group allowed to view results"
+msgstr "Grupo predeterminado que puede ver resultados"
+
+#: language/lang_config.php:40 language/lang_config.php:39
+msgid "Main Settings"
+msgstr "Configuración principal"
+
+#: language/lang_config.php:44 language/lang_config.php:43
+msgid "General Polls Settings"
+msgstr "Configuración general de encuestas"
+
+#: language/lang_config.php:45 language/lang_config.php:44
+msgid "Default Permissions"
+msgstr "Permisos predeterminados"
+
+#: language/lang_config.php:50 language/lang_config.php:54
+#: language/lang_config.php:49 language/lang_config.php:53
+msgid "True"
+msgstr "Verdad"
+
+#: language/lang_config.php:51 language/lang_config.php:55
+#: language/lang_config.php:50 language/lang_config.php:54
+msgid "False"
+msgstr "Falso"
+
+#: language/lang_config.php:58 language/lang_config.php:57
+msgid "As Submitted"
+msgstr "Como enviado"
+
+#: language/lang_config.php:59 language/lang_config.php:58
+msgid "By Votes"
+msgstr "Por Votos"
+
+#: language/lang_config.php:62 language/lang_config.php:61
+msgid "Forward to Poll"
+msgstr "Reenviar a encuesta"
+
+#: language/lang_config.php:63 language/lang_config.php:62
+msgid "Display Admin List"
+msgstr "Mostrar lista de administradores"
+
+#: language/lang_config.php:64 language/lang_config.php:63
+msgid "Display Public List"
+msgstr "Mostrar lista pública"
+
+#: language/lang_config.php:65 language/lang_config.php:64
+msgid "Display Home"
+msgstr "Pantalla de inicio"
+
+#: language/lang_config.php:66 language/lang_config.php:65
+msgid "Display Admin"
+msgstr "Administrador de Display"
+
+#: language/lang_config.php:69 language/lang_config.php:68
+msgid "No access"
+msgstr "Sin acceso"
+
+#: language/lang_config.php:70 language/lang_config.php:69
+msgid "Read-Only"
+msgstr "Solo lectura"
+
+#: language/lang_config.php:71 language/lang_config.php:70
+msgid "Read-Write"
+msgstr "Leer escribir"
+
+#: language/lang_config.php:74 language/lang_config.php:73
+msgid "Left Blocks"
+msgstr "Bloques izquierdo"
+
+#: language/lang_config.php:75 language/lang_config.php:74
+msgid "Right Blocks"
+msgstr "Bloques izquierdo"
+
+#: language/lang_config.php:76 language/lang_config.php:75
+msgid "Left & Right Blocks"
+msgstr "Bloques izquierdo y derecho"
+
+#: language/lang_config.php:77 language/lang_config.php:76
+msgid "None"
+msgstr "Nada"
+
+#: functions.inc:453
+msgid "Enter it here"
+msgstr ""
