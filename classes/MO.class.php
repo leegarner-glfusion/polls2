@@ -15,7 +15,7 @@ namespace Polls;
 
 
 /**
- * Manage locale settings for the Library plugin.
+ * Manage locale settings for the Polls plugin.
  * @package polls
  */
 class MO
@@ -57,10 +57,21 @@ class MO
         // namespace.
         self::$domain = Config::PI_NAME;
 
+        $locale = $LANG_LOCALE;
+        if (empty($lang)) {
+            $lang = COM_getLanguage();
+        }
+
+        // If not using the system language, then the locale
+        // hasn't been determined yet.
         if (!empty($lang) && $lang != $_CONF['language']) {
+            // Save the current locale for reset()
+            self::$old_locale = setlocale(LC_MESSAGES, "0");
+
             // Validate and use the appropriate locale code.
-            // Defaults to 'en_US' if a supportated locale wasn't requested.
-            $parts = explode('_', $lang);
+            // Tries to look up the locale for the language first.
+            // Then uses the global locale (ignoring the requested language).
+            // Defaults to 'en_US' if a supportated locale wasn't found.
             if (isset(self::$lang2locale[$lang])) {
                 $locale = self::$lang2locale[$lang];
             } elseif (isset($LANG_LOCALE) && !empty($LANG_LOCALE)) {
@@ -70,17 +81,13 @@ class MO
                 // global not set, fall back to US english
                 $locale = 'en_US';
             }
-
-            // Save the existing messages language
-            self::$old_locale = setlocale(LC_MESSAGES, "0");
-
-            $results = setlocale(
-                LC_MESSAGES,
-                $locale.'.utf8', $locale, $lang
-            );
-        } else {
-            $results = true;
         }
+        // Set the locale for messages.
+        // This is the only part that's needed here.
+        $results = setlocale(
+            LC_MESSAGES,
+            $locale.'.utf8', $locale
+        );
         if ($results) {
             $dom = bind_textdomain_codeset(self::$domain, 'UTF-8');
             $dom = bindtextdomain(self::$domain, __DIR__ . "/../locale");
