@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-05 10:13-0700\n"
+"POT-Creation-Date: 2020-10-13 12:37-0700\n"
 "PO-Revision-Date: 2020-10-02 13:25-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,7 +31,7 @@ msgstr "Již jste hlasovali"
 
 #: functions.inc:404 functions.inc:400 classes/Poll.class.php:1234
 #: functions.inc:407 functions.inc:391 classes/Poll.class.php:1235
-#: classes/Poll.class.php:1237 classes/Poll.class.php:1236
+#: classes/Poll.class.php:1237 classes/Poll.class.php:1236 functions.inc:392
 msgid "Poll Topic"
 msgstr "Téma hlasování"
 
@@ -41,16 +41,18 @@ msgstr "Téma hlasování"
 #: classes/Views/Results.class.php:200 functions.inc:412 functions.inc:396
 #: classes/Poll.class.php:1264 classes/Poll.class.php:1480
 #: classes/Poll.class.php:1266 classes/Poll.class.php:1482
-#: classes/Poll.class.php:1265 classes/Poll.class.php:1481
+#: classes/Poll.class.php:1265 classes/Poll.class.php:1481 functions.inc:397
 msgid "Votes"
 msgstr "Hlasy"
 
 #: functions.inc:418 functions.inc:434 functions.inc:414 functions.inc:430
-#: functions.inc:421 functions.inc:437 functions.inc:405
+#: functions.inc:421 functions.inc:437 functions.inc:405 functions.inc:406
+#: functions.inc:422
 msgid "Top Ten Polls"
 msgstr "Deset nejlepších anket"
 
 #: functions.inc:435 functions.inc:431 functions.inc:438 functions.inc:422
+#: functions.inc:423
 msgid ""
 "It appears that there are no polls on this site or no one has ever voted."
 msgstr ""
@@ -58,6 +60,7 @@ msgstr ""
 "nikdy nehlasoval."
 
 #: functions.inc:456 functions.inc:452 functions.inc:459 functions.inc:443
+#: functions.inc:444
 msgid "Polls (Answers) in the system"
 msgstr "Ankety (odpovědi) v systému"
 
@@ -119,6 +122,7 @@ msgstr "Výsledky"
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1251
 #: classes/Poll.class.php:1096 classes/Poll.class.php:1252
 #: classes/Poll.class.php:1254 t.php:40 classes/Poll.class.php:1253
+#: classes/MO.class.php:94
 msgid "Vote"
 msgstr "Hlasovat"
 
@@ -460,26 +464,26 @@ msgstr "Zadejte ID ankety"
 msgid "Error Missing Field(s)"
 msgstr "Chyba chybějících polí"
 
-#: functions.inc:189 functions.inc:173
+#: functions.inc:189 functions.inc:173 functions.inc:174
 msgid "Preview"
 msgstr "Náhled"
 
-#: functions.inc:728 functions.inc:712 functions.inc:715
+#: functions.inc:728 functions.inc:712 functions.inc:715 functions.inc:713
 msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr "HTML: vykreslí hlasovací blok pro hlasování na tomto webu. použití"
 
-#: functions.inc:732 functions.inc:716 functions.inc:719
+#: functions.inc:732 functions.inc:716 functions.inc:719 functions.inc:717
 msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr "HTML: vykreslí výsledky hlasování na tomto webu. použití"
 
-#: functions.inc:736 functions.inc:720 functions.inc:723
+#: functions.inc:736 functions.inc:720 functions.inc:723 functions.inc:721
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
 "Odkaz: k anketě na tomto webu. link_text je výchozí k tématu Anketa. "
 "používání"
 
-#: functions.inc:356
+#: functions.inc:356 functions.inc:357
 msgid "Comment"
 msgstr "Souhlas"
 

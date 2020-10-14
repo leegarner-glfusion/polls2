@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-05 10:13-0700\n"
+"POT-Creation-Date: 2020-10-13 12:37-0700\n"
 "PO-Revision-Date: 2020-10-05 09:36-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,7 +31,7 @@ msgstr "Olet jo äänestänyt."
 
 #: functions.inc:404 functions.inc:400 classes/Poll.class.php:1234
 #: functions.inc:407 functions.inc:391 classes/Poll.class.php:1235
-#: classes/Poll.class.php:1237 classes/Poll.class.php:1236
+#: classes/Poll.class.php:1237 classes/Poll.class.php:1236 functions.inc:392
 msgid "Poll Topic"
 msgstr "Pollin aihe"
 
@@ -41,16 +41,18 @@ msgstr "Pollin aihe"
 #: classes/Views/Results.class.php:200 functions.inc:412 functions.inc:396
 #: classes/Poll.class.php:1264 classes/Poll.class.php:1480
 #: classes/Poll.class.php:1266 classes/Poll.class.php:1482
-#: classes/Poll.class.php:1265 classes/Poll.class.php:1481
+#: classes/Poll.class.php:1265 classes/Poll.class.php:1481 functions.inc:397
 msgid "Votes"
 msgstr "ääntä"
 
 #: functions.inc:418 functions.inc:434 functions.inc:414 functions.inc:430
-#: functions.inc:421 functions.inc:437 functions.inc:405
+#: functions.inc:421 functions.inc:437 functions.inc:405 functions.inc:406
+#: functions.inc:422
 msgid "Top Ten Polls"
 msgstr "Top 10 kyselyt"
 
 #: functions.inc:435 functions.inc:431 functions.inc:438 functions.inc:422
+#: functions.inc:423
 msgid ""
 "It appears that there are no polls on this site or no one has ever voted."
 msgstr ""
@@ -58,6 +60,7 @@ msgstr ""
 "äänestänyt."
 
 #: functions.inc:456 functions.inc:452 functions.inc:459 functions.inc:443
+#: functions.inc:444
 msgid "Polls (Answers) in the system"
 msgstr "Polleja (Vastauksia) systeemissä"
 
@@ -119,6 +122,7 @@ msgstr "Tulokset"
 #: classes/Poll.class.php:1095 classes/Poll.class.php:1251
 #: classes/Poll.class.php:1096 classes/Poll.class.php:1252
 #: classes/Poll.class.php:1254 t.php:40 classes/Poll.class.php:1253
+#: classes/MO.class.php:94
 msgid "Vote"
 msgstr "äänestä"
 
@@ -458,25 +462,25 @@ msgstr "Anna kyselytunnus"
 msgid "Error Missing Field(s)"
 msgstr "Virhe puuttuu kenttiä"
 
-#: functions.inc:189 functions.inc:173
+#: functions.inc:189 functions.inc:173 functions.inc:174
 msgid "Preview"
 msgstr "Esikatselu"
 
-#: functions.inc:728 functions.inc:712 functions.inc:715
+#: functions.inc:728 functions.inc:712 functions.inc:715 functions.inc:713
 msgid "HTML: renders a voting block for a Poll on this site. usage"
 msgstr "HTML: tekee äänestyslohkon tämän sivuston kyselylle. käyttö"
 
-#: functions.inc:732 functions.inc:716 functions.inc:719
+#: functions.inc:732 functions.inc:716 functions.inc:719 functions.inc:717
 msgid "HTML: renders the results of a Poll on this site. usage"
 msgstr "HTML: renderoi tämän sivuston kyselyn tulokset. käyttö"
 
-#: functions.inc:736 functions.inc:720 functions.inc:723
+#: functions.inc:736 functions.inc:720 functions.inc:723 functions.inc:721
 msgid ""
 "Link: to a Poll on this site.  link_text defaults to the Poll topic. usage"
 msgstr ""
 "Linkki: tämän sivuston kyselyyn. Link_text oletuksena kyselyn aihe. Käyttö"
 
-#: functions.inc:356
+#: functions.inc:356 functions.inc:357
 msgid "Comment"
 msgstr "kommentteja"
 
