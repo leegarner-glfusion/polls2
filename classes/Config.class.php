@@ -54,11 +54,15 @@ final class Config
      */
     private function __construct()
     {
+        global $_CONF;  // for base urls
+
         if ($this->properties === NULL) {
             $this->properties = \config::get_instance()
                 ->get_config(self::PI_NAME);
         }
         $this->properties['pi_name'] = self::PI_NAME;
+        $this->properties['url'] = $_CONF['site_url'] . '/' . self::PI_NAME;
+        $this->properties['admin_url'] = $_CONF['site_admin_url'] . '/plugins/' . self::PI_NAME;
     }
 
 

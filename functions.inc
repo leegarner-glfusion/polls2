@@ -75,8 +75,6 @@ use Polls\Models\Groups;
 
 // May later rely on the class autoloader
 require_once __DIR__ . '/' . Config::PI_NAME . '.php';
-Config::set('url', $_CONF['site_url'] . '/' . Config::PI_NAME);
-Config::set('admin_url', $_CONF['site_admin_url'] . '/plugins/' . Config::PI_NAME);
 
 /*
 * load the language file(s), including custom strings if any
