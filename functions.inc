@@ -112,7 +112,6 @@ function plugin_getmenuitems_polls2()
 {
     global $_CONF, $LANG_POLLS;
 
-    $menuitems = array();
     if (
         Config::get('hidepollsmenu') == 1 ||
         (
@@ -121,12 +120,9 @@ function plugin_getmenuitems_polls2()
     ) {
         return false;
     }
-    $a = preg_replace(
-        '/\{(.*)\}/i',
-        '<i class="uk-icon uk-icon-${1}"></i>',
-        $LANG_POLLS['mnu_title']);
-    $menuitems[$a] = Config::get('url') . '/index.php';
-    return $menuitems;
+    return array(
+        $LANG_POLLS['polls'] . ' <i class="uk-icon-check-square"></i>' => Config::get('url') . '/index.php',
+    );
 }
 
 /**

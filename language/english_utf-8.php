@@ -24,7 +24,6 @@ global $LANG32;
 
 $LANG_POLLS = array(
     'polls'             => 'Polls',
-    'mnu_title'         => 'Polls {check-square}',
     'results'           => 'Results',
     'pollresults'       => 'Poll Results',
     'votes'             => 'votes',
