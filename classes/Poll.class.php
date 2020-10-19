@@ -1483,6 +1483,16 @@ class Poll
             'icon' => '', 'form_url' => '',
         );
         $sql_now = $_CONF['_now']->toMySQL(true);
+        $filter = "WHERE is_open = 1 AND ('$sql_now' BETWEEN opens AND closes " .
+            SEC_buildAccessSql('AND', 'group_id') .
+            ") OR (closes < '$sql_now' " . SEC_buildAccessSql('AND', 'results_gid') . ')';
+        $count = 0;
+        $res = DB_query("SELECT COUNT(*) AS poll_count FROM " . DB::table('topics') . ' ' . $filter);
+        if ($res) {
+            $A = DB_fetchArray($res, false);
+            $count = (int)$A['poll_count'];
+        }
+
         $query_arr = array(
             'table' => 'polltopics',
             'sql' => "SELECT p.*, UNIX_TIMESTAMP(p.date) AS unixdate,
@@ -1511,6 +1521,9 @@ class Poll
             array(__CLASS__, 'getListField'),
             $header_arr, $text_arr, $query_arr, $defsort_arr, '', $extras
         );
+        if ($count == 0) {
+            $retval .= '<div class="uk-alert uk-alert-danger">' . $LANG_POLLS['stats_none'] . '</div>';
+        }
         return $retval;
     }
 
