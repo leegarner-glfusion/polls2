@@ -199,6 +199,7 @@ class Results
             'admin_url' => Config::get('admin_url') . '/index.php',
             'polls_url' => $this->isAdmin ? '' : Config::get('url') . '/index.php',
             'isOpen' => $this->Poll->isOpen(),
+            'adminView' => $this->Poll->hideResults(),
         ) );
 
         if (Poll::hasRights('edit')) {

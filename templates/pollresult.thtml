@@ -9,7 +9,13 @@
     <h3>{poll_topic}</h3>
 {!endif}
 {!if isOpen}
-    <div class="uk-alert uk-alert-danger">{$LANG_POLLS['msg_results_open']}</div>
+{!if adminView}
+    <div class="uk-alert uk-alert-danger">
+{!else}
+    <div class="uk-alert">
+{!endif}
+        {$LANG_POLLS['msg_results_open']}
+    </div>
 {!endif}
 {!if poll_description}
   <div class="uk-panel uk-panel-box">{poll_description}</div>
