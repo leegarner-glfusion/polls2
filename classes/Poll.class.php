@@ -1578,11 +1578,8 @@ class Poll
      */
     public static function deleteVotes($pid)
     {
-        $Poll = new self($pid);
-        if (!$Poll->isNew()) {
-            Answer::deletePoll($Poll->getID());
-            Voter::deletePoll($Poll->getID());
-        }
+        Answer::resetPoll($pid);
+        Voter::deletePoll($pid);
     }
 
 

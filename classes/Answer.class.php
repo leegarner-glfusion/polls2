@@ -167,6 +167,21 @@ class Answer
 
 
     /**
+     * Reset all answers to zero votes for a poll.
+     *
+     * @param   string  $pid    Poll ID
+     */
+    public static function resetPoll($pid)
+    {
+        DB_query(
+            "UPDATE " . DB::table('answers') .
+            " SET votes = 0
+            WHERE pid = '" . DB_escapeString($pid) . "'"
+        );
+    }
+
+
+    /**
      * Set the poll ID.
      *
      * @param   string  $pid    Poll ID
