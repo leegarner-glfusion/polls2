@@ -174,14 +174,17 @@ class Poll
     /**
      * Get all the currently open polls.
      *
-     * @param   boolean $inblock    True if the in_block flag must be set
+     * @param   boolean $modes  Mode for display
      * @return  array       Array of Poll objects
      */
-    public static function getOpen($mode=Modes::ALL)
+    public static function getOpen($mode=NULL)
     {
         global $_CONF;
 
-        $in_block = $modes == Modes::BLOCK ? ' AND display = 1' : '';
+        if ($mode === NULL) {
+            $mode = Modes::ALL;
+        }
+        $in_block = $mode == Modes::BLOCK ? ' AND display = 1' : '';
         $sql = "SELECT p.*, 
             (SELECT count(v.id) FROM " . DB::table('voters') . " v
                 WHERE v.pid = p.pid) as vote_count FROM " . DB::table('topics') . " p
