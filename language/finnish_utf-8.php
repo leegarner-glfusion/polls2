@@ -71,6 +71,7 @@ $LANG_POLLS = array(
 'message' => 'Message',
 'poll_closed' => 'Poll is Closed',
 's_alreadyvoted'    => 'You have already voted',
+'confirm_poll_reset' => 'Are you sure you want to delete all of the results for this poll?',
 );
 
 ###############################################################################
