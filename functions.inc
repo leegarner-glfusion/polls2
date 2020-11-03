@@ -96,7 +96,6 @@ function plugin_getmenuitems_polls2()
 {
     global $_CONF;
 
-    $menuitems = array();
     if (
         Config::get('hidepollsmenu') == 1 ||
         (

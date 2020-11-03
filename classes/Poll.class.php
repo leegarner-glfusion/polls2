@@ -174,14 +174,17 @@ class Poll
     /**
      * Get all the currently open polls.
      *
-     * @param   boolean $inblock    True if the in_block flag must be set
+     * @param   boolean $modes  Mode for display
      * @return  array       Array of Poll objects
      */
-    public static function getOpen($mode=Modes::ALL)
+    public static function getOpen($mode=NULL)
     {
         global $_CONF;
 
-        $in_block = $modes == Modes::BLOCK ? ' AND display = 1' : '';
+        if ($mode === NULL) {
+            $mode = Modes::ALL;
+        }
+        $in_block = $mode == Modes::BLOCK ? ' AND display = 1' : '';
         $sql = "SELECT p.*, 
             (SELECT count(v.id) FROM " . DB::table('voters') . " v
                 WHERE v.pid = p.pid) as vote_count FROM " . DB::table('topics') . " p
@@ -1508,6 +1511,16 @@ class Poll
             'icon' => '', 'form_url' => '',
         );
         $sql_now = $_CONF['_now']->toMySQL(true);
+        $filter = "WHERE is_open = 1 AND ('$sql_now' BETWEEN opens AND closes " .
+            SEC_buildAccessSql('AND', 'group_id') .
+            ") OR (closes < '$sql_now' " . SEC_buildAccessSql('AND', 'results_gid') . ')';
+        $count = 0;
+        $res = DB_query("SELECT COUNT(*) AS poll_count FROM " . DB::table('topics') . ' ' . $filter);
+        if ($res) {
+            $A = DB_fetchArray($res, false);
+            $count = (int)$A['poll_count'];
+        }
+
         $query_arr = array(
             'table' => 'polltopics',
             'sql' => "SELECT p.*, UNIX_TIMESTAMP(p.date) AS unixdate,
@@ -1536,6 +1549,9 @@ class Poll
             array(__CLASS__, 'getListField'),
             $header_arr, $text_arr, $query_arr, $defsort_arr, '', $extras
         );
+        if ($count == 0) {
+            $retval .= '<div class="uk-alert uk-alert-danger">' . $LANG_POLLS['stats_none'] . '</div>';
+        }
         return $retval;
     }
 
