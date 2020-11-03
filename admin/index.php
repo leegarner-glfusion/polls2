@@ -57,7 +57,9 @@ if (!plugin_ismoderator_polls2()) {
 // MAIN ========================================================================
 
 $action = '';
-$expected = array('edit','save','delete','lv','delvote','results', 'presults', 'resetpoll');
+$expected = array(
+    'edit','save','delete','lv', 'results', 'presults', 'resetpoll',
+);
 foreach($expected as $provided) {
     if (isset($_POST[$provided])) {
         $action = $provided;
