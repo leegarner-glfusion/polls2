@@ -7,3 +7,4 @@ Release TBD
   * Remove UNIX-style permissions, use group for access to voting and results.
   * Add opening and closing date/time fields to control the voting window.
   * Get vote and question counts directly from the related tables for accuracy.
+  * After closing, highlight winning selection(s) in results display.
