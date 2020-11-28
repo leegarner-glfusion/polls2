@@ -835,7 +835,7 @@ function plugin_autotags_polls2($op, $content = '', $autotag = '')
                     ->Render();
             } else {
                 $Results = new Results($pid);
-                $retval = $Results->Render();
+                $retval = $Results->withDisplaytype(Modes::AUTOTAG)->Render();
             }
 
             if ( $retval != '' ) {
