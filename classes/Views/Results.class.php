@@ -158,18 +158,19 @@ class Results
         }
 
         if (
-            !$this->Poll->hideResults() ||
-            !$this->Poll->isOpen() ||
-            (isset($_USER['uid']) && $_USER['uid'] == $this->Poll->getOwnerID()) ||
-            Poll::hasRights('edit')
+            $this->Poll->hideResults() &&
+            !$this->Poll->isOpen()
         ) {
-            // The poll owner or admin is checking early results.
-        } else {
-            if ($this->displaytype == Modes::AUTOTAG) {
-                $retval = '<div class="poll-autotag-message">' . $LANG_POLLS['pollhidden']. "</div>";
-            } else if ($this->displaytype == 1 ) {
-                $retval = '';
-            } else {
+            if (
+                $this->displaytype == Modes::NORMAL
+                &&
+                (
+                    !isset($_USER['uid']) ||
+                    $_USER['uid'] != $this->Poll->getOwnerID() ||
+                    !Poll::hasRights('edit')
+                )
+            ) {
+                // Normal mode, show a message if not an owner or admin
                 $msg = '';
                 if ($this->Poll->alreadyVoted()) {
                     $msg .= $LANG_POLLS['alreadyvoted'] . '<br />';
@@ -177,8 +178,8 @@ class Results
                 $msg .= $LANG_POLLS['pollhidden'];
                 $retval = COM_showMessageText($msg,'', true,'error');
                 $retval .= Poll::listPolls();
+                return $retval;
             }
-            return $retval;
         }
 
         $poll = new \Template(__DIR__ . '/../../templates/');
