@@ -1550,7 +1550,7 @@ class Poll
             $header_arr, $text_arr, $query_arr, $defsort_arr, '', $extras
         );
         if ($count == 0) {
-            $retval .= '<div class="uk-alert uk-alert-danger">' . $LANG_POLLS['stats_none'] . '</div>';
+            $retval .= '<div class="uk-alert uk-alert-danger">' . MO::_('It appears that there are no polls on this site or no one has ever voted.') . '</div>';
         }
         return $retval;
     }
