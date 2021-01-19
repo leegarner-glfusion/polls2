@@ -149,7 +149,7 @@
 {!if delete_button}
     <button class="uk-button uk-button-danger" type="submit" name="delete" value="{lang_delete}" onclick="return confirm('{lang_delete_confirm}');">{lang_delete}</button>
 {!endif}
-    <button class="uk-button cancel" type="submit" name="cancel" value="{lang_cancel}">{lang_cancel}</button>
+    <a href="{action_url}" class="uk-button cancel">{lang_cancel}</a>
 </form>
 <script>
   $("#polleditor").validate();
