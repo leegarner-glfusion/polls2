@@ -657,12 +657,15 @@ function plugin_getheadercss_polls2()
     global $_CONF;
 
     $styles = array();
-    $file = '/' . Config::get('pi_name') . '/style.css';
-
-    if (@file_exists($_CONF['path_layout'].'plugins' . $file)) {
-        $styles[] = $_CONF['path_layout'].'plugins/' . $file;
-    } else {
-        $styles[] = $_CONF['path_html'] . $file;
+    $dirs = array(
+        __DIR__ . '/css',
+        $_CONF['path_layout'] . 'plugins/' . Config::get('pi_name'),
+        __DIR__ . '/css/custom',
+    );
+    foreach ($dirs as $dir) {
+        if (file_exists($dir . '/style.css')) {
+            $styles[] = $dir . '/style.css';
+        }
     }
     return $styles;
 }
