@@ -1,4 +1,7 @@
 {# begin {templatelocation} #}
+{!if show_htmleditor}
+{wysiwyg}
+{!endif}
 <form id="polleditor" class="uk-form uk-form-horizontal" action="{action_url}" method="post">
     <input type="hidden" name="{sectoken_name}" value="{sectoken}">
     <input type="hidden" value="{old_pid}" name="old_pid">
@@ -109,9 +112,9 @@
                 </ul>
 
                 <div class="uk-form-row uk-margin">
-                    <div class="uk-form-controls">
+                    <!--<div class="uk-form-controls">
                         <span class="uk-text-bold">{lang_answersvotes}</span>
-                  </div>
+                  </div>-->
                 </div>
 
                 <ul id="question-tabs" class="uk-switcher uk-margin">

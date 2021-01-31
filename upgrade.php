@@ -132,6 +132,18 @@ function polls_upgrade()
                 "DELETE FROM `{$_TABLES['groups']}` WHERE grp_id='" .
                 ucfirst(Config::PI_NAME) . " Admin'"
             );
+            DB_query(
+                "ALTER TABLE " . DB::table('questions') .
+                " CHANGE question question text"
+            );
+            DB_query(
+                "ALTER TABLE " . DB::table('answers') .
+                " CHANGE answer answer text"
+            );
+            DB_query(
+                "ALTER TABLE " . DB::table('answers') .
+                " CHANGE remark remark text"
+            );
 
         default :
             DB_query(

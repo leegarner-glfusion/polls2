@@ -5,16 +5,23 @@
   {!!set reqclass '' !!}
 {!endif}
 <li>
-  <div class="uk-form-row">
-    <label class="uk-form-label" for="question"><span class="uk-text-bold">{lang_question}</span></label>
-    <div class="uk-form-controls">
-      <input class="uk-form-width-large {reqclass}" type="text" name="question[]" value="{question_text}" maxlength="255">
+    <div class="uk-form-row">
+        <label class="uk-form-label" for="question"><span class="uk-text-bold">{lang_question}</span></label>
+        <div class="uk-form-controls">
+            <textarea style="width:80%" name="question[]">{question_text}</textarea>
+        </div>
     </div>
-  </div>
-  <div class="uk-form-row">
-    <div class="uk-form-controls">
-      {answer_option}
+    <div class="uk-form-row">
+        <div class="uk-form-controls">
+            <table class="uk-table pollanswers" style="width:90%">
+                <tr>
+                    <th>{lang_answer}</th>
+                    <th style="width:10%;">{lang_votes}</th>
+                    <th>{lang_comment}</th>
+                </tr>
+                {answer_option}
+            </table>
+        </div>
     </div>
-  </div>
 </li>
 {# end {templatelocation} #}

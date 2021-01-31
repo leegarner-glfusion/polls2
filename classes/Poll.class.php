@@ -620,6 +620,34 @@ class Poll
             'answer' => 'pollansweroption.thtml',
         ) );
 
+        SEC_setCookie(
+            $_CONF['cookie_name'].'adveditor',
+            SEC_createTokenGeneral('advancededitor'),
+            time() + 1200,
+            $_CONF['cookie_path'],
+            $_CONF['cookiedomain'],
+            $_CONF['cookiesecure'],
+            false
+        );
+
+        $tpl_var = Config::get('pi_name') . '_entry';
+        switch (PLG_getEditorType()) {
+        case 'ckeditor':
+            $T->set_var('show_htmleditor', true);
+            PLG_requestEditor(Config::get('pi_name'), $tpl_var, 'ckeditor_polls.thtml');
+            PLG_templateSetVars($tpl_var, $T);
+            break;
+        case 'tinymce' :
+            $T->set_var('show_htmleditor',true);
+            PLG_requestEditor(Config::get('pi_name'), $tpl_var, 'tinymce_polls.thtml');
+            PLG_templateSetVars($tpl_var, $T);
+            break;
+        default :
+            // don't support others right now
+            $T->set_var('show_htmleditor', false);
+            break;
+        }
+
         if (!empty($this->pid)) {       // if not a new record
             // Get permissions for poll
             if (!self::hasRights('edit')) {
@@ -721,7 +749,6 @@ class Poll
             'lang_results_group' => MO::_('Results Group'),
             'group_dropdown' => SEC_getGroupDropdown($this->voting_gid, 3),
             'res_grp_dropdown' => SEC_getGroupDropdown($this->results_gid, 3, 'results_gid'),
-            'lang_answersvotes' => MO::_('Answers / Votes / Remark'),
             'lang_save' => MO::_('Save'),
             'lang_cancel' => MO::_('Cancel'),
             'lang_datepicker' => MO::_('Date Picker'),
@@ -729,6 +756,9 @@ class Poll
             'lang_general' => MO::_('General'),
             'lang_poll_questions' => MO::_('Poll Questions'),
             'lang_permissions' => MO::_('Permissions'),
+            'lang_answer' => MO::_('Answer'),
+            'lang_votes' => MO::_('Votes'),
+            'lang_comment' => MO::_('Comment'),
         ) );
 
         $T->set_block('editor','questiontab','qt');
@@ -981,7 +1011,9 @@ class Poll
                 'width' => '35px',
             ),
             array(
-                'text' => MO::_('Reset'),
+                'text' => MO::_('Reset') .
+                    ' <i class="uk-icon uk-icon-question-circle tooltip" title="' .
+                    MO::_('Remove all votes and reset answer count') . '"></i>',
                 'field' => 'reset',
                 'sort' => false,
                 'align' => 'center',
@@ -1605,7 +1637,7 @@ class Poll
     {
         $Poll = new self($pid);
         if (!$Poll->isNew()) {
-            Answer::deletePoll($Poll->getID());
+            Answer::resetPoll($Poll->getID());
             Voter::deletePoll($Poll->getID());
         }
     }

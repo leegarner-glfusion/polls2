@@ -25,9 +25,9 @@ $_SQL[DB::key('answers')] = "CREATE TABLE " . DB::table('answers') . " (
   pid varchar(128) NOT NULL default '',
   qid mediumint(9) NOT NULL default 0,
   aid tinyint(3) unsigned NOT NULL default '0',
-  answer varchar(255) default NULL,
+  answer text,
   votes mediumint(8) unsigned default NULL,
-  remark varchar(255) NULL,
+  remark text,
   PRIMARY KEY (pid, qid, aid)
 ) ENGINE=MyISAM
 ";
@@ -35,7 +35,7 @@ $_SQL[DB::key('answers')] = "CREATE TABLE " . DB::table('answers') . " (
 $_SQL[DB::key('questions')] = "CREATE TABLE " . DB::table('questions') . " (
     qid mediumint(9) NOT NULL DEFAULT '0',
     pid varchar(128) NOT NULL,
-    question varchar(255) NOT NULL,
+    question text,
     PRIMARY KEY (qid, pid)
 ) ENGINE=MyISAM
 ";
